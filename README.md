@@ -29,6 +29,6 @@ Desenvolver um Avaliador de Soft Skill, capaz de permitir que alunos de um grupo
 2. Em seu computador, crie uma pasta para se copiar o projeto
 3. Através do seu terminal, acesse esta pasta e utilize o comando `git clone` com chave HTTPS ou SSH para copiar o projeto e seus arquivos para seu computador
 
-![image](![image](https://github.com/user-attachments/assets/fd08b675-724f-4bda-8c27-65435de06037))
+![image](https://github.com/user-attachments/assets/7c8f3a2f-a50b-4b34-9dee-6a7fe1ad18ce)
 
 4. TODO
