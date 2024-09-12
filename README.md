@@ -8,7 +8,7 @@
 
 ## Objetivo do projeto
 
-Desenvolver um Avaliador de Soft Skill, capaz de permitir que alunos de um grupo avaliem seus membros, e que os professores recebam esta informação em um formato padronizado. O projeto também deverá dar algumas permissões adicionais para que o professores possam ter um certo nível de controle sobre o sistema (admin). A interface deve ser intuitiva e os fluxos mapeados para exibir as mensagens corretas para que o usuário não se sinta perdido.
+Desenvolver um Avaliador de Soft Skill, capaz de permitir que alunos de um grupo avaliem seus membros, calcule a média das notas e que os professores recebam esta informação em um formato padronizado. O projeto também deverá dar algumas permissões adicionais para que o professores possam ter um certo nível de controle sobre o sistema (admin). A interface deve ser intuitiva e os fluxos mapeados para exibir as mensagens corretas para que o usuário não se sinta perdido.
 
 ## Tecnologia utilizada para desenvolver o projeto
 
@@ -29,6 +29,6 @@ Desenvolver um Avaliador de Soft Skill, capaz de permitir que alunos de um grupo
 2. Em seu computador, crie uma pasta para se copiar o projeto
 3. Através do seu terminal, acesse esta pasta e utilize o comando `git clone` com chave HTTPS ou SSH para copiar o projeto e seus arquivos para seu computador
 
-![image](https://github.com/SQLutions-FATEC/API-1-Semestre/assets/77405968/87d85c50-a5a4-4cf3-ac8c-d6c8b4ac45fb)
+![image](![image](https://github.com/user-attachments/assets/fd08b675-724f-4bda-8c27-65435de06037))
 
 4. TODO
