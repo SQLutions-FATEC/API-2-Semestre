@@ -48,7 +48,77 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 ## 🎯 Backlogs & User Stories
 
-DOING
+### Backlog do Produto
+
+#### ✅ Requisitos Funcionais
+
+| ID | Descrição | Prioridade | Fator | Sprint |
+|:--:|-----------|:----------:|:-----:|:------:|
+| 1 | Receber dados das equipes e seus integrantes/Criar tela do admin | x | x | x |
+| 2 | Receber as avaliações de cada integrante/Tela de preenchimento | x | x | x |
+| 3 | Permitir login de usuários/Tela de login | x | x | x |
+| 4 | Apresentar as médias ao professor | x | x | x |
+| 5 | Gerar relatórios dos valores calculados | x | x | x |
+| 6 | Modelagem do Banco de Dados | x | x | 1 |
+| 7 | Integrar banco de dados à aplicação | x | x | x |
+| 8 | Período de início e fim de avaliação dos alunos | x | x | x |
+
+#### ✔️ Requisitos Não Funcionais
+
+| ID | Descrição |
+|:--:|-----------|
+| 1 | Linguagem de programação: Java |
+| 2 | Banco de Dados com modelo relacional |
+| 3 | Acesso ao Banco de Dados com JDBC |
+
+### Backlog das Sprints
+
+#### Sprint 1
+
+| ID | Descrição |
+|:--:|-----------|
+| 1 | ✅ Modelagem do Banco de Dados |
+
+#### Sprint 2
+
+| ID | Descrição |
+|:--:|-----------|
+| x | ✅ x |
+| 1 | ✔️ Linguagem de programação: Java |
+| x | ✔️ x |
+
+#### Sprint 3
+
+| ID | Descrição |
+|:--:|-----------|
+| x | ✅ x |
+| 1 | ✔️ Linguagem de programação: Java |
+| x | ✔️ x |
+
+#### Sprint 4
+
+| ID | Descrição |
+|:--:|-----------|
+| x | ✅ x |
+| 1 | ✔️ Linguagem de programação: Java |
+| x | ✔️ x |
+
+### User Stories
+
+| Épico | ID | Ator | Ação | Motivo |
+|:-----:|:--:|------|------|--------|
+| x | 1 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
+| x | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
+| x | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
+| x | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
+| x | 5 | Professor | ❓Define as datas de cada sprint❓ | Para definir o período de acesso dos alunos na plataforma |
+| x | 6 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
+| x | 7 | Professor | ❓Visualiza as médias dos alunos na sprint❓ | Para ter um acompanhamento do desempenho |
+| x | 8 | Professor | ❓Visualiza um relatório geral dos alunos no fim do projeto❓ | Para ter uma visualização da evolução do desempenho dos alunos |
+| x | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| x | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
 ## 🖥️ Documentação
 
@@ -68,8 +138,9 @@ TODO
 
 ## 🛠️ Tecnologias
 
-1. Java - [Link](https://www.java.com/pt-BR/)
-2. COLOCAR IDE AQUI - [Link]()
+As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
+
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) INTELLIJ?
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
