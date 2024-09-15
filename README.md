@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[Sobre](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-sobre-o-projeto) | [Backlogs e User Stories]() | [Protótipo e Documentação]() | [Tecnologias]() | [Equipe](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#equipe)
+[Sobre](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-sobre-o-projeto) | [Backlogs e User Stories](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-backlogs--user-stories) | [Documentação](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#%EF%B8%8F-documenta%C3%A7%C3%A3o) | [Tecnologias](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#%EF%B8%8F-tecnologias) | [Equipe](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#equipe)
 
 </div>
 
