@@ -8,7 +8,7 @@
 
 <div align="center">
 
-[Sobre]() | [Backlogs e User Stories]() | [Protótipo e Documentação]() | [Tecnologias]() | [Equipe]()
+[Sobre](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-sobre-o-projeto) | [Backlogs e User Stories]() | [Protótipo e Documentação]() | [Tecnologias]() | [Equipe](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#equipe)
 
 </div>
 
@@ -44,20 +44,17 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
   TODO
 </details>
 
-## Tecnologia utilizada para desenvolver o projeto
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
-1. Java - [Link](https://www.java.com/pt-BR/)
-2. COLOCAR IDE AQUI - [Link]()
+## 🎯 Backlogs & User Stories
 
-## Metodologia usada no projeto
+DOING
 
-1.  SCRUM [Link](https://www.atlassian.com/br/agile/scrum)
-2.  Validação das Operações: Realizamos testes manuais de fluxo para garantir a precisão e a confiabilidade do sistema.
-3.  Direcionamento das tarefas: Direcionamos as operações/atividades entre os membros.
-4.  Organização das tarefas: Utilizamos o Backlog do GitHub para priorização dos tarefas.
-5.  Acompanhamento do projeto: Programamos reuniões e formulários para compartilharmos o andamento do projeto.
+## 🖥️ Documentação
 
-## Como utilizar o projeto
+TODO
+
+### Como utilizar o projeto
 
 1. Entre na [página principal do projeto](https://github.com/SQLutions-FATEC/API-2-Semestre)
 2. Em seu computador, crie uma pasta para se copiar o projeto
@@ -67,7 +64,16 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 4. TODO
 
-## Equipe
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+
+## 🛠️ Tecnologias
+
+1. Java - [Link](https://www.java.com/pt-BR/)
+2. COLOCAR IDE AQUI - [Link]()
+
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+
+## 👥 Equipe
 
 |  | Função | Nome | Redes |
 |--|--------|------|-------|
@@ -80,3 +86,5 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 | ![joao](https://github.com/user-attachments/assets/984a1b7c-e4fa-4b78-84f1-0391f0f08de5) | Desenvolvedor | João Tuschtler Paulista | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joaopaulista/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/joaopaulista) |
 | ![lucas](https://github.com/user-attachments/assets/2a1afdae-7de8-4449-9fea-28fac568e960) | Desenvolvedor | Lucas Souza | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lucas-souza-a67a52165/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JayWeinberg123) |
 | ![tiago](https://github.com/user-attachments/assets/2715b681-6533-41bd-a176-4ec9130a1a90) | Desenvolvedor | Tiago Torres dos Reis | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tiago-torres-dos-reis/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/TiagoTReis) |
+
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
