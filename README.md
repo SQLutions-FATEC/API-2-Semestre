@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[Objetivos da Sprint]() | [Entregas]() | [Métricas do Time]() | [Links Úteis]()
+[Objetivos da Sprint](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#-objetivos-da-sprint) | [Entregas](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#%EF%B8%8F-entregas) | [Métricas do Time](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#-m%C3%A9tricas-do-time) | [Links Úteis](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#-links-%C3%BAteis)
 
 </div>
 
@@ -13,7 +13,7 @@ O projeto se baseia no desenvolvimento de um sistema para avaliação de nota do
 Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por essa sprint são:
 - TODO
 
-[→ Voltar ao topo]()
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#sprint-4-11112024-a-01122024)
 
 ## ✔️ Entregas
 
@@ -24,7 +24,7 @@ TODO
   TODO
 </details>
 
-[→ Voltar ao topo]()
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#sprint-4-11112024-a-01122024)
 
 ## 📈 Métricas do time
 
@@ -34,10 +34,10 @@ O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto)
 
 TODO
 
-[→ Voltar ao topo]()
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#sprint-4-11112024-a-01122024)
 
 ## 🔗 Links úteis
 
 TODO
 
-[→ Voltar ao topo]()
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-4/README.md#sprint-4-11112024-a-01122024)
