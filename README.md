@@ -1,10 +1,10 @@
 # Sprint 1: 09/09/2024 a 29/09/2024
 
----
+O projeto se baseia no desenvolvimento de um sistema para avaliação de nota dos alunos no modelo PACER, que haverá dois tipos de atores; professor e aluno. Tendo em visto o entendimento do problema a ser resolvido, a primeira sprint teve foco na documentação, conversa com o cliente, P2 e M2, e estabilização do ambiente de desenvolvimento. Como documentação, o objetivo foi atender ao Backlog de Produto, User Stories, README e UML.
 
 <div align="center">
 
-[Objetivos da Sprint]() | [Entregas]() | [Métricas do Time]() | [Links Úteis]()
+[Objetivos da Sprint](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#-objetivos-da-sprint) | [Entregas](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#%EF%B8%8F-entregas) | [Métricas do Time](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#-m%C3%A9tricas-do-time) | [Links Úteis](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#-links-%C3%BAteis)
 
 </div>
 
@@ -13,7 +13,7 @@
 Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por essa sprint são:
 - *RF6*: Modelagem do Banco de Dados
 
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
 
 ## ✔️ Entregas
 
@@ -26,6 +26,8 @@ TODO
   TODO
 </details>
 
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
+
 ## 📈 Métricas do time
 
 Nesta sprint foi feito o preparatório da base, que será a base para as demais sprints. Com isso, me refiro ao Backlog de Produto, criação de cards da sprint 1 e 2, além da definição de tecnologias a serem utilizadas pelos membros da equipe e validação do cliente, P2 e M2 sobre os aspectos referidos.
@@ -34,10 +36,10 @@ O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto)
 
 TODO
 
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
 
 ## 🔗 Links úteis
 
 TODO
 
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
