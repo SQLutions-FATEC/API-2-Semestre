@@ -54,14 +54,12 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição | Prioridade | Fator | Sprint |
 |:--:|-----------|:----------:|:-----:|:------:|
-| 1 | Receber dados das equipes e seus integrantes/Criar tela do admin | x | x | x |
-| 2 | Receber as avaliações de cada integrante/Tela de preenchimento | x | x | x |
-| 3 | Permitir login de usuários/Tela de login | x | x | x |
-| 4 | Apresentar as médias ao professor | x | x | x |
-| 5 | Gerar relatórios dos valores calculados | x | x | x |
-| 6 | Modelagem do Banco de Dados | x | x | 1 |
-| 7 | Integrar banco de dados à aplicação | x | x | x |
-| 8 | Período de início e fim de avaliação dos alunos | x | x | x |
+| 1 | Alunos preencherem avaliações de outros membros | Alta | 1 | 3 |
+| 2 | Receber dados das equipes e seus integrantes (arquivo .csv) | Alta | 2 | 2 |
+| 3 | Apresentar as médias ao professor | Alta | 3 | 4 |
+| 4 | Gerar relatórios dos valores calculados | Média | 4 | 4 |
+| 5 | Período de início e fim de avaliação dos alunos | Alta | 5 | 2 |
+| 6 | Identificar o usuário (Login) | Média | 6 | 3 |
 
 #### ✔️ Requisitos Não Funcionais
 
@@ -77,31 +75,37 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Modelagem do Banco de Dados |
+| x | x |
 
 #### Sprint 2
 
 | ID | Descrição |
 |:--:|-----------|
-| x | ✅ x |
-| 1 | ✔️ Linguagem de programação: Java |
-| x | ✔️ x |
+| 1 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
+| 2 | ✅ Período de início e fim de avaliação dos alunos |
+| 3 | ✔️ Linguagem de programação: Java |
+| 4 | ✔️ Banco de Dados com modelo relacional |
+| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 3
 
 | ID | Descrição |
 |:--:|-----------|
-| x | ✅ x |
-| 1 | ✔️ Linguagem de programação: Java |
-| x | ✔️ x |
+| 1 | ✅ Alunos preencherem avaliações de outros membros | Alta | 1 | 3 |
+| 2 | ✅ Identificar o usuário (Login) | Média | 6 | 3 |
+| 3 | ✔️ Linguagem de programação: Java |
+| 4 | ✔️ Banco de Dados com modelo relacional |
+| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 4
 
 | ID | Descrição |
 |:--:|-----------|
-| x | ✅ x |
-| 1 | ✔️ Linguagem de programação: Java |
-| x | ✔️ x |
+| 1 | ✅ Apresentar as médias ao professor | Alta | 3 | 4 |
+| 2 | ✅ Gerar relatórios dos valores calculados | Média | 4 | 4 |
+| 3 | ✔️ Linguagem de programação: Java |
+| 4 | ✔️ Banco de Dados com modelo relacional |
+| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 ### User Stories
 
@@ -113,10 +117,9 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 | x | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
 | x | 5 | Professor | ❓Define as datas de cada sprint❓ | Para definir o período de acesso dos alunos na plataforma |
 | x | 6 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| x | 7 | Professor | ❓Visualiza as médias dos alunos na sprint❓ | Para ter um acompanhamento do desempenho |
-| x | 8 | Professor | ❓Visualiza um relatório geral dos alunos no fim do projeto❓ | Para ter uma visualização da evolução do desempenho dos alunos |
-| x | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| x | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| x | 7 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
+| x | 8 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| x | 9 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
