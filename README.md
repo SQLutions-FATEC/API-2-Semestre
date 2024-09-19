@@ -54,12 +54,12 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição | Prioridade | Fator | Sprint |
 |:--:|-----------|:----------:|:-----:|:------:|
-| 1 | Alunos preencherem avaliações de outros membros | Alta | 1 | 3 |
-| 2 | Receber dados das equipes e seus integrantes (arquivo .csv) | Alta | 2 | 2 |
-| 3 | Apresentar as médias ao professor | Alta | 3 | 4 |
-| 4 | Gerar relatórios dos valores calculados | Média | 4 | 4 |
-| 5 | Período de início e fim de avaliação dos alunos | Alta | 5 | 2 |
-| 6 | Identificar o usuário (Login) | Média | 6 | 3 |
+| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 3 |
+| 2 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 2 | 2 |
+| 3 | Apresentar as médias ao professor | :red_circle: Alta | 3 | 4 |
+| 4 | Gerar relatórios dos valores calculados | :yellow_circle: Média | 4 | 4 |
+| 5 | Período de início e fim de avaliação dos alunos | :red_circle: Alta | 5 | 2 |
+| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 3 |
 
 #### ✔️ Requisitos Não Funcionais
 
@@ -151,7 +151,7 @@ As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na 
 
 |  | Função | Nome | Redes |
 |--|--------|------|-------|
-| ![davi](https://github.com/user-attachments/assets/08f611cd-614b-41b8-a7a7-cab3065e9aeb) | Product Owner | Davi Soares | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dsf21/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DaviSFS21) |
+| ![davi](https://github.com/user-attachments/assets/08f611cd-614b-41b8-a7a7-cab3065e9aeb) | Product Owner | Davi Soares Fernandes dos Santos | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dsf21/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DaviSFS21) |
 | ![augusto](https://github.com/user-attachments/assets/642849b4-3329-4e61-8d77-9a4b84f258de) | Scrum Master | Augusto de Moraes Piatto | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/augusto-piatto/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/augustopiatto) |
 | ![bryan](https://github.com/user-attachments/assets/ee31c3b5-3ba6-4019-8c95-ba03cfa94d4c) | Desenvolvedor | Bryan Matheus | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bryan-matheus-5aa0a3302/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BryanARMatheus) |
 | ![caina](https://github.com/user-attachments/assets/a6f52b8c-11c7-4f20-9647-004cd04c60bc) | Desenvolvedor | Cainã Nascimento Melo | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cain%C3%A3-melo/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/CainaNascimentoMelo) |
