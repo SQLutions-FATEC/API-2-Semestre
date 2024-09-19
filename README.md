@@ -54,12 +54,12 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição | Prioridade | Fator | Sprint |
 |:--:|-----------|:----------:|:-----:|:------:|
-| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 3 |
-| 2 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 2 | 2 |
-| 3 | Apresentar as médias ao professor | :red_circle: Alta | 3 | 4 |
-| 4 | Gerar relatórios dos valores calculados | :yellow_circle: Média | 4 | 4 |
-| 5 | Período de início e fim de avaliação dos alunos | :red_circle: Alta | 5 | 2 |
-| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 3 |
+| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 2 |
+| 2 | Apresentar as médias ao professor | :red_circle: Alta | 2 | 3 |
+| 3 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 3 | 2 |
+| 4 | Gerar relatórios dos valores calculados | :red_circle: Alta | 4 | 3 |
+| 5 | Período de início e fim de avaliação dos alunos | :yellow_circle: Média | 5 | 4 |
+| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 4 |
 
 #### ✔️ Requisitos Não Funcionais
 
@@ -115,11 +115,12 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 | x | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
 | x | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
 | x | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
-| x | 5 | Professor | ❓Define as datas de cada sprint❓ | Para definir o período de acesso dos alunos na plataforma |
-| x | 6 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| x | 7 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
-| x | 8 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| x | 9 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| x | 5 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
+| x | 6 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
+| x | 7 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
+| x | 8 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
+| x | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| x | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
