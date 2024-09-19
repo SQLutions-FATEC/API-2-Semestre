@@ -82,7 +82,7 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 | ID | Descrição |
 |:--:|-----------|
 | 1 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
-| 2 | ✅ Período de início e fim de avaliação dos alunos |
+| 2 | ✅ Alunos preencherem avaliações de outros membros |
 | 3 | ✔️ Linguagem de programação: Java |
 | 4 | ✔️ Banco de Dados com modelo relacional |
 | 5 | ✔️ Acesso ao Banco de Dados com JDBC |
@@ -91,8 +91,8 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Alunos preencherem avaliações de outros membros | Alta | 1 | 3 |
-| 2 | ✅ Identificar o usuário (Login) | Média | 6 | 3 |
+| 1 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
+| 2 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
 | 3 | ✔️ Linguagem de programação: Java |
 | 4 | ✔️ Banco de Dados com modelo relacional |
 | 5 | ✔️ Acesso ao Banco de Dados com JDBC |
@@ -101,8 +101,8 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Apresentar as médias ao professor | Alta | 3 | 4 |
-| 2 | ✅ Gerar relatórios dos valores calculados | Média | 4 | 4 |
+| 1 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
+| 2 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
 | 3 | ✔️ Linguagem de programação: Java |
 | 4 | ✔️ Banco de Dados com modelo relacional |
 | 5 | ✔️ Acesso ao Banco de Dados com JDBC |
