@@ -65,9 +65,9 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | Linguagem de programação: Java |
-| 2 | Banco de Dados com modelo relacional |
-| 3 | Acesso ao Banco de Dados com JDBC |
+| 7 | Linguagem de programação: Java |
+| 8 | Banco de Dados com modelo relacional |
+| 9 | Acesso ao Banco de Dados com JDBC |
 
 ### Backlog das Sprints
 
@@ -81,46 +81,46 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
-| 2 | ✅ Alunos preencherem avaliações de outros membros |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 1 | ✅ Alunos preencherem avaliações de outros membros |
+| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 3
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
-| 2 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 2 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
+| 4 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 4
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
-| 2 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 5 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
+| 6 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 ### User Stories
 
 | Épico | ID | Ator | Ação | Motivo |
 |:-----:|:--:|------|------|--------|
-| x | 1 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
-| x | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
-| x | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
-| x | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
-| x | 5 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
-| x | 6 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
-| x | 7 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| x | 8 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
-| x | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| x | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| 6 | 1 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
+| 6 | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
+| 3 | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
+| 3 | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
+| 5 | 5 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
+| 5 | 6 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
+| 1 | 7 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
+| 2/4 | 8 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
+| 2 | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| 3 | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
