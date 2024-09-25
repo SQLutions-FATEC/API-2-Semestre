@@ -92,6 +92,7 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 | ID | Descrição |
 |:--:|-----------|
 | 2 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
+| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
 | 4 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
 | 7 | ✔️ Linguagem de programação: Java |
 | 8 | ✔️ Banco de Dados com modelo relacional |
@@ -101,6 +102,7 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
+| 1 | ✅ Alunos preencherem avaliações de outros membros |
 | 5 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
 | 6 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
 | 7 | ✔️ Linguagem de programação: Java |
@@ -109,18 +111,19 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 ### User Stories
 
-| Épico | ID | Ator | Ação | Motivo |
-|:-----:|:--:|------|------|--------|
-| 6 | 1 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
-| 6 | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
-| 3 | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
-| 3 | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
-| 5 | 5 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
-| 5 | 6 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
-| 1 | 7 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| 2/4 | 8 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
-| 2 | 9 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| 3 | 10 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| Épico | ID | Sprint | Ator | Ação | Motivo |
+|:-----:|:--:|:------:|------|------|--------|
+| 3 | 1 | 2 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
+| 1 | 2 | 2 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
+| 2/4 | 3 | 3 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
+| 2 | 4 | 3 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| 3 | 5 | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
+| 3 | 6 | 3 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| 5 | 7 | 4 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
+| 5 | 8 | 4 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
+| 6 | 9 | 4 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
+| 6 | 10 | 4 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
+| 1 | 11 | 4 | Professor | Altera critérios | Para avaliar conforme desejar seus alunos |
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
