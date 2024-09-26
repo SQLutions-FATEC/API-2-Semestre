@@ -54,20 +54,20 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição | Prioridade | Fator | Sprint |
 |:--:|-----------|:----------:|:-----:|:------:|
-| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 3 |
-| 2 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 2 | 2 |
-| 3 | Apresentar as médias ao professor | :red_circle: Alta | 3 | 4 |
-| 4 | Gerar relatórios dos valores calculados | :yellow_circle: Média | 4 | 4 |
-| 5 | Período de início e fim de avaliação dos alunos | :red_circle: Alta | 5 | 2 |
-| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 3 |
+| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 2 |
+| 2 | Apresentar as médias ao professor | :red_circle: Alta | 2 | 3 |
+| 3 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 3 | 2 |
+| 4 | Gerar relatórios dos valores calculados | :red_circle: Alta | 4 | 3 |
+| 5 | Período de início e fim de avaliação dos alunos | :yellow_circle: Média | 5 | 4 |
+| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 4 |
 
 #### ✔️ Requisitos Não Funcionais
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | Linguagem de programação: Java |
-| 2 | Banco de Dados com modelo relacional |
-| 3 | Acesso ao Banco de Dados com JDBC |
+| 7 | Linguagem de programação: Java |
+| 8 | Banco de Dados com modelo relacional |
+| 9 | Acesso ao Banco de Dados com JDBC |
 
 ### Backlog das Sprints
 
@@ -81,45 +81,49 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
-| 2 | ✅ Período de início e fim de avaliação dos alunos |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 1 | ✅ Alunos preencherem avaliações de outros membros |
+| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 3
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Alunos preencherem avaliações de outros membros | Alta | 1 | 3 |
-| 2 | ✅ Identificar o usuário (Login) | Média | 6 | 3 |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 2 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
+| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
+| 4 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 #### Sprint 4
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Apresentar as médias ao professor | Alta | 3 | 4 |
-| 2 | ✅ Gerar relatórios dos valores calculados | Média | 4 | 4 |
-| 3 | ✔️ Linguagem de programação: Java |
-| 4 | ✔️ Banco de Dados com modelo relacional |
-| 5 | ✔️ Acesso ao Banco de Dados com JDBC |
+| 1 | ✅ Alunos preencherem avaliações de outros membros |
+| 5 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
+| 6 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
+| 7 | ✔️ Linguagem de programação: Java |
+| 8 | ✔️ Banco de Dados com modelo relacional |
+| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
 
 ### User Stories
 
-| Épico | ID | Ator | Ação | Motivo |
-|:-----:|:--:|------|------|--------|
-| x | 1 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
-| x | 2 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
-| x | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
-| x | 4 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
-| x | 5 | Professor | ❓Define as datas de cada sprint❓ | Para definir o período de acesso dos alunos na plataforma |
-| x | 6 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| x | 7 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
-| x | 8 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| x | 9 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| Épico | ID | Sprint | Ator | Ação | Motivo |
+|:-----:|:--:|:------:|------|------|--------|
+| 3 | 1 | 2 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
+| 1 | 2 | 2 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
+| 2/4 | 3 | 3 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
+| 2 | 4 | 3 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
+| 3 | 5 | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
+| 3 | 6 | 3 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
+| 5 | 7 | 4 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
+| 5 | 8 | 4 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
+| 6 | 9 | 4 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
+| 6 | 10 | 4 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
+| 1 | 11 | 4 | Professor | Altera critérios | Para avaliar conforme desejar seus alunos |
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
@@ -143,7 +147,7 @@ TODO
 
 As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
 
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) INTELLIJ?
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
