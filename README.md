@@ -11,7 +11,7 @@ O projeto se baseia no desenvolvimento de um sistema para avaliação de nota do
 ## 🎯 Objetivos da Sprint
 
 Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por essa sprint são:
-- *RF6*: Modelagem do Banco de Dados
+- N/A
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
 
@@ -19,12 +19,13 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
 
 Para entregas da sprint, tivemos os artefatos SCRUM validados, como Backlog do Produto, Backlog das Sprints e User Stories, através de comunicação direta entre o P.O. e o cliente. Para observar esses artefatos, acesse [este link](https://github.com/SQLutions-FATEC/API-2-Semestre?tab=readme-ov-file#-backlogs--user-stories)
 
-TODO
+### UML
 
-<details>
-  <summary><b>UML</b></summary>
-  TODO
-</details>
+![image](https://github.com/user-attachments/assets/1f7dcb02-06a9-4727-a419-513d14d1a8b6)
+
+### MER
+
+
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
 
@@ -34,12 +35,6 @@ Nesta sprint foi feito o preparatório da base, que será a base para as demais 
 
 O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto) e será representado na forma de um gráfico de Burndown. O eixo X representa os dias trabalhados na sprint e o eixo Y representa a quantidade de horas correspondentes para as tarefas da sprint 1. Conforme o gráfico avança no eixo X, pode-se observar que as entregas das atividades ocorrem e devem seguir o máximo possível à linha ideal
 
-TODO
-
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
-
-## 🔗 Links úteis
-
-TODO
+![image](https://github.com/user-attachments/assets/a61d8caa-ae05-4490-acf5-0d4c5d8ef049)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
