@@ -25,7 +25,7 @@ Para entregas da sprint, tivemos os artefatos SCRUM validados, como Backlog do P
 
 ### MER
 
-
+![image](https://github.com/user-attachments/assets/6cba016a-b15c-43ca-8dc7-a08ae6a71a2c)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
 
