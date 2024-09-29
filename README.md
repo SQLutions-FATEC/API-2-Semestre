@@ -44,4 +44,7 @@ O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto)
 Vídeo do funcionamento do [wireframe](https://www.loom.com/share/9198ed6765cb4d23b3985322b7d98a77?sid=2a8631ce-c030-4ecf-a531-ce1cf86ed0d6)
 [Wireframe](https://www.figma.com/proto/9GFN1bzp2LFcHMfjXq8jKt/FATEC?node-id=2-155&node-type=canvas&t=aQj9ZJOOt8IW1VxG-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A155&show-proto-sidebar=1)
 
+Vídeo da explicação do [MER](https://www.loom.com/share/7f6a6cc59978451b942e01854e632f90?sid=0bece905-9e7f-47d0-ac8a-1068eaecad46)
+[MER](https://lucid.app/lucidchart/d3db8d95-2b6a-473f-8f60-90e07a328f93/edit?invitationId=inv_a0329dad-38a0-4aa1-93a9-6037de6f0d62)
+
 [→ Voltar ao topo]()
