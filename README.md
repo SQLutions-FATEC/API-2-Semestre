@@ -38,3 +38,10 @@ O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto)
 ![image](https://github.com/user-attachments/assets/a61d8caa-ae05-4490-acf5-0d4c5d8ef049)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/develop-1/README.md#sprint-1-09092024-a-29092024)
+
+## 🔗 Links úteis
+
+Vídeo do funcionamento do [wireframe](https://www.loom.com/share/9198ed6765cb4d23b3985322b7d98a77?sid=2a8631ce-c030-4ecf-a531-ce1cf86ed0d6)
+[Wireframe](https://www.figma.com/proto/9GFN1bzp2LFcHMfjXq8jKt/FATEC?node-id=2-155&node-type=canvas&t=aQj9ZJOOt8IW1VxG-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=2%3A155&show-proto-sidebar=1)
+
+[→ Voltar ao topo]()
