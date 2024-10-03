@@ -129,17 +129,13 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 ## 🖥️ Documentação
 
-TODO
+Como planejamento foi feito wireframe para validação do fluxo com o cliente, assim como fluxograma e a modelagem de banco de dados que estão acessíveis [na documentação](https://github.com/SQLutions-FATEC/API-2-Semestre/wiki/3.-Documenta%C3%A7%C3%A3o-do-Projeto)
 
-### Como utilizar o projeto
-
-1. Entre na [página principal do projeto](https://github.com/SQLutions-FATEC/API-2-Semestre)
-2. Em seu computador, crie uma pasta para se copiar o projeto
-3. Através do seu terminal, acesse esta pasta e utilize o comando `git clone` com chave HTTPS ou SSH para copiar o projeto e seus arquivos para seu computador
-
-![image](https://github.com/user-attachments/assets/7c8f3a2f-a50b-4b34-9dee-6a7fe1ad18ce)
-
-4. TODO
+> 🔗 **Links gerais**<br>
+>
+> - Manual do usuário: TODO<br>
+> - Guia de instalação: TODO<br>
+> - Modelagem do banco de dados: [clique aqui para acessar](https://lucid.app/lucidchart/d3db8d95-2b6a-473f-8f60-90e07a328f93/edit?invitationId=inv_a0329dad-38a0-4aa1-93a9-6037de6f0d62&page=0_0#)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
@@ -147,7 +143,7 @@ TODO
 
 As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
 
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)
+[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![JavaFX](https://img.shields.io/badge/JavaFX-18A303?style=for-the-badge&logo=java&logoColor=white)](https://openjfx.io/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
 
