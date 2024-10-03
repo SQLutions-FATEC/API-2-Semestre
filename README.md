@@ -26,7 +26,7 @@ Cada entrega foi realizada a partir da criação de uma tag em cada repositório
 
 | Sprint | Previsão |	Status |	Histórico |
 |--------|----------|--------|------------|
-| 01 | 29/09/2024 |	Em andamento | ver relatório |
+| 01 | 29/09/2024 |	✔️ Concluída | [ver relatório](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-1) |
 | 02 | 20/10/2024	| Etapa futura | ver relatório |
 | 03 | 10/11/2024	| Etapa futura | ver relatório |
 | 04 | 01/12/2024	| Etapa futura | ver relatório |
