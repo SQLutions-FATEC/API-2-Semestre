@@ -37,7 +37,12 @@ build/
 ### Mac OS ###
 .DS_Store
 
+### Intellij ###
+/shelf/
+/workspace.xml
+
 ### NOSSO PROJETO ###
 .github/**
 .git
 README.md
+
