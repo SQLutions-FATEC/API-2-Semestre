@@ -4,11 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f8acb1c-850e-4fa7-972e-e3f35922dd03" name="Changes" comment="" />
+    <list default="true" id="2f8acb1c-850e-4fa7-972e-e3f35922dd03" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/HomeControlScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/StudentEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/StudentEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/student/student-evaluator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/student/studentEvaluator.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -20,10 +33,10 @@
       </MavenGeneralSettings>
     </option>
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2nDs058aspZBcUjgJjRLHFh4m44" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -31,11 +44,12 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.HomePrincipal.executor": "Run",
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature/tela-avaliacao",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Noite/IdeaProjects/API-2-Semestre"
+    "last_opened_file_path": "C:/Users/Noite/IdeaProjects/telebot"
   }
 }]]></component>
   <component name="RunManager">
