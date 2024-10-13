@@ -19,7 +19,7 @@ Estre projeto deverá ser capaz de permitir que alunos de um grupo avaliem seus 
 
 > Projeto baseado na metodologia ágil SCRUM, procurando desenvolver a Proatividade, Autonomia, Colaboração e Entrega de Resultados dos estudantes envolvidos
 
-📌 Status do Projeto: Sprint 1
+📌 Status do Projeto: Sprint 2
 
 ### 🏁 Entregas de Sprints
 Cada entrega foi realizada a partir da criação de uma tag em cada repositório (web e todos os microsserviços), além da criação de uma branch neste repositório com um relatório completo de tudo o que foi desenvolvido naquela sprint. Observe a relação a seguir:
@@ -91,9 +91,8 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 2 | ✅ Apresentar as médias ao professor | Alta | 1 | 3 |
-| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
-| 4 | ✅ Gerar relatórios dos valores calculados | Média | 6 | 3 |
+| 2 | ✅ Apresentar as médias ao professor |
+| 4 | ✅ Gerar relatórios dos valores calculados |
 | 7 | ✔️ Linguagem de programação: Java |
 | 8 | ✔️ Banco de Dados com modelo relacional |
 | 9 | ✔️ Acesso ao Banco de Dados com JDBC |
@@ -102,9 +101,8 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| 1 | ✅ Alunos preencherem avaliações de outros membros |
-| 5 | ✅ Período de início e fim de avaliação dos alunos | Alta | 3 | 4 |
-| 6 | ✅ Identificar o usuário (Login) | Média | 4 | 4 |
+| 5 | ✅ Período de início e fim de avaliação dos alunos |
+| 6 | ✅ Identificar o usuário (Login) |
 | 7 | ✔️ Linguagem de programação: Java |
 | 8 | ✔️ Banco de Dados com modelo relacional |
 | 9 | ✔️ Acesso ao Banco de Dados com JDBC |
