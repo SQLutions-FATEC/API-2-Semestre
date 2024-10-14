@@ -6,9 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="2f8acb1c-850e-4fa7-972e-e3f35922dd03" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/HomeControlScreen.java" afterDir="false" />
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/ProfessorController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/professor/professorScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+=======
+>>>>>>> 610405d3a499356ead95a722819f393c455ac92e
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/StudentEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/StudentEvaluator.java" afterDir="false" />
@@ -52,7 +55,11 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "feature/tela-avaliacao",
     "kotlin-language-version-configured": "true",
+<<<<<<< HEAD
     "last_opened_file_path": "D:/tela_verificacao_aluno_professor/tela_verificacao_aluno_professor/API-2-Semestre/API-2-Semestre"
+=======
+    "last_opened_file_path": "C:/Users/Noite/IdeaProjects/telebot"
+>>>>>>> 610405d3a499356ead95a722819f393c455ac92e
   }
 }]]></component>
   <component name="RunManager">
