@@ -25,4 +25,12 @@ public class ProfessorController {
         stage.setScene(scene);
         stage.show();
     }
+    public void TrocarCSVScreen(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 }
