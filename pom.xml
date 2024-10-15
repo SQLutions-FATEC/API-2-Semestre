@@ -5,9 +5,9 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>teste</artifactId>
+  <artifactId>Avaliador de Soft Skill</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>teste</name>
+  <name>Avaliador de Soft Skill</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

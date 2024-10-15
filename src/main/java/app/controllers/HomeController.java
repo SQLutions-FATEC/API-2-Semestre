@@ -1,25 +1,19 @@
 package app.controllers;
 
-<<<<<<< HEAD
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-=======
->>>>>>> 610405d3a499356ead95a722819f393c455ac92e
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-<<<<<<< HEAD
 import java.util.List;
 import java.util.Arrays;
 
-public class HomeControlScreen {
-
-    // Emails simulados para a validação
+public class HomeController {
     private List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
     private List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
 
@@ -30,7 +24,7 @@ public class HomeControlScreen {
         String email = emailField.getText();
         if (alunos.contains(email)) {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/studentEvaluator.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/studentScreen.fxml"));
                 Parent root = loader.load();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(root));
@@ -41,26 +35,11 @@ public class HomeControlScreen {
             }
         } else {
             showAlert("Acesso negado", "Email não corresponde a um aluno");
-=======
-
-public class HomeControlScreen {
-
-    public void onAlunoButtonClick() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/studentEvaluator.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Avaliaçao de Alunos");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
->>>>>>> 610405d3a499356ead95a722819f393c455ac92e
         }
     }
 
+
     public void onProfessorButtonClick() {
-<<<<<<< HEAD
         String email = emailField.getText();
         if (professores.contains(email)) {
             try {
@@ -84,8 +63,5 @@ public class HomeControlScreen {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-=======
-
->>>>>>> 610405d3a499356ead95a722819f393c455ac92e
     }
 }

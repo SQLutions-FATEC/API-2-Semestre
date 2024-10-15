@@ -18,7 +18,7 @@ public class ProfessorController {
     }
 
     public void VoltarPrincipalScreen(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/student/principalScreen.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
