@@ -2,7 +2,33 @@
 
 ## Sprint 1
 
+### ❓✅ Dúvidas tiradas com o cliente:
 
+- O professor define o limite de pontos por grupo a cada sprint.
+
+- As avaliações começam após o término da sprint, com uma semana para conclusão, e o professor gostaria de poder fechá-las manualmente ou automaticamente após o prazo.
+
+- O professor não precisa modificar valores após os cálculos serem feitos.
+
+- A aplicação não tomará nenhuma ação se o aluno tentar acessá-la fora do período de avaliação.
+
+- Não é prioritário o aluno ter acesso às avaliações anteriores feitas por ele.
+
+- O professor prefere cadastrar alunos em grupo, utilizando arquivos .csv.
+
+- Não é essencial gerar gráficos de evolução nas sprints, sendo suficiente gerar arquivos .csv para análise no Excel.
+
+- Não é uma prioridade permitir que o aluno edite suas respostas após enviar suas notas, mas seria interessante considerar isso no futuro.
+
+- Não é necessário gerar relatórios gerais ao final do projeto, apenas relatórios individuais por sprint.
+
+- O professor poderá mover alunos entre equipes, mas excluir alunos não é uma prioridade.
+
+- 
+
+- O professor gostaria de definir as datas de cada sprint e poder editá-las, mas essa funcionalidade não é prioritária.
+
+- Não é necessário que o professor visualize relatórios de alunos que evadiram.
 
 ## Sprint 2
 
@@ -34,4 +60,19 @@
 
 ### ❓✅ Dúvidas tiradas com o cliente:
 
-- 
+- O professor gostaria de ter acesso a projetos anteriores, mas isso não é prioritário, contanto que os dados não sejam apagados.
+
+- A aplicação deve fornecer médias por critério/aluno, com as notas individuais de cada membro da equipe.
+
+- O professor não deve editar a quantidade de sprints depois que ele começar.
+
+- *Quando iniciamos um semestre novo, o professor vai inserir o ano e o semestre atual; depois, ele irá descrever a quantidade de sprints, e as datas de início e fim de cada uma delas; O professor descreverá os critérios; então, ele vai definir equipes e alunos.*
+
+### 🖋️ Entrega da sprint:
+_**Obrigatório:** A aplicação deve enviar e buscar informações do banco._ 
+
+- Será entregue a criação de equipes com a importação de arquivos .csv para a aplicação.
+
+## Sprint 3
+
+### 👤User story 3:
