@@ -102,9 +102,6 @@ public class StudentEvaluator {
             System.out.println("Colaboração: " + aluno.getColaboracao());
             System.out.println("Entrega: " + aluno.getEntrega());
         }
-
-        // Aqui você pode implementar a lógica para salvar os dados em algum lugar
-        // Exemplo: enviar para um banco de dados, gravar em um arquivo, etc.
     }
 
     @FXML
