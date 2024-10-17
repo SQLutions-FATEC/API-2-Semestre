@@ -92,6 +92,22 @@ public class StudentEvaluator {
     }
 
     @FXML
+    private void enviarNotas() {
+        // Percorre todos os alunos na tabela
+        for (Aluno aluno : alunos) {
+            // Aqui você já está trabalhando com os objetos Aluno que foram atualizados na tabela
+            System.out.println("Aluno: " + aluno.getNome());
+            System.out.println("Proatividade: " + aluno.getProatividade());
+            System.out.println("Autonomia: " + aluno.getAutonomia());
+            System.out.println("Colaboração: " + aluno.getColaboracao());
+            System.out.println("Entrega: " + aluno.getEntrega());
+        }
+
+        // Aqui você pode implementar a lógica para salvar os dados em algum lugar
+        // Exemplo: enviar para um banco de dados, gravar em um arquivo, etc.
+    }
+
+    @FXML
     private Label LabelDataSprint; // Adicione isso para referenciar o Label
 
     private void atualizarDataSprint() {
