@@ -13,7 +13,7 @@
 
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-      prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.StudentEvaluator">
+      prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.StudentController">
   <HBox alignment="CENTER" prefHeight="80.0" prefWidth="800.0">
     <VBox.margin>
       <Insets bottom="-10.0"/>
