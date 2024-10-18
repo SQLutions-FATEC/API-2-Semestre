@@ -3,7 +3,7 @@ package app.controllers.Model;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class Aluno {
+public class AlunoModel {
 
     private SimpleIntegerProperty ra;
     private SimpleStringProperty nome;
@@ -11,7 +11,7 @@ public class Aluno {
     private SimpleStringProperty senha;
     private SimpleStringProperty id_equipe;
 
-    public Aluno(int ra, String nome, String email, String senha, String id_equipe) {
+    public AlunoModel(int ra, String nome, String email, String senha, String id_equipe) {
         this.ra = new SimpleIntegerProperty(ra);
         this.nome = new SimpleStringProperty(nome);
         this.email = new SimpleStringProperty(email);
