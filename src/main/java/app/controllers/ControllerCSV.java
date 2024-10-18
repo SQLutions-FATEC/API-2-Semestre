@@ -64,31 +64,37 @@ public class ControllerCSV extends ConexaoBanco {
             leitor = new BufferedReader(new FileReader(file));
 
             ObservableList<AlunoModel> alunoList = FXCollections.observableArrayList();
-            ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();  // Lista para equipes
+            EquipeModel equipe = null;
+            boolean isPrimeiraLinha = true;
 
             while ((line = leitor.readLine()) != null) {
                 String[] linha = line.split(",");
 
-                if (linha.length < 7) {
-                    System.out.println("Linha inválida: " + line);
+                if (isPrimeiraLinha) {
+
+                    if (linha.length < 2) {
+                        System.out.println("Linha da equipe inválida: " + line);
+                        return;
+                    }
+                    equipe = new EquipeModel(linha[0], linha[1]);
+                    isPrimeiraLinha = false;
+                    System.out.println("Equipe: " + equipe.getNome() + " - GitHub: " + equipe.getLink_github());
                     continue;
                 }
 
-                EquipeModel equipe = new EquipeModel(
-                        linha[0],
-                        linha[1]
-                );
-                equipeList.add(equipe);
+                if (linha.length < 5) {
+                    System.out.println("Linha de aluno inválida: " + line);
+                    continue;
+                }
 
                 AlunoModel aluno = new AlunoModel(
-                        Integer.parseInt(linha[2]),
+                        Integer.parseInt(linha[0]),  // RA
+                        linha[1],
+                        linha[2],
                         linha[3],
-                        linha[4],
-                        linha[5],
-                        linha[6]
+                        equipe.getNome()
                 );
                 alunoList.add(aluno);
-
             }
 
             colRa.setCellValueFactory(new PropertyValueFactory<>("ra"));
@@ -96,8 +102,8 @@ public class ControllerCSV extends ConexaoBanco {
             colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
             colSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
             colEquipe.setCellValueFactory(new PropertyValueFactory<>("id_equipe"));
-            tableView.setItems(alunoList);
 
+            tableView.setItems(alunoList);
 
             System.out.println("Dados importados com sucesso!");
         } catch (IOException e) {
@@ -112,6 +118,7 @@ public class ControllerCSV extends ConexaoBanco {
             }
         }
     }
+
 
     public void confirmarCSV() {
         Connection connection = null;
@@ -141,8 +148,6 @@ public class ControllerCSV extends ConexaoBanco {
                     System.out.println("Erro ao inserir aluno: " + aluno.getNome() + " - " + e.getMessage());
                 }
             }
-
-            statement = connection.prepareStatement(sqlEquipe);
 
 
             System.out.println("Dados confirmados e cadastrados no banco de dados com sucesso!");
