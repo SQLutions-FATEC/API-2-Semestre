@@ -1,5 +1,8 @@
 package app.controllers;
 
+import app.controllers.Model.AlunoModel;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -13,6 +16,19 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ControllerCSV extends ConexaoBanco {
+
+    @FXML
+    public TableView<AlunoModel> tableView;
+    @FXML
+    public TableColumn<AlunoModel, Integer> colRa;
+    @FXML
+    public TableColumn<AlunoModel, String> colNome;
+    @FXML
+    public TableColumn<AlunoModel, String> colEmail;
+    @FXML
+    public TableColumn<AlunoModel, String> colSenha;
+    @FXML
+    public TableColumn<AlunoModel, String> colEquipe;
 
     @FXML
     private Button buttonEnviarCSV;
