@@ -107,4 +107,49 @@ public class ControllerCSV extends ConexaoBanco {
             }
         }
     }
+
+    public void confirmarCSV(){
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = ConexaoBanco.getConnection();
+            if (connection == null) {
+                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
+                return;
+            }
+
+            String sql = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
+            statement = connection.prepareStatement(sql);
+
+            for (AlunoModel aluno : tableView.getItems()) {
+                statement.setInt(1, aluno.getRa());
+                statement.setString(2, aluno.getNome());
+                statement.setString(3, aluno.getSenha());
+                statement.setString(4, aluno.getEmail());
+                statement.setString(5, aluno.getId_equipe());
+
+                try {
+                    statement.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Erro ao inserir aluno: " + aluno.getNome() + " - " + e.getMessage());
+                }
+            }
+
+            System.out.println("Dados confirmados e cadastrados no banco de dados com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
 }
