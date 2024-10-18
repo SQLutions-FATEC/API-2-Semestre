@@ -34,5 +34,10 @@
             <Font size="26.0" />
          </font>
       </Label>
+      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="127.0" layoutY="347.0" prefHeight="39.0" prefWidth="349.0" text="Link do Github: https://github.com/Gamma_Paradox">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
