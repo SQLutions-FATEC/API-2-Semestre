@@ -51,12 +51,13 @@
 
 - **DoD**: 
 - **DoR**:
-  - Tela no JavaFX:
-      - Após selecionar aluno na primeira tela, o usuário terá que colocar o seu email e, caso esteja cadastrado, terá uma tela contendo os outros alunos de seu grupo, que serão sujeitos à sua avaliação.
-  - Backend que:
-      -  Recebe as informações, e depois realiza o INSERT no banco de dados;
-  - Banco de dados contendo:
-      -  Tabela de notas.
+    - O cliente deseja que a aplicação importe um .csv contendo a equipe e os alunos do banco de dados
+      - Tela no JavaFX:
+          - Após selecionar aluno na primeira tela, o usuário terá que colocar o seu email e, caso esteja cadastrado, terá uma tela contendo os outros alunos de seu grupo, que serão sujeitos à sua avaliação.
+      - Backend que:
+          -  Recebe as informações, e depois realiza o INSERT no banco de dados;
+      - Banco de dados contendo:
+          -  Tabela de notas.
 
 ### ❓✅ Dúvidas tiradas com o cliente:
 
