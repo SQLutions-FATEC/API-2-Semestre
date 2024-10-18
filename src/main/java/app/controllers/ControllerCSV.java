@@ -63,38 +63,41 @@ public class ControllerCSV extends ConexaoBanco {
         try {
             leitor = new BufferedReader(new FileReader(file));
 
-            ObservableList<AlunoModel> observableList = FXCollections.observableArrayList();
+            ObservableList<AlunoModel> alunoList = FXCollections.observableArrayList();
+            ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();  // Lista para equipes
 
             while ((line = leitor.readLine()) != null) {
                 String[] linha = line.split(",");
 
-                if (linha.length < 5) {
+                if (linha.length < 7) {
                     System.out.println("Linha inválida: " + line);
                     continue;
                 }
 
-                AlunoModel aluno = new AlunoModel(
-                        Integer.parseInt(linha[0]),
-                        linha[1],
-                        linha[2],
-                        linha[3],
-                        linha[4]
+                EquipeModel equipe = new EquipeModel(
+                        linha[0],
+                        linha[1]
                 );
+                equipeList.add(equipe);
 
-                observableList.add(aluno);
+                AlunoModel aluno = new AlunoModel(
+                        Integer.parseInt(linha[2]),
+                        linha[3],
+                        linha[4],
+                        linha[5],
+                        linha[6]
+                );
+                alunoList.add(aluno);
 
-                try {
-                } catch (Exception e) {
-                    System.out.println("Erro ao inserir linha: " + line + " - " + e.getMessage());
-                }
-
-                colRa.setCellValueFactory(new PropertyValueFactory<>("ra"));
-                colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-                colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
-                colSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
-                colEquipe.setCellValueFactory(new PropertyValueFactory<>("id_equipe"));
-                tableView.setItems(observableList);
             }
+
+            colRa.setCellValueFactory(new PropertyValueFactory<>("ra"));
+            colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+            colSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
+            colEquipe.setCellValueFactory(new PropertyValueFactory<>("id_equipe"));
+            tableView.setItems(alunoList);
+
 
             System.out.println("Dados importados com sucesso!");
         } catch (IOException e) {
@@ -110,7 +113,7 @@ public class ControllerCSV extends ConexaoBanco {
         }
     }
 
-    public void confirmarCSV(){
+    public void confirmarCSV() {
         Connection connection = null;
         PreparedStatement statement = null;
 
@@ -121,8 +124,9 @@ public class ControllerCSV extends ConexaoBanco {
                 return;
             }
 
-            String sql = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql);
+            String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
+
+            statement = connection.prepareStatement(sqlAluno);
 
             for (AlunoModel aluno : tableView.getItems()) {
                 statement.setInt(1, aluno.getRa());
@@ -137,6 +141,9 @@ public class ControllerCSV extends ConexaoBanco {
                     System.out.println("Erro ao inserir aluno: " + aluno.getNome() + " - " + e.getMessage());
                 }
             }
+
+            statement = connection.prepareStatement(sqlEquipe);
+
 
             System.out.println("Dados confirmados e cadastrados no banco de dados com sucesso!");
         } catch (SQLException e) {
@@ -156,7 +163,7 @@ public class ControllerCSV extends ConexaoBanco {
     }
 
     public void voltarTelaProfessor() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));  // novo FXML para professor
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
         Parent root = loader.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
