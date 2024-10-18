@@ -41,5 +41,6 @@ build/
 ### NOSSO PROJETO ###
 .github/**
 .git
+out
 README.md
 
