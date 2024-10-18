@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -34,6 +35,11 @@ public class ControllerCSV extends ConexaoBanco {
     public TableColumn<AlunoModel, String> colSenha;
     @FXML
     public TableColumn<AlunoModel, String> colEquipe;
+
+    @FXML
+    public Label labelNomeEquipe;
+    @FXML
+    public Label labelGithubEquipe;
 
     @FXML
     private Button buttonEnviarCSV;
@@ -78,7 +84,8 @@ public class ControllerCSV extends ConexaoBanco {
                     }
                     equipe = new EquipeModel(linha[0], linha[1]);
                     isPrimeiraLinha = false;
-                    System.out.println("Equipe: " + equipe.getNome() + " - GitHub: " + equipe.getLink_github());
+                    labelNomeEquipe.setText(equipe.getNome());
+                    labelGithubEquipe.setText(equipe.getLink_github());
                     continue;
                 }
 
