@@ -9,14 +9,14 @@ public class AlunoModel {
     private SimpleStringProperty nome;
     private SimpleStringProperty email;
     private SimpleStringProperty senha;
-    private SimpleStringProperty id_equipe;
+    private SimpleIntegerProperty id_equipe;
 
-    public AlunoModel(int ra, String nome, String email, String senha, String id_equipe) {
+    public AlunoModel(int ra, String nome, String email, String senha, int id_equipe) {
         this.ra = new SimpleIntegerProperty(ra);
         this.nome = new SimpleStringProperty(nome);
         this.email = new SimpleStringProperty(email);
         this.senha = new SimpleStringProperty(senha);
-        this.id_equipe = new SimpleStringProperty(id_equipe);
+        this.id_equipe = new SimpleIntegerProperty(id_equipe);
     }
 
     public Integer getRa() {
@@ -51,12 +51,12 @@ public class AlunoModel {
         this.senha = new SimpleStringProperty(senha);
     }
 
-    public String getId_equipe() {
+    public Integer getId_equipe() {
         return id_equipe.get();
     }
 
-    public void setId_equipe(String id_equipe) {
-        this.id_equipe = new SimpleStringProperty(id_equipe);
+    public void setId_equipe(Integer id_equipe) {
+        this.id_equipe = new SimpleIntegerProperty(id_equipe);
     }
 
 }

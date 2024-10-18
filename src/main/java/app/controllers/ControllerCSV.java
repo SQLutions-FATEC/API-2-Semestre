@@ -99,7 +99,7 @@ public class ControllerCSV extends ConexaoBanco {
                         linha[1],
                         linha[2],
                         linha[3],
-                        linha[4]
+                        Integer.parseInt(linha[4])
                 );
                 alunoList.add(aluno);
             }
@@ -156,7 +156,7 @@ public class ControllerCSV extends ConexaoBanco {
                 statementAluno.setString(2, aluno.getNome());
                 statementAluno.setString(3, aluno.getSenha());
                 statementAluno.setString(4, aluno.getEmail());
-                statementAluno.setString(5, aluno.getId_equipe());
+                statementAluno.setInt(5, aluno.getId_equipe());
                 try {
                     statementAluno.executeUpdate();
                 } catch (SQLException e) {
