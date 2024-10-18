@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ControllerCSV">
    <children>
       <Button fx:id="buttonEnviarCSV" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="39.0" prefWidth="83.0" text="Inserir csv" />
-      <Button layoutX="14.0" layoutY="347.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="83.0" text="Voltar" />
+      <Button layoutX="14.0" layoutY="347.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="39.0" prefWidth="83.0" text="Voltar" />
       <TableView fx:id="tableView" layoutX="27.0" layoutY="90.0" prefHeight="220.0" prefWidth="546.0">
          <columns>
             <TableColumn fx:id="colRa" prefWidth="120.0" text="RA" />
