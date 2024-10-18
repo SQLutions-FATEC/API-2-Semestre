@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 public class ConexaoBanco {
+    static Dotenv dotenv = Dotenv.load();
+
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/avaliador";
-    private static final String USER = "root";
-    private static final String PASSWORD = "admin";
+    private static final String USER = dotenv.get("DB_USER");
+    private static final String PASSWORD = dotenv.get("DB_PASSWORD");;
 
     public static Connection getConnection() {
         Connection conn = null;
