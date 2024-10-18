@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.controllers.Model.AlunoModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
