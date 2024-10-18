@@ -43,3 +43,5 @@ build/
 .git
 README.md
 
+.idea/dbnavigator.xml
+.idea/workspace.xml
