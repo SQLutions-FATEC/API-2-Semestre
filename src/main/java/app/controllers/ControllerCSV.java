@@ -95,11 +95,11 @@ public class ControllerCSV extends ConexaoBanco {
                 }
 
                 AlunoModel aluno = new AlunoModel(
-                        Integer.parseInt(linha[0]),  // RA
+                        Integer.parseInt(linha[0]),
                         linha[1],
                         linha[2],
                         linha[3],
-                        equipe.getNome()
+                        linha[4]
                 );
                 alunoList.add(aluno);
             }
@@ -129,7 +129,8 @@ public class ControllerCSV extends ConexaoBanco {
 
     public void confirmarCSV() {
         Connection connection = null;
-        PreparedStatement statement = null;
+        PreparedStatement statementAluno = null;
+        PreparedStatement statementEquipe = null;
 
         try {
             connection = ConexaoBanco.getConnection();
@@ -138,32 +139,41 @@ public class ControllerCSV extends ConexaoBanco {
                 return;
             }
 
-            String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
+            String sqlEquipe = "INSERT INTO equipe (nome, link_github) VALUES (?, ?)";
+            statementEquipe = connection.prepareStatement(sqlEquipe);
 
-            statement = connection.prepareStatement(sqlAluno);
+            String nomeEquipe = labelNomeEquipe.getText();
+            String linkGithub = labelGithubEquipe.getText();
+            statementEquipe.setString(1, nomeEquipe);
+            statementEquipe.setString(2, linkGithub);
+            statementEquipe.executeUpdate();
+
+            String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
+            statementAluno = connection.prepareStatement(sqlAluno);
 
             for (AlunoModel aluno : tableView.getItems()) {
-                statement.setInt(1, aluno.getRa());
-                statement.setString(2, aluno.getNome());
-                statement.setString(3, aluno.getSenha());
-                statement.setString(4, aluno.getEmail());
-                statement.setString(5, aluno.getId_equipe());
-
+                statementAluno.setInt(1, aluno.getRa());
+                statementAluno.setString(2, aluno.getNome());
+                statementAluno.setString(3, aluno.getSenha());
+                statementAluno.setString(4, aluno.getEmail());
+                statementAluno.setString(5, aluno.getId_equipe());
                 try {
-                    statement.executeUpdate();
+                    statementAluno.executeUpdate();
                 } catch (SQLException e) {
                     System.out.println("Erro ao inserir aluno: " + aluno.getNome() + " - " + e.getMessage());
                 }
             }
-
 
             System.out.println("Dados confirmados e cadastrados no banco de dados com sucesso!");
         } catch (SQLException e) {
             System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
         } finally {
             try {
-                if (statement != null) {
-                    statement.close();
+                if (statementAluno != null) {
+                    statementAluno.close();
+                }
+                if (statementEquipe != null) {
+                    statementEquipe.close();
                 }
                 if (connection != null) {
                     connection.close();
@@ -173,6 +183,7 @@ public class ControllerCSV extends ConexaoBanco {
             }
         }
     }
+
 
     public void voltarTelaProfessor() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
