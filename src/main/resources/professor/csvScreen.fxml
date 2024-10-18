@@ -29,5 +29,10 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Label>
+      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="309.0" prefHeight="38.0" prefWidth="388.0" text="Equipe: Gamma Paradox">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
