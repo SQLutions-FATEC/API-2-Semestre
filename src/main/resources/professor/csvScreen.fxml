@@ -9,35 +9,24 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ControllerCSV">
    <children>
-      <Button fx:id="buttonEnviarCSV" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="39.0" prefWidth="83.0" text="Inserir csv">
-         <font>
-            <Font size="13.0" />
-         </font></Button>
+      <Button fx:id="buttonEnviarCSV" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="39.0" prefWidth="83.0" text="Inserir csv" />
       <Button layoutX="14.0" layoutY="347.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="83.0" text="Voltar" />
       <TableView fx:id="tableView" layoutX="27.0" layoutY="90.0" prefHeight="220.0" prefWidth="546.0">
          <columns>
             <TableColumn fx:id="colRa" prefWidth="120.0" text="RA" />
             <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="120.0" text="Nome" />
             <TableColumn fx:id="colEmail" minWidth="0.0" prefWidth="120.0" text="E-mail" />
-            <TableColumn prefWidth="120.0" text="Senha" />
-            <TableColumn fx:id="colEquipe" minWidth="0.0" prefWidth="120.0" text="ID da Equipe" />
+            <TableColumn fx:id="colSenha" minWidth="0.0" prefWidth="120.0" text="Senha" />
+            <TableColumn fx:id="colEquipe" minWidth="0.0" prefWidth="120.0" text="Equipe" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button layoutX="503.0" layoutY="347.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="83.0" style="-fx-background-color: #00FF00;" text="Confirmar">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font></Button>
-      <Label layoutX="124.0" text="Carregar arquivo CSV">
+      <Button fx:id="buttonConfirmarCSV" layoutX="503.0" layoutY="347.0" mnemonicParsing="false" onAction="#confirmarCSV" prefHeight="39.0" prefWidth="83.0" text="Confirmar" />
+      <Label layoutX="170.0" text="Carregar alunos">
          <font>
             <Font name="System Bold" size="35.0" />
-         </font>
-      </Label>
-      <Label layoutX="156.0" layoutY="311.0" text="Modelo de excel do aluno">
-         <font>
-            <Font size="25.0" />
          </font>
       </Label>
    </children>
