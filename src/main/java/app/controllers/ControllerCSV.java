@@ -1,8 +1,11 @@
 package app.controllers;
 
 import app.controllers.Model.AlunoModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.Button;
@@ -32,6 +35,11 @@ public class ControllerCSV extends ConexaoBanco {
 
     @FXML
     private Button buttonEnviarCSV;
+    @FXML
+    private Button buttonConfirmarCSV;
+
+    BufferedReader leitor = null;
+    String line;
 
     @FXML
     public void enviarCSV() {
@@ -50,62 +58,52 @@ public class ControllerCSV extends ConexaoBanco {
     }
 
     private void processarCSV(File file) {
-        BufferedReader leitor = null;
-        String line;
-        Connection connection = null;
-        PreparedStatement statement = null;
-
         try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
-            }
-
-            String sql = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
-            statement = connection.prepareStatement(sql);
-
             leitor = new BufferedReader(new FileReader(file));
+
+            ObservableList<AlunoModel> observableList = FXCollections.observableArrayList();
 
             while ((line = leitor.readLine()) != null) {
                 String[] linha = line.split(",");
 
-                if (linha.length < 4) {
+                if (linha.length < 5) {
                     System.out.println("Linha inválida: " + line);
                     continue;
                 }
 
-                statement.setString(1, linha[0]);
-                statement.setString(2, linha[1]);
-                statement.setString(3, linha[2]);
-                statement.setString(4, linha[3]);
-                statement.setString(5, linha[4]);
+                AlunoModel aluno = new AlunoModel(
+                        Integer.parseInt(linha[0]),
+                        linha[1],
+                        linha[2],
+                        linha[3],
+                        linha[4]
+                );
+
+                observableList.add(aluno);
 
                 try {
-                    statement.executeUpdate();
-                } catch (SQLException e) {
+                } catch (Exception e) {
                     System.out.println("Erro ao inserir linha: " + line + " - " + e.getMessage());
                 }
+
+                colRa.setCellValueFactory(new PropertyValueFactory<>("ra"));
+                colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
+                colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+                colSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
+                colEquipe.setCellValueFactory(new PropertyValueFactory<>("id_equipe"));
+                tableView.setItems(observableList);
             }
 
             System.out.println("Dados importados com sucesso!");
         } catch (IOException e) {
             System.out.println("Erro ao ler o arquivo: " + e.getMessage());
-        } catch (SQLException e) {
-            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
         } finally {
             try {
                 if (leitor != null) {
                     leitor.close();
                 }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (IOException | SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Erro: " + e.getMessage());
             }
         }
     }
