@@ -175,7 +175,7 @@ Gerar relatórios dos valores calculados
 - 
 
 ### 🖋️ Entrega da sprint:
-_**Obrigatório:** _ 
+***Obrigatório:***
 
 - 
 
