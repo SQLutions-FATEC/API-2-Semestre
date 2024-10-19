@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;  //campo para senha
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Arrays;
 
 public class HomeController {
-    private List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
-    private List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
+    private final List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
+    private final List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
     protected Stage stage;
     protected Parent root;
 

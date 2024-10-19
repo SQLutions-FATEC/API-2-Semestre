@@ -11,15 +11,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class StudentController {
     protected Stage stage;
@@ -48,16 +47,12 @@ public class StudentController {
     private ComboBox<String> MudarSprint;
 
     @FXML
-    private Label labelDataSprint;
-
-    @FXML
     private Label LabelNumeroSprint;
 
     private ObservableList<Aluno> alunos;
 
     @FXML
     public void initialize() {
-        // Inicializa as colunas
         colunaAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaProatividade.setCellValueFactory(new PropertyValueFactory<>("proatividade"));
         colunaAutonomia.setCellValueFactory(new PropertyValueFactory<>("autonomia"));
@@ -137,34 +132,14 @@ public class StudentController {
         }
     }
 
-    public void VoltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
+    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/student/mainScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Login");
         stage.show();
-    }
-
-    private void setCellFactory(TableColumn<Aluno, Integer> column) {
-        column.setCellFactory(new Callback<TableColumn<Aluno, Integer>, TableCell<Aluno, Integer>>() {
-            @Override
-            public TableCell<Aluno, Integer> call(TableColumn<Aluno, Integer> param) {
-                return new TableCell<Aluno, Integer>() {
-                    @Override
-                    protected void updateItem(Integer item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty || item == null) {
-                            setText(null);
-                        } else {
-                            setText(item.toString());
-                            setStyle("-fx-alignment: CENTER;");
-                        }
-                    }
-                };
-            }
-        });
     }
 
     private void adicionarDados() {

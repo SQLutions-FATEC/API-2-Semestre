@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProfessorController implements Initializable {
@@ -42,7 +43,7 @@ public class ProfessorController implements Initializable {
     public Label labelAvisoDesc;
 
 
-    private ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
+    private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -121,8 +122,8 @@ public class ProfessorController implements Initializable {
         }
     }
 
-    public void VoltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
+    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/student/mainScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
@@ -131,13 +132,23 @@ public class ProfessorController implements Initializable {
         stage.show();
     }
 
-    public void TrocarCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
+    public void trocarCSVScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/csvScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
         stage.setScene(scene);
         stage.setTitle("Insira um arquivo CSV");
+        stage.show();
+    }
+
+    public void definirCriteriosCSVScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriosScreen.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Login");
         stage.show();
     }
 }

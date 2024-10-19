@@ -93,7 +93,6 @@ public class CSVController extends ConexaoBanco {
                     continue;
                 }
 
-                System.out.print(linha.length);
                 if (linha.length != 4) {
                     System.out.println("Linha de aluno inválida: " + line);
                     continue;
@@ -193,7 +192,6 @@ public class CSVController extends ConexaoBanco {
             }
         }
     }
-
 
     public void voltarTelaProfessor(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
