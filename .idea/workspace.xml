@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c045187-097b-4af9-8c71-290e0020188c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/Aluno.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/StudentEvaluator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/student/mainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/student/mainScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/student/studentScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/student/studentScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +46,7 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#75 on feat/enviar-csv",
+    "git-widget-placeholder": "Merging feat/enviar-csv",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Pichau/Desktop/Archives/Programação/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
     "project.structure.last.edited": "Modules",
