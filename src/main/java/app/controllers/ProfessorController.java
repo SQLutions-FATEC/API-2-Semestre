@@ -25,6 +25,10 @@ import java.util.ResourceBundle;
 
 public class ProfessorController implements Initializable {
 
+    protected Stage stage;
+    protected Parent root;
+    protected Scene scene;
+
     @FXML
     public TableView<EquipeModel> tableEquipe;
     @FXML
@@ -117,19 +121,22 @@ public class ProfessorController implements Initializable {
     }
 
     public void VoltarPrincipalScreen(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
-        Scene scene = new Scene(root);
+        root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         stage.setScene(scene);
+        stage.setTitle("Login");
         stage.show();
     }
     public void TrocarCSVScreen(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
-        Scene scene = new Scene(root);
+        root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle("Insira um arquivo CSV");
         stage.show();
     }
 }
