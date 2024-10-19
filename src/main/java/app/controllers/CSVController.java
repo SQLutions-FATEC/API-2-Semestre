@@ -1,5 +1,8 @@
 package app.controllers;
 
+import app.helpers.ConexaoBanco;
+import app.models.AlunoModel;
+import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
-public class ControllerCSV extends ConexaoBanco {
+public class CSVController extends ConexaoBanco {
 
     protected Stage stage;
     protected Parent root;

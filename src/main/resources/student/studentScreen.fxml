@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.StudentEvaluator">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.StudentController">
   <HBox alignment="CENTER" prefHeight="80.0" prefWidth="800.0">
     <VBox.margin>
       <Insets bottom="-10.0" />
@@ -60,14 +60,15 @@
     </TableView>
   </HBox>
   <HBox alignment="CENTER" layoutX="50.0" prefHeight="120.0" prefWidth="600.0" spacing="30.0">
-    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #FF6347;" text="Retornar">
-      <cursor>
-        <Cursor fx:constant="CLOSED_HAND" />
-      </cursor>
-      <font>
-        <Font name="System Bold" size="12.0" />
-      </font>
-    </Button>
+    <Button layoutX="54.0" layoutY="517.0" mnemonicParsing="false" onAction="#VoltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar" />
+<!--    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #FF6347;" text="Retornar">-->
+<!--      <cursor>-->
+<!--        <Cursor fx:constant="CLOSED_HAND" />-->
+<!--      </cursor>-->
+<!--      <font>-->
+<!--        <Font name="System Bold" size="12.0" />-->
+<!--      </font>-->
+<!--    </Button>-->
     <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #00FF00;" text="Enviar" onAction="#enviarNotas">
       <font>
         <Font name="System Bold" size="12.0" />

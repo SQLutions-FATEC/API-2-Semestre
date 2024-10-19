@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.helpers.ConexaoBanco;
+import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +26,6 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ProfessorController implements Initializable {
-
     protected Stage stage;
     protected Parent root;
     protected Scene scene;
@@ -125,11 +126,11 @@ public class ProfessorController implements Initializable {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
-
         stage.setScene(scene);
         stage.setTitle("Login");
         stage.show();
     }
+
     public void TrocarCSVScreen(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
