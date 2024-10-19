@@ -37,8 +37,6 @@ public class ControllerCSV extends ConexaoBanco {
     public TableColumn<AlunoModel, String> colEmail;
     @FXML
     public TableColumn<AlunoModel, String> colSenha;
-    @FXML
-    public TableColumn<AlunoModel, String> colEquipe;
 
     @FXML
     public Label labelNomeEquipe;
@@ -111,7 +109,6 @@ public class ControllerCSV extends ConexaoBanco {
             colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
             colSenha.setCellValueFactory(new PropertyValueFactory<>("senha"));
-            colEquipe.setCellValueFactory(new PropertyValueFactory<>("id_equipe"));
 
             tableView.setItems(alunoList);
 
