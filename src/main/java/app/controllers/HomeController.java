@@ -14,11 +14,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Arrays;
 
 public class HomeController {
-    private final List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
-    private final List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
+    private final List<String> professores = List.of("professor@fatec.sp.gov.br");
+    private final List<String> alunos = List.of("aluno@fatec.sp.gov.br");
     protected Stage stage;
     protected Parent root;
 

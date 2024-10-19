@@ -48,8 +48,6 @@ public class CSVController extends ConexaoBanco {
 
     @FXML
     private Button buttonEnviarCSV;
-    @FXML
-    private Button buttonConfirmarCSV;
 
     BufferedReader leitor = null;
     String line;
@@ -75,7 +73,7 @@ public class CSVController extends ConexaoBanco {
             leitor = new BufferedReader(new FileReader(file));
 
             ObservableList<AlunoModel> alunoList = FXCollections.observableArrayList();
-            EquipeModel equipe = null;
+            EquipeModel equipe;
             boolean isPrimeiraLinha = true;
 
             while ((line = leitor.readLine()) != null) {
@@ -130,7 +128,7 @@ public class CSVController extends ConexaoBanco {
     }
 
 
-    public void confirmarCSV() throws SQLException {
+    public void confirmarCSV() {
         Connection connection = null;
         PreparedStatement statementAluno = null;
         PreparedStatement statementEquipe = null;
