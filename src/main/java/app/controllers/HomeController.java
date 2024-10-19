@@ -2,6 +2,7 @@ package app.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;  //campo para senha
 import javafx.scene.control.Alert;
@@ -18,15 +19,17 @@ import java.util.Arrays;
 public class HomeController {
     private List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
     private List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
+    protected Stage stage;
+    protected Parent root;
 
     @FXML
-    private TextField emailField;  //campo de email no FXML
+    private TextField emailField;
 
     @FXML
-    private PasswordField passwordField;  //campo de senha no FXML
+    private PasswordField passwordField;
 
     @FXML
-    public void handleLogin() {
+    public void handleLogin(ActionEvent event) {
         String email = emailField.getText();
         String password = passwordField.getText();
 
@@ -35,21 +38,20 @@ public class HomeController {
             return;
         }
 
-        // Verificação básica de email para alunos e professores
         if (alunos.contains(email)) {
-            loadStudentScreen();
+            loadStudentScreen(event);
         } else if (professores.contains(email)) {
-            loadProfessorScreen();
+            loadProfessorScreen(event);
         } else {
             showAlert("Acesso negado", "Email não autorizado.");
         }
     }
 
-    private void loadStudentScreen() {
+    private void loadStudentScreen(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/studentScreen.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
+            root = loader.load();
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Avaliação de Alunos");
             stage.show();
@@ -58,11 +60,11 @@ public class HomeController {
         }
     }
 
-    private void loadProfessorScreen() {
+    private void loadProfessorScreen(ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
-            Parent root = loader.load();
-            Stage stage = new Stage();
+            root = loader.load();
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
             stage.setTitle("Tela do Professor");
             stage.show();
