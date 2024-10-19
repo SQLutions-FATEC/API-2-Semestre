@@ -6,10 +6,12 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
    <children>
       <Button layoutX="54.0" layoutY="517.0" mnemonicParsing="false" onAction="#VoltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar" />
       <Separator blendMode="DARKEN" layoutX="202.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
@@ -36,15 +38,21 @@
          </font>
       </Label>
       <ChoiceBox layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
-      <Label layoutX="308.0" layoutY="211.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
+      <Label fx:id="labelAvisoEquipe" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="423.0" layoutY="256.0" prefHeight="45.0" prefWidth="150.0" text="Crie uma Equipe" textAlignment="CENTER">
+      <Label fx:id="labelAvisoDesc" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <TableView fx:id="tableEquipe" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
+        <columns>
+          <TableColumn fx:id="colNome" prefWidth="250.0" text="Nome" />
+            <TableColumn fx:id="colGithub" prefWidth="250.0" text="Link do GitHub" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>

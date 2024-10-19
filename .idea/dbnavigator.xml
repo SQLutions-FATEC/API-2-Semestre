@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DBNavigator.Project.DDLFileAttachmentManager">
+    <mappings />
+    <preferences />
+  </component>
+  <component name="DBNavigator.Project.DataEditorManager">
+    <record-view-column-sorting-type value="BY_INDEX" />
+    <value-preview-text-wrapping value="true" />
+    <value-preview-pinned value="false" />
+  </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
@@ -7,12 +16,18 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="6b5d079b-1a99-4e4c-b36e-3a3aaa77122f">
-      <console name="Connection com valaidado" type="STANDARD" schema="" session="Main" />
+    <connection id="9fa4cda6-168f-4fe5-a0da-ba1d33c5de9b">
+      <console name="Connection" type="STANDARD" schema="" session="Main" />
     </connection>
+  </component>
+  <component name="DBNavigator.Project.DatabaseEditorStateManager">
+    <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
+  </component>
+  <component name="DBNavigator.Project.DatabaseSessionManager">
+    <connection id="9fa4cda6-168f-4fe5-a0da-ba1d33c5de9b" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
@@ -31,9 +46,9 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="6b5d079b-1a99-4e4c-b36e-3a3aaa77122f" active="true" signed="true">
+      <connection id="9fa4cda6-168f-4fe5-a0da-ba1d33c5de9b" active="true" signed="true">
         <database>
-          <name value="Connection com valaidado" />
+          <name value="Connection" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -42,14 +57,14 @@
           <driver-library value="" />
           <driver value="" />
           <url-type value="DATABASE" />
-          <host value="127.0.0.1" />
+          <host value="localhost" />
           <port value="3306" />
           <database value="avaliador" />
           <tns-folder value="" />
           <tns-profile value="" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="aGVhdmVuc2dhdGV3YXkxMg==" />
+          <deprecated-pwd value="YWRtaW4=" />
         </database>
         <properties>
           <auto-commit value="false" />
