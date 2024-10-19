@@ -7,11 +7,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ControllerCSV">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ControllerCSV">
    <children>
-      <Button fx:id="buttonEnviarCSV" layoutX="503.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="39.0" prefWidth="83.0" text="Inserir csv" />
-      <Button layoutX="14.0" layoutY="347.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="39.0" prefWidth="83.0" text="Voltar" />
-      <TableView fx:id="tableView" layoutX="27.0" layoutY="90.0" prefHeight="220.0" prefWidth="546.0">
+      <Button fx:id="buttonEnviarCSV" layoutX="666.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="40.0" prefWidth="120.0" text="Inserir csv">
+         <font>
+            <Font size="17.0" />
+         </font></Button>
+      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="40.0" prefWidth="120.0" text="Voltar">
+         <font>
+            <Font size="17.0" />
+         </font></Button>
+      <TableView fx:id="tableView" layoutX="50.0" layoutY="107.0" prefHeight="300.0" prefWidth="700.0">
          <columns>
             <TableColumn fx:id="colRa" prefWidth="120.0" text="RA" />
             <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="120.0" text="Nome" />
@@ -23,20 +29,23 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="buttonConfirmarCSV" layoutX="503.0" layoutY="347.0" mnemonicParsing="false" onAction="#confirmarCSV" prefHeight="39.0" prefWidth="83.0" text="Confirmar" />
-      <Label layoutX="170.0" text="Carregar alunos">
+      <Button fx:id="buttonConfirmarCSV" layoutX="666.0" layoutY="548.0" mnemonicParsing="false" onAction="#confirmarCSV" prefHeight="40.0" prefWidth="120.0" text="Confirmar">
          <font>
-            <Font name="System Bold" size="35.0" />
+            <Font size="17.0" />
+         </font></Button>
+      <Label layoutX="252.0" layoutY="25.0" text="Carregar alunos">
+         <font>
+            <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="106.0" layoutY="309.0" prefHeight="38.0" prefWidth="388.0" text="Equipe: Gamma Paradox">
+      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="407.0" prefHeight="53.0" prefWidth="700.0" text="Equipe: Gamma Paradox">
          <font>
-            <Font size="26.0" />
+            <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="127.0" layoutY="347.0" prefHeight="39.0" prefWidth="349.0" text="Link do Github: https://github.com/Gamma_Paradox">
+      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="50.0" layoutY="460.0" prefHeight="73.0" prefWidth="700.0" text="Link do Github: https://github.com/Gamma_Paradox">
          <font>
-            <Font size="14.0" />
+            <Font size="20.0" />
          </font>
       </Label>
    </children>
