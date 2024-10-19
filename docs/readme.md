@@ -16,7 +16,7 @@
 
 ## Sprint 2
 
-### 👤User story 1: *Professor importa uma tabela contendo informações dos alunos para poupar tempo e padronizar o envio, cadastrando vários alunos de uma única vez*
+### 👤User story 1: *Professor importa uma tabela contendo informações dos alunos para poupar tempo e padronizar o envio, cadastrando vários alunos de uma única vez* - 🟡Prioridade média
 
 - **DoR**:
     - Duas telas no JavaFX:
@@ -33,7 +33,7 @@
     -  O professor prefere cadastrar alunos em grupo, utilizando arquivos .csv.
     -  Quando o professor for cadastrar o aluno na aplicação, ele vai inserir o nome, e-mail e a turma. O .csv deve conter o nome e o link do Github da equipe.
 
-### 👤User story 2: *Aluno avalia outros integrantes da equipe a cada sprint para facilitar a visualização, facilitar o envio da avaliação e automatizar parte do processo*
+### 👤User story 2: *Aluno avalia outros integrantes da equipe a cada sprint numa tabela com linhas referentes aos alunos e colunas referentes aos critérios, para facilitar a visualização e o envio da avaliação e automatizar parte do processo* - 🔴Prioridade alta
 
 - **DoR**:
     - O cliente deseja que a aplicação importe um .csv contendo a equipe e os alunos do banco de dados
@@ -51,9 +51,12 @@
 - O professor gostaria de ter acesso a projetos anteriores, mas isso não é prioritário, contanto que os dados não sejam apagados.
 - A aplicação deve fornecer médias por critério/aluno, com as notas individuais de cada membro da equipe.
 - O professor não deve editar a quantidade de sprints depois que ele começar.
+-  Não é uma prioridade permitir que o aluno edite suas respostas após enviar suas notas, mas seria interessante considerar isso no futuro.
+-  O professor prefere cadastrar alunos em grupo, utilizando arquivos .csv.
+-  Quando o professor for cadastrar o aluno na aplicação, ele vai inserir o nome, e-mail e a turma. O .csv deve conter o nome e o link do Github da equipe.
 - *Quando iniciamos um semestre novo, o professor vai inserir o ano e o semestre atual; depois, ele irá descrever a quantidade de sprints, e as datas de início e fim de cada uma delas; O professor descreverá os critérios; então, ele vai definir equipes e alunos.*
 
-### 🖋️ Entrega da sprint:
+### 🖋️ Entrega da sprint(DoD):
 _**Obrigatório:** A aplicação deve enviar e buscar informações do banco._ 
 
 - Documentação para configurar a aplicação em Windows e Linux;
@@ -64,15 +67,14 @@ _**Obrigatório:** A aplicação deve enviar e buscar informações do banco._
 
 ## Sprint 3
 
-### 👤User story 3: Professor visualiza as médias das notas da equipe por sprint para obter um acompanhamento detalhado e periódico do desempenho das equipes
+### 👤User story 3: Professor visualiza as médias das notas da equipe por sprint para obter um acompanhamento detalhado e periódico do desempenho das equipes - 🔴Prioridade alta
 
-Apresentar as médias ao professor
 - **DoR**:
     - JavaFX:
         - Seletor de equipe
-        - Seletor de semestre (travado até preencher a equipe)
+        - Seletor de semestre
         - Seletor de sprint (travado até preencher o semestre)
-        - Seletor de aluno (travado até preencher a sprint)
+        - Seletor de aluno (travado até preencher a sprint. Não é obrigatório preencher esse seletor. Caso este campo esteja vazio, o programa irá retornar a média geral da equipe em determinado semestre, em determinada sprint.)
         - Tabela com as notas para cada critério
         - Tela de edição de aluno
         - Visualização dos atributos do aluno
@@ -94,9 +96,13 @@ Apresentar as médias ao professor
         - Tabela intermediária de critério e semestre
         - Tabela de Nota
         - Tabela de TipoUsuario
+- **Dúvidas pertinentes**:
+    - O professor não precisa modificar valores após os cálculos serem feitos.
+    - Não é necessário gerar relatórios gerais ao final do projeto, apenas relatórios individuais por sprint.
+    - O professor gostaria de ter acesso a projetos anteriores, mas isso não é prioritário, contanto que os dados não sejam apagados.
+    - A aplicação deve fornecer médias por critério/aluno, com as notas individuais de cada membro da equipe.
 
-
-### 👤User story 4: Aluno visualiza o histórico de avaliações para obter um feedback real no andamento do projeto - 🟡Médio
+### 👤User story 4: *Aluno visualiza o histórico de avaliações para obter um feedback real no andamento do projeto* - 🟢Prioridade baixa
 
 - **DoR**:
     - Backend:
@@ -111,27 +117,33 @@ Apresentar as médias ao professor
         - Tabela intermediária de critério e semestre
         - Tabela de Nota
         - Tabela de TipoUsuario
+- **Dúvidas pertinentes**:
+    - Não é prioritário o aluno ter acesso às avaliações anteriores feitas por ele.
 
-### 👤User story 5: Professor gerencia alunos e equipes antes do início do projeto para fornecer os acessos aos alunos
+### 👤User story 5: *Professor gerencia alunos e equipes antes do início do projeto para fornecer os acessos aos alunos* - 🔴Prioridade alta
 
 - **DoR**:
     - JavaFX:
         - Tela de edição de aluno
         - Visualização dos atributos do aluno
     - Back:
-        - Pega os parâmetros dos seletores, monta uma query de POST, identifica todos alunos e suas notas, e retorna um arquivo CSV para o usuário, que irá começar download imediatamente
+        - Endpoint de GET para todas as equipes
+        - Endpoint de GET para o nome da equipe
+        - Endpoint de GET para o link do Github da equipe
+        - Endpoint de GET para todos os alunos da equipe
+        - Endpoint de GET para o nome do aluno
+        - Endpoint de GET para o email do aluno
+        - Endpoint de GET para a senha do aluno
     - Banco:
         - Tabela de Equipe
         - Tabela de Aluno
         - Tabela de Semestre
         - Tabela intermediária de equipe e semestre
         - Tabela de Sprint
-        - Tabela de Critério
-        - Tabela intermediária de critério e semestre
-        - Tabela de Nota
-        - Tabela de TipoUsuario
+- **Dúvidas pertinentes**:
+    -
      
-### 👤User Story 6: Professor edita os alunos e equipes ao longo do projeto	para remanejar alunos entre as equipes
+### 👤User Story 6: *Professor edita os alunos e equipes ao longo do projeto para remanejar alunos entre as equipes* - 🔴Prioridade alta
 
 Gerar relatórios dos valores calculados
 - **DoR**:
@@ -154,6 +166,9 @@ Gerar relatórios dos valores calculados
         - Tabela intermediária de critério e semestre
         - Tabela de Nota
         - Tabela de TipoUsuario
+- **Dúvidas pertinentes**:
+    - O professor poderá mover alunos entre equipes, mas excluir alunos não é uma prioridade.
+    - Não é necessário que o professor visualize relatórios de alunos que evadiram.
 
 ### ❓✅ Dúvidas tiradas com o cliente:
 
