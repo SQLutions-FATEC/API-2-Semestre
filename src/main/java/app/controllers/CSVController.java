@@ -93,7 +93,8 @@ public class CSVController extends ConexaoBanco {
                     continue;
                 }
 
-                if (linha.length < 5) {
+                System.out.print(linha.length);
+                if (linha.length != 4) {
                     System.out.println("Linha de aluno inválida: " + line);
                     continue;
                 }
@@ -103,7 +104,7 @@ public class CSVController extends ConexaoBanco {
                         linha[1],
                         linha[2],
                         linha[3],
-                        Integer.parseInt(linha[4])
+                        0
                 );
                 alunoList.add(aluno);
             }
