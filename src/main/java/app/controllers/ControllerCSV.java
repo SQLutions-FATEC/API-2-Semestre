@@ -19,9 +19,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ControllerCSV extends ConexaoBanco {
 
@@ -83,7 +81,6 @@ public class ControllerCSV extends ConexaoBanco {
                 String[] linha = line.split(",");
 
                 if (isPrimeiraLinha) {
-
                     if (linha.length < 2) {
                         System.out.println("Linha da equipe inválida: " + line);
                         return;
@@ -133,7 +130,7 @@ public class ControllerCSV extends ConexaoBanco {
     }
 
 
-    public void confirmarCSV() {
+    public void confirmarCSV() throws SQLException {
         Connection connection = null;
         PreparedStatement statementAluno = null;
         PreparedStatement statementEquipe = null;
@@ -145,14 +142,20 @@ public class ControllerCSV extends ConexaoBanco {
                 return;
             }
 
-            String sqlEquipe = "INSERT INTO equipe (nome, link_github) VALUES (?, ?)";
-            statementEquipe = connection.prepareStatement(sqlEquipe);
-
+            statementEquipe = connection.prepareStatement("INSERT INTO equipe (nome, link_github) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             String nomeEquipe = labelNomeEquipe.getText();
             String linkGithub = labelGithubEquipe.getText();
             statementEquipe.setString(1, nomeEquipe);
             statementEquipe.setString(2, linkGithub);
-            statementEquipe.executeUpdate();
+            int rowsAffected = statementEquipe.executeUpdate();
+            int equipeId = 0;
+
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = statementEquipe.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    equipeId = generatedKeys.getInt(1);
+                }
+            }
 
             String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
             statementAluno = connection.prepareStatement(sqlAluno);
@@ -162,7 +165,7 @@ public class ControllerCSV extends ConexaoBanco {
                 statementAluno.setString(2, aluno.getNome());
                 statementAluno.setString(3, aluno.getSenha());
                 statementAluno.setString(4, aluno.getEmail());
-                statementAluno.setInt(5, aluno.getId_equipe());
+                statementAluno.setInt(5, equipeId);
                 try {
                     statementAluno.executeUpdate();
                 } catch (SQLException e) {
