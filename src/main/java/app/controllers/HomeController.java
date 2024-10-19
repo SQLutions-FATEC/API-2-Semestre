@@ -3,7 +3,7 @@ package app.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;  // Campo para senha
+import javafx.scene.control.PasswordField;  //campo para senha
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
@@ -20,10 +20,10 @@ public class HomeController {
     private List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
 
     @FXML
-    private TextField emailField;  // campo de email no FXML
+    private TextField emailField;  //campo de email no FXML
 
     @FXML
-    private PasswordField passwordField;  // campo de senha no FXML
+    private PasswordField passwordField;  //campo de senha no FXML
 
     @FXML
     public void handleLogin() {
