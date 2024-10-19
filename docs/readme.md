@@ -18,7 +18,6 @@
 
 ### 👤User story 1: *Professor importa uma tabela contendo informações dos alunos para poupar tempo e padronizar o envio, cadastrando vários alunos de uma única vez*
 
-- **DoD**:
 - **DoR**:
     - Duas telas no JavaFX:
         - Tela de login para que o usuário selecione se ele é aluno ou professor;
@@ -65,7 +64,9 @@ _**Obrigatório:** A aplicação deve enviar e buscar informações do banco._
 
 ## Sprint 3
 
-### 👤User story 3: Apresentar as médias ao professor
+### 👤User story 3: Professor visualiza as médias das notas da equipe por sprint para obter um acompanhamento detalhado e periódico do desempenho das equipes
+
+Apresentar as médias ao professor
 - **DoR**:
     - JavaFX:
         - Seletor de equipe
@@ -73,6 +74,8 @@ _**Obrigatório:** A aplicação deve enviar e buscar informações do banco._
         - Seletor de sprint (travado até preencher o semestre)
         - Seletor de aluno (travado até preencher a sprint)
         - Tabela com as notas para cada critério
+        - Tela de edição de aluno
+        - Visualização dos atributos do aluno
     
     - Back:
         - Endpoint de GET para todas equipes
@@ -93,25 +96,72 @@ _**Obrigatório:** A aplicação deve enviar e buscar informações do banco._
         - Tabela de TipoUsuario
 
 
-### 👤User story 4: Gerar relatórios dos valores calculados
+### 👤User story 4: Aluno visualiza o histórico de avaliações para obter um feedback real no andamento do projeto - 🟡Médio
+
+- **DoR**:
+    - Backend:
+        - Endpoint de GET para todas as sprints na tela do aluno;
+    - Banco de dados:
+        - Tabela de Equipe
+        - Tabela de Aluno
+        - Tabela de Semestre
+        - Tabela intermediária de equipe e semestre
+        - Tabela de Sprint
+        - Tabela de Critério
+        - Tabela intermediária de critério e semestre
+        - Tabela de Nota
+        - Tabela de TipoUsuario
+
+### 👤User story 5: Professor gerencia alunos e equipes antes do início do projeto para fornecer os acessos aos alunos
+
 - **DoR**:
     - JavaFX:
-        - Seletor de equipe
-        - Seletor de semestre (travado até preencher a equipe)
-        - Seletor de sprint (travado até preencher o semestre)
-        - Botão para gerar o relatório
+        - Tela de edição de aluno
+        - Visualização dos atributos do aluno
+    - Back:
+        - Pega os parâmetros dos seletores, monta uma query de POST, identifica todos alunos e suas notas, e retorna um arquivo CSV para o usuário, que irá começar download imediatamente
+    - Banco:
+        - Tabela de Equipe
+        - Tabela de Aluno
+        - Tabela de Semestre
+        - Tabela intermediária de equipe e semestre
+        - Tabela de Sprint
+        - Tabela de Critério
+        - Tabela intermediária de critério e semestre
+        - Tabela de Nota
+        - Tabela de TipoUsuario
+     
+### 👤User Story 6: Professor edita os alunos e equipes ao longo do projeto	para remanejar alunos entre as equipes
 
-  - Back:
-      - Pega os parâmetros dos seletores, monta uma query de POST, identifica todos alunos e suas notas, e retorna um arquivo CSV para o usuário, que irá começar download imediatamente
+Gerar relatórios dos valores calculados
+- **DoR**:
+    - JavaFX:
+        - Tela de edição de aluno
+        - Visualização dos atributos do aluno
 
-  - Banco:
-      - Tabela de Equipe
-      - Tabela de Aluno
-      - Tabela de Semestre
-      - Tabela intermediária de equipe e semestre
-      - Tabela de Sprint
-      - Tabela de Critério
-      - Tabela intermediária de critério e semestre
-      - Tabela de Nota
-      - Tabela de TipoUsuario
+    - Back:
+        - Endpoint de GET para nome do aluno
+        - Endpoint de GET para email do aluno
+        - Endpoint de GET para equipe do aluno
+    
+    - Banco:
+        - Tabela de Equipe
+        - Tabela de Aluno
+        - Tabela de Semestre
+        - Tabela intermediária de equipe e semestre
+        - Tabela de Sprint
+        - Tabela de Critério
+        - Tabela intermediária de critério e semestre
+        - Tabela de Nota
+        - Tabela de TipoUsuario
 
+### ❓✅ Dúvidas tiradas com o cliente:
+
+- 
+
+### 🖋️ Entrega da sprint:
+_**Obrigatório:** _ 
+
+- 
+
+******
