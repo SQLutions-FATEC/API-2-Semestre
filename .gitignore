@@ -5,6 +5,7 @@ target/
 
 ### IntelliJ IDEA ###
 .idea
+.idea/**
 *.iws
 *.iml
 *.ipr
@@ -41,5 +42,5 @@ build/
 ### NOSSO PROJETO ###
 .github/**
 .git
+.env
 README.md
-

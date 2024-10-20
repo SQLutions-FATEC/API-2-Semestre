@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.example</groupId>
-  <artifactId>Avaliador-de-Soft-Skill</artifactId>
+  <artifactId>avaliador-de-soft-skill</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Avaliador de Soft Skill</name>
 
@@ -23,6 +23,11 @@
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>22.0.1</version>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.32</version>
     </dependency>
 
     <dependency>
