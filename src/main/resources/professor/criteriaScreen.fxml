@@ -3,35 +3,49 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CriteriaController">
-        <Button layoutX="14.0" layoutY="434.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="38.0" prefWidth="143.0" text="Voltar">
+        <Button layoutX="48.0" layoutY="524.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="38.0" prefWidth="143.0" text="Voltar">
             <font>
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button layoutX="364.0" layoutY="434.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Deletar usuário">
-            <font>
-                <Font size="15.0" />
-            </font>
-        </Button>
-        <Button layoutX="527.0" layoutY="434.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
+        <Button layoutX="612.0" layoutY="531.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
             <font>
                 <Font size="15.0" />
             </font>
         </Button>
         <ChoiceBox layoutX="35.0" layoutY="64.0" prefWidth="150.0" />
-        <ChoiceBox layoutX="35.0" layoutY="177.0" prefWidth="150.0" />
-        <Label layoutX="35.0" layoutY="32.0" prefHeight="21.0" prefWidth="67.0" text="Usuário">
+        <Label layoutX="35.0" layoutY="32.0" prefHeight="21.0" prefWidth="83.0" text="Criterios">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
-        <Label layoutX="35.0" layoutY="144.0" prefHeight="25.0" prefWidth="150.0" text="Mudar para equipe">
+        <Label layoutX="425.0" layoutY="30.0" prefHeight="25.0" prefWidth="150.0" text="Novo criterio">
             <font>
                 <Font size="16.0" />
             </font>
         </Label>
+   <ChoiceBox layoutX="220.0" layoutY="63.0" prefWidth="150.0" />
+   <Label layoutX="220.0" layoutY="31.0" prefHeight="21.0" prefWidth="83.0" text="Semestre">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <Button layoutX="607.0" layoutY="56.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="36.0" text="+">
+      <font>
+         <Font size="15.0" />
+      </font>
+   </Button>
+   <TextField layoutX="425.0" layoutY="64.0" />
+   <Pane layoutX="100.0" layoutY="200.0" prefHeight="200.0" prefWidth="600.0" style="-fx-background-color: grey;" />
+   <Label layoutX="100.0" layoutY="166.0" prefHeight="25.0" prefWidth="171.0" text="Criterios escolhidos">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
 </AnchorPane>
