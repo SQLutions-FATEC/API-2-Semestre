@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class EditStudentController {
 
-    public void VoltarProfessorScreen(ActionEvent event) throws IOException {
+    public void voltarProfessorScreen(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/professor/professorScreen.fxml"));
         Scene scene = new Scene(root);
 

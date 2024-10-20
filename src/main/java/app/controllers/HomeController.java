@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;  //campo para senha
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +14,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Arrays;
 
 public class HomeController {
-    private List<String> professores = Arrays.asList("professor@fatec.sp.gov.br");
-    private List<String> alunos = Arrays.asList("aluno@fatec.sp.gov.br");
+    private final List<String> professores = List.of("professor@fatec.sp.gov.br");
+    private final List<String> alunos = List.of("aluno@fatec.sp.gov.br");
     protected Stage stage;
     protected Parent root;
 

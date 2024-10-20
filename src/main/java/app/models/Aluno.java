@@ -1,4 +1,4 @@
-package app.controllers;
+package app.models;
 
 public class Aluno {
     private String nome;

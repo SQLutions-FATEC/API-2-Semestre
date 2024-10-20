@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.helpers.ConexaoBanco;
+import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,10 +23,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class ProfessorController implements Initializable {
-
     protected Stage stage;
     protected Parent root;
     protected Scene scene;
@@ -41,7 +43,7 @@ public class ProfessorController implements Initializable {
     public Label labelAvisoDesc;
 
 
-    private ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
+    private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -120,18 +122,18 @@ public class ProfessorController implements Initializable {
         }
     }
 
-    public void VoltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/student/mainScreen.fxml"));
+    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/student/mainScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-
 
         stage.setScene(scene);
         stage.setTitle("Login");
         stage.show();
     }
-    public void TrocarCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("/professor/csvScreen.fxml"));
+
+    public void trocarCSVScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/csvScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
@@ -140,12 +142,23 @@ public class ProfessorController implements Initializable {
         stage.show();
     }
 
-    public void EditarAluno(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/EditStudent.fxml"));
-        Scene scene = new Scene(root);
+    public void definirCriteriosCSVScreen(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriaScreen.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle("Login");
+        stage.show();
+    }
+
+    public void editarAluno(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/editStudentScreen.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Editar aluno");
         stage.show();
     }
 }

@@ -1,5 +1,8 @@
 package app.controllers;
 
+import app.helpers.ConexaoBanco;
+import app.models.AlunoModel;
+import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
-public class ControllerCSV extends ConexaoBanco {
+public class CSVController extends ConexaoBanco {
 
     protected Stage stage;
     protected Parent root;
@@ -45,8 +48,6 @@ public class ControllerCSV extends ConexaoBanco {
 
     @FXML
     private Button buttonEnviarCSV;
-    @FXML
-    private Button buttonConfirmarCSV;
 
     BufferedReader leitor = null;
     String line;
@@ -72,7 +73,7 @@ public class ControllerCSV extends ConexaoBanco {
             leitor = new BufferedReader(new FileReader(file));
 
             ObservableList<AlunoModel> alunoList = FXCollections.observableArrayList();
-            EquipeModel equipe = null;
+            EquipeModel equipe;
             boolean isPrimeiraLinha = true;
 
             while ((line = leitor.readLine()) != null) {
@@ -90,7 +91,7 @@ public class ControllerCSV extends ConexaoBanco {
                     continue;
                 }
 
-                if (linha.length < 5) {
+                if (linha.length != 4) {
                     System.out.println("Linha de aluno inválida: " + line);
                     continue;
                 }
@@ -100,7 +101,7 @@ public class ControllerCSV extends ConexaoBanco {
                         linha[1],
                         linha[2],
                         linha[3],
-                        Integer.parseInt(linha[4])
+                        0
                 );
                 alunoList.add(aluno);
             }
@@ -127,7 +128,7 @@ public class ControllerCSV extends ConexaoBanco {
     }
 
 
-    public void confirmarCSV() throws SQLException {
+    public void confirmarCSV() {
         Connection connection = null;
         PreparedStatement statementAluno = null;
         PreparedStatement statementEquipe = null;
@@ -189,7 +190,6 @@ public class ControllerCSV extends ConexaoBanco {
             }
         }
     }
-
 
     public void voltarTelaProfessor(ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
