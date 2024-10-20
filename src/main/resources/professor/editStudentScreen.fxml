@@ -6,9 +6,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="487.0" prefWidth="684.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
-   <children>
-      <Button layoutX="14.0" layoutY="434.0" mnemonicParsing="false" onAction="#VoltarProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Fechar">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
+      <Button layoutX="14.0" layoutY="434.0" mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>
@@ -35,5 +34,4 @@
             <Font size="16.0" />
          </font>
       </Label>
-   </children>
 </AnchorPane>

@@ -4,13 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c045187-097b-4af9-8c71-290e0020188c" name="Changes" comment="refactor(warnings): corrige os warnings">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/EditStudentController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/professor/EditStudent.fxml" afterDir="false" />
+    <list default="true" id="5c045187-097b-4af9-8c71-290e0020188c" name="Changes" comment="chore: resolve conflito">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/professor/criteriaScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/EditStudentController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/ProfessorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/ProfessorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/professor/EditStudent.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/professor/editStudentScreen.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/professor/professorScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/professor/professorScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -22,6 +22,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -53,7 +54,7 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "#74 on Merging feat/define-criterios",
+    "git-widget-placeholder": "#74 on feat/define-criterios",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Pichau/Desktop/Archives/Programação/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
     "project.structure.last.edited": "Modules",
@@ -102,12 +103,20 @@
       <option name="project" value="LOCAL" />
       <updated>1729370096020</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="chore: resolve conflito">
+      <option name="closed" value="true" />
+      <created>1729435637914</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1729435637914</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: resolve conflito" />
     <MESSAGE value="refactor(warnings): corrige os warnings" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor(warnings): corrige os warnings" />
+    <MESSAGE value="chore: resolve conflito" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: resolve conflito" />
   </component>
 </project>

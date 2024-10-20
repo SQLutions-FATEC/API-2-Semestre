@@ -143,7 +143,7 @@ public class ProfessorController implements Initializable {
     }
 
     public void definirCriteriosCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriosScreen.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriaScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
@@ -152,12 +152,13 @@ public class ProfessorController implements Initializable {
         stage.show();
     }
 
-    public void EditarAluno(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/EditStudent.fxml"));
-        Scene scene = new Scene(root);
+    public void editarAluno(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/editStudentScreen.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle("Editar aluno");
         stage.show();
     }
 }
