@@ -14,22 +14,18 @@
       <Insets bottom="20" left="20" right="20" top="20" />
    </padding>
 
-   <!-- Título -->
    <Label alignment="TOP_LEFT" contentDisplay="BOTTOM" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="80.0" prefWidth="72.0" text="Login" textAlignment="CENTER">
       <font>
          <Font size="25.0" />
       </font>
    </Label>
 
-   <!-- Campo de usuário -->
    <Label contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="22.0" prefWidth="174.0" text="Usuário" textOverrun="CENTER_ELLIPSIS" />
    <TextField fx:id="emailField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="29.0" prefWidth="171.0" promptText="digite aqui" />
 
-   <!-- Campo de senha -->
    <Label prefHeight="24.0" prefWidth="169.0" text="Senha" />
    <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="11.0" prefWidth="180.0" promptText="digite aqui" />
 
-   <!-- Botão Entrar -->
    <Button contentDisplay="CENTER" onAction="#handleLogin" prefHeight="40.0" prefWidth="100.0" text="Entrar">
       <font>
          <Font name="System Bold" size="13.0" />
