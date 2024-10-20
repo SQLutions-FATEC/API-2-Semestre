@@ -28,7 +28,10 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
   <br>
   Este requisito foi iniciado e finalizado na sprint 2. A funcionalidade permite que um aluno possa visualizar os membros da sua equipe, os requisitos que precisam ser avaliados, e permite que ele dê as devidas notas, dentro dos requisitos especificados. São eles: Nota entre 0 e 3; uma avaliação por critério por membro a cada sprint; após envio, não é permitida edição.
   <br>
-  GIF AQUI
+  <br>
+  <div align="center">
+    <img src="assets/gifs/aluno.gif" alt="Fluxo do aluno" width="400" height="300">
+  </div>
 </details>
 
 ---
@@ -40,7 +43,10 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
   <br>
   Este requisito foi iniciado e finalizado na sprint 2. A funcionalidade permite que um usuário do tipo "Professor" insira um arquivo CSV com as informações dos alunos e da equipe, desta forma, criando usuários do tipo "Aluno", juntamente com seus usuários e senha, e relacionando estes usuários com a entidade "Equipe". O resultado permite que o usuários consigam logar e acessar a tela do RF 01 para avaliar seus colegas de equipe.
   <br>
-  GIF AQUI
+  <br>
+  <div align="center">
+    <img src="assets/gifs/professor.gif" alt="Fluxo do aluno" width="400" height="300">
+  </div>
 </details>
 
 ---
@@ -52,7 +58,10 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
   <br>
   A imagem representa uma atualização sobre as tabelas existentes, quando comparado com a sprint 1. Está mais detalhado, possuindo: Tabelas intermediária "Criterio_semestre" e "Equipe_semestre"; relação da "Pontuacao" com "Equipe"; relação do "Usuario" com "Equipe"; adição de uma tabela "Historico", que no primeiro momento não será utilizada.
   <br>
-  ![image](https://github.com/user-attachments/assets/1813c8ff-f847-4fd9-b5f1-d845975826bd)
+  <br>
+  <div align="center">
+    <img src="https://github.com/user-attachments/assets/1813c8ff-f847-4fd9-b5f1-d845975826bd" alt="image" />
+  </div>
 </details>
 
 ---
@@ -61,11 +70,13 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
 
 ## 📈 Métricas do time
 
-Nesta sprint foi feito TODO.
+Nesta sprint foram feitas telas com JavaFX e a conexão com banco, no quesito POST e GET. Com as entregas desta sprint, temos um fluxo de login para o aluno e um para o professor. O cliente poderá fazer adição de alunos e equipes com base em um CSV com formato pré definido, e visualizar estes alunos. O aluno consegue ver os membros de sua equipe, mas ainda não consegue avaliar de fato.
 
 O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto) e será representado na forma de um gráfico de Burndown. O eixo X representa os dias trabalhados na sprint e o eixo Y representa a quantidade de horas correspondentes para as tarefas da sprint 2. Conforme o gráfico avança no eixo X, pode-se observar que as entregas das atividades ocorrem e devem seguir o máximo possível à linha ideal.
 
-TODO
+  <div align="center">
+    <img src="assets/images/burndownSprint2.png" alt="burndown" />
+  </div>
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#sprint-2-30092024-a-20102024)
 
