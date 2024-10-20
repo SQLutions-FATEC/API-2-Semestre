@@ -5,7 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5c045187-097b-4af9-8c71-290e0020188c" name="Changes" comment="chore: resolve conflito">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/DragõesCibernéticos.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/FalcõesDourados.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/UnicornsImortais.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/csv-example.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/AlunoModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/controllers/EquipeModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/ControllerCSV.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/ControllerCSV.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/HomeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/ProfessorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controllers/ProfessorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/professor/csvScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/professor/csvScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/professor/professorScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/professor/professorScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/student/mainScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/student/mainScreen.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,7 +55,7 @@
   "keyToString": {
     "Application.Main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feat/enviar-csv",
+    "git-widget-placeholder": "Merging feat/editar-aluno",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/Pichau/Desktop/Archives/Programação/mysql-connector-j-9.1.0/mysql-connector-j-9.1.0.jar",
     "project.structure.last.edited": "Modules",
@@ -51,7 +66,7 @@
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="app.controllers.Main" />
-      <module name="teste" />
+      <module name="Avaliador-de-Soft-Skill" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
