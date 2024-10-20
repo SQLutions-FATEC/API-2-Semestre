@@ -46,5 +46,10 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <Button layoutX="48.0" layoutY="144.0" mnemonicParsing="false" onAction="#EditarAluno" prefHeight="44.0" prefWidth="118.0" text="Editar Aluno">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
