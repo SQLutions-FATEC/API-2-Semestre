@@ -1,162 +1,87 @@
-# Projeto Avaliador de Soft Skill
-
-![sqlutions logo](https://github.com/user-attachments/assets/4884e8b3-b59a-45ba-ad13-13faa8d4d9b3)
-
-### Bem-vindo ao repositório do nosso projeto _**Avaliador de Soft Skill**_, desenvolvido pela equipe _**SQLutions**_ do curso Banco de Dados 2º Semestre da Fatec de São José dos Campos.
-
----
+# Sprint 2: 30/09/2024 a 20/10/2024
 
 <div align="center">
 
-[Sobre](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-sobre-o-projeto) | [Backlogs e User Stories](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#-backlogs--user-stories) | [Documentação](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#%EF%B8%8F-documenta%C3%A7%C3%A3o) | [Tecnologias](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#%EF%B8%8F-tecnologias) | [Equipe](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md#equipe)
+[Objetivos da Sprint](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#-objetivos-da-sprint) | [Entregas](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#%EF%B8%8F-entregas) | [Métricas do Time](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#-m%C3%A9tricas-do-time) | [Links Úteis](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#-links-%C3%BAteis)
 
 </div>
 
-## 📑 Sobre o projeto
+O projeto se baseia no desenvolvimento de um sistema para avaliação de nota dos alunos no modelo PACER, que haverá dois tipos de atores; professor e aluno. Tendo em visto o entendimento do problema a ser resolvido, a quarta sprint teve foco na TODO.
 
-O cliente do projeto é um cliente interno da FATEC (professores P2 e M2). A ideia para este projeto é o desenvolvimento de um Avaliador de Soft Skill. Todos anos os professores responsáveis pela API recebem dos alunos uma avaliação PACER (Proatividade, Autonomia, Colaboração e Entrega de Resultados) que os próprios alunos do grupo preenchem, porém, acabam sendo feitos em formatos diferentes e, por vezes, sem cálculo da média de cada aluno, o que toma muito tempo dos professores.<br>
-Estre projeto deverá ser capaz de permitir que alunos de um grupo avaliem seus membros, calcule a média das notas e que os professores recebam esta informação em um formato padronizado. O projeto também deverá dar algumas permissões adicionais para que o professores possam ter um certo nível de controle sobre o sistema (admin). A interface deve ser intuitiva e os fluxos mapeados para exibir as mensagens corretas para que o usuário não se sinta perdido.
+## 🎯 Objetivos da Sprint
 
-> Projeto baseado na metodologia ágil SCRUM, procurando desenvolver a Proatividade, Autonomia, Colaboração e Entrega de Resultados dos estudantes envolvidos
+Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por essa sprint são:
+- *RF 01*: Alunos preencherem avaliações de outros membros
+- *RF 02*: Receber dados das equipes e seus integrantes (arquivo .csv)
+- *RNF 01*: Linguagem de programação: Java
+- *RNF 02*: Banco de Dados com modelo relacional
+- *RNF 03*: Acesso ao Banco de Dados com JDBC
 
-📌 Status do Projeto: Sprint 2
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#sprint-2-30092024-a-20102024)
 
-### 🏁 Entregas de Sprints
-Cada entrega foi realizada a partir da criação de uma tag em cada repositório (web e todos os microsserviços), além da criação de uma branch neste repositório com um relatório completo de tudo o que foi desenvolvido naquela sprint. Observe a relação a seguir:
+## ✔ Entregas
 
-| Sprint | Previsão |	Status |	Histórico |
-|--------|----------|--------|------------|
-| 01 | 29/09/2024 |	✔️ Concluída | [ver relatório](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-1) |
-| 02 | 20/10/2024	| Etapa futura | ver relatório |
-| 03 | 10/11/2024	| Etapa futura | ver relatório |
-| 04 | 01/12/2024	| Etapa futura | ver relatório |
-
-### 🎬 Apresentação Final
-Confira a seguir uma demonstração das funcionalidades para cada tipo de usuário do sistema:
+### RF 01: Alunos preencherem avaliações de outros membros
 
 <details>
-  <summary>Aluno</summary>
-  TODO
+  <summary><b>Clique aqui para ver detalhes sobre o desenvolvimento deste requisito</b></summary>
+  <br>
+  Este requisito foi iniciado e finalizado na sprint 2. A funcionalidade permite que um aluno possa visualizar os membros da sua equipe, os requisitos que precisam ser avaliados, e permite que ele dê as devidas notas, dentro dos requisitos especificados. São eles: Nota entre 0 e 3; uma avaliação por critério por membro a cada sprint; após envio, não é permitida edição.
+  <br>
+  <br>
+  <div align="center">
+    <img src="assets/gifs/aluno.gif" alt="Fluxo do aluno" width="400" height="300">
+  </div>
 </details>
+
+---
+
+### RF 02: Receber dados das equipes e seus integrantes (arquivo .csv)
 
 <details>
-  <summary>Professor</summary>
-  TODO
+  <summary><b>Clique aqui para ver detalhes sobre o desenvolvimento deste requisito</b></summary>
+  <br>
+  Este requisito foi iniciado e finalizado na sprint 2. A funcionalidade permite que um usuário do tipo "Professor" insira um arquivo CSV com as informações dos alunos e da equipe, desta forma, criando usuários do tipo "Aluno", juntamente com seus usuários e senha, e relacionando estes usuários com a entidade "Equipe". O resultado permite que o usuários consigam logar e acessar a tela do RF 01 para avaliar seus colegas de equipe.
+  <br>
+  <br>
+  <div align="center">
+    <img src="assets/gifs/professor.gif" alt="Fluxo do aluno" width="400" height="300">
+  </div>
 </details>
 
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+---
 
-## 🎯 Backlogs & User Stories
+### RNF 02: Banco de Dados com modelo relacional
 
-### Backlog do Produto
+<details>
+  <summary><b>Clique aqui para ver detalhes sobre o desenvolvimento deste requisito</b></summary>
+  <br>
+  A imagem representa uma atualização sobre as tabelas existentes, quando comparado com a sprint 1. Está mais detalhado, possuindo: Tabelas intermediária "Criterio_semestre" e "Equipe_semestre"; relação da "Pontuacao" com "Equipe"; relação do "Usuario" com "Equipe"; adição de uma tabela "Historico", que no primeiro momento não será utilizada.
+  <br>
+  <br>
+  <div align="center">
+    <img src="https://github.com/user-attachments/assets/1813c8ff-f847-4fd9-b5f1-d845975826bd" alt="image" />
+  </div>
+</details>
 
-#### ✅ Requisitos Funcionais
+---
 
-| ID | Descrição | Prioridade | Fator | Sprint |
-|:--:|-----------|:----------:|:-----:|:------:|
-| 1 | Alunos preencherem avaliações de outros membros | :red_circle: Alta | 1 | 2 |
-| 2 | Apresentar as médias ao professor | :red_circle: Alta | 2 | 3 |
-| 3 | Receber dados das equipes e seus integrantes (arquivo .csv) | :red_circle: Alta | 3 | 2 |
-| 4 | Gerar relatórios dos valores calculados | :red_circle: Alta | 4 | 3 |
-| 5 | Período de início e fim de avaliação dos alunos | :yellow_circle: Média | 5 | 4 |
-| 6 | Identificar o usuário (Login) | :yellow_circle: Média | 6 | 4 |
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#sprint-2-30092024-a-20102024)
 
-#### ✔️ Requisitos Não Funcionais
+## 📈 Métricas do time
 
-| ID | Descrição |
-|:--:|-----------|
-| 7 | Linguagem de programação: Java |
-| 8 | Banco de Dados com modelo relacional |
-| 9 | Acesso ao Banco de Dados com JDBC |
+Nesta sprint foram feitas telas com JavaFX e a conexão com banco, no quesito POST e GET. Com as entregas desta sprint, temos um fluxo de login para o aluno e um para o professor. O cliente poderá fazer adição de alunos e equipes com base em um CSV com formato pré definido, e visualizar estes alunos. O aluno consegue ver os membros de sua equipe, mas ainda não consegue avaliar de fato.
 
-### Backlog das Sprints
+O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto) e será representado na forma de um gráfico de Burndown. O eixo X representa os dias trabalhados na sprint e o eixo Y representa a quantidade de horas correspondentes para as tarefas da sprint 2. Conforme o gráfico avança no eixo X, pode-se observar que as entregas das atividades ocorrem e devem seguir o máximo possível à linha ideal.
 
-#### Sprint 1
+  <div align="center">
+    <img src="assets/images/burndownSprint2.png" alt="burndown" />
+  </div>
 
-| ID | Descrição |
-|:--:|-----------|
-| x | x |
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#sprint-2-30092024-a-20102024)
 
-#### Sprint 2
+## 🔗 Links úteis
 
-| ID | Descrição |
-|:--:|-----------|
-| 1 | ✅ Alunos preencherem avaliações de outros membros |
-| 3 | ✅ Receber dados das equipes e seus integrantes (arquivo .csv) |
-| 7 | ✔️ Linguagem de programação: Java |
-| 8 | ✔️ Banco de Dados com modelo relacional |
-| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
+Link do [MER](https://drive.google.com/file/d/1GN9CMUtYHpZZ8r1cUnd8weSH0UnCd6-W/view?usp=drive_link)
 
-#### Sprint 3
-
-| ID | Descrição |
-|:--:|-----------|
-| 2 | ✅ Apresentar as médias ao professor |
-| 4 | ✅ Gerar relatórios dos valores calculados |
-| 7 | ✔️ Linguagem de programação: Java |
-| 8 | ✔️ Banco de Dados com modelo relacional |
-| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
-
-#### Sprint 4
-
-| ID | Descrição |
-|:--:|-----------|
-| 5 | ✅ Período de início e fim de avaliação dos alunos |
-| 6 | ✅ Identificar o usuário (Login) |
-| 7 | ✔️ Linguagem de programação: Java |
-| 8 | ✔️ Banco de Dados com modelo relacional |
-| 9 | ✔️ Acesso ao Banco de Dados com JDBC |
-
-### User Stories
-
-| Épico | ID | Sprint | Ator | Ação | Motivo |
-|:-----:|:--:|:------:|------|------|--------|
-| 3 | 1 | 2 | Professor | Importa uma tabela contendo informações dos alunos | Para cadastrar um grupo inteiro de uma única vez |
-| 1 | 2 | 2 | Aluno | Avalia os outros integrantes da equipe a cada sprint | Para atender os requisitos da API |
-| 2/4 | 3 | 3 | Professor | Visualiza as médias das notas da equipe por sprint | Para ter um acompanhamento do desempenho |
-| 2 | 4 | 3 | Aluno | Visualiza o histórico de avaliações | Para obter um feedback real no andamento do projeto |
-| 3 | 5 | 3 | Professor | Gerencia alunos e equipes antes do início do projeto | Para fornecer os acessos aos alunos |
-| 3 | 6 | 3 | Professor | Edita os alunos e equipes ao longo do projeto | Para remanejar os dados
-| 5 | 7 | 4 | Professor | Define as datas de cada sprint | Para definir o período de acesso dos alunos na plataforma |
-| 5 | 8 | 4 | Professor | Edita as datas de cada sprint | Para contornar imprevistos que venham a surgir |
-| 6 | 9 | 4 | Professor | Faz Login | Para acessar seu perfil e funcionalidades |
-| 6 | 10 | 4 | Aluno | Faz login | Para acessar seu perfil e funcionalidades |
-| 1 | 11 | 4 | Professor | Altera critérios | Para avaliar conforme desejar seus alunos |
-
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
-
-## 🖥️ Documentação
-
-Como planejamento foi feito wireframe para validação do fluxo com o cliente, assim como fluxograma e a modelagem de banco de dados que estão acessíveis [na documentação](https://github.com/SQLutions-FATEC/API-2-Semestre/wiki/3.-Documenta%C3%A7%C3%A3o-do-Projeto)
-
-> 🔗 **Links gerais**<br>
->
-> - Manual do usuário: TODO<br>
-> - Guia de instalação: TODO<br>
-> - Modelagem do banco de dados: [clique aqui para acessar](https://lucid.app/lucidchart/d3db8d95-2b6a-473f-8f60-90e07a328f93/edit?invitationId=inv_a0329dad-38a0-4aa1-93a9-6037de6f0d62&page=0_0#)
-
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
-
-## 🛠️ Tecnologias
-
-As seguintes ferramentas, linguagens, bibliotecas e tecnologias foram usadas na construção do projeto:
-
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://www.java.com/) [![JavaFX](https://img.shields.io/badge/JavaFX-18A303?style=for-the-badge&logo=java&logoColor=white)](https://openjfx.io/) [![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/seu-usuario) [![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)](https://git-scm.com/) [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://slack.com/) [![Google Docs](https://img.shields.io/badge/Google_Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://docs.google.com/) [![Figma](https://img.shields.io/badge/Figma-0ACF83?style=for-the-badge&logo=figma&logoColor=white)](https://www.figma.com/) [![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=for-the-badge&logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)
-
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
-
-## 👥 Equipe
-
-|  | Função | Nome | Redes |
-|--|--------|------|-------|
-| ![davi](https://github.com/user-attachments/assets/08f611cd-614b-41b8-a7a7-cab3065e9aeb) | Product Owner | Davi Soares Fernandes dos Santos | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/dsf21/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/DaviSFS21) |
-| ![augusto](https://github.com/user-attachments/assets/642849b4-3329-4e61-8d77-9a4b84f258de) | Scrum Master | Augusto de Moraes Piatto | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/augusto-piatto/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/augustopiatto) |
-| ![bryan](https://github.com/user-attachments/assets/ee31c3b5-3ba6-4019-8c95-ba03cfa94d4c) | Desenvolvedor | Bryan Matheus | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/bryan-matheus-5aa0a3302/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/BryanARMatheus) |
-| ![caina](https://github.com/user-attachments/assets/a6f52b8c-11c7-4f20-9647-004cd04c60bc) | Desenvolvedor | Cainã Nascimento Melo | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/cain%C3%A3-melo/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/CainaNascimentoMelo) |
-| ![enzo](https://github.com/user-attachments/assets/3211d516-d4a0-48fc-af1d-e1cbef5d1a1e) | Desenvolvedor | Enzo Lemos Franco | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enzo-lemos-franco-002651293/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EnzoLFranco) |
-| ![gloria](https://github.com/user-attachments/assets/2de16de0-fd28-4700-b5b5-a00702dfce10) | Desenvolvedora | Glória Brito | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gloriafbrito/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/GloBrito) |
-| ![joao](https://github.com/user-attachments/assets/984a1b7c-e4fa-4b78-84f1-0391f0f08de5) | Desenvolvedor | João Tuschtler Paulista | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/joaopaulista/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/joaopaulista) |
-| ![lucas](https://github.com/user-attachments/assets/2a1afdae-7de8-4449-9fea-28fac568e960) | Desenvolvedor | Lucas Souza | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/lucas-souza-a67a52165/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/JayWeinberg123) |
-| ![tiago](https://github.com/user-attachments/assets/2715b681-6533-41bd-a176-4ec9130a1a90) | Desenvolvedor | Tiago Torres dos Reis | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tiago-torres-dos-reis/) [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/TiagoTReis) |
-
-[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
+[→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2?tab=readme-ov-file#sprint-2-30092024-a-20102024)
