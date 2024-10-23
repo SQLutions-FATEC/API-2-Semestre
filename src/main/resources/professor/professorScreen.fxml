@@ -7,12 +7,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
    <children>
-      <Button layoutX="54.0" layoutY="517.0" mnemonicParsing="false" onAction="#VoltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar" />
-      <Separator blendMode="DARKEN" layoutX="202.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
+      <Separator blendMode="DARKEN" layoutX="224.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
@@ -20,16 +20,6 @@
             <Insets />
          </opaqueInsets>
       </Separator>
-      <Button layoutX="47.0" layoutY="31.0" mnemonicParsing="false" onAction="#TrocarCSVScreen" prefHeight="44.0" prefWidth="118.0" text="Criar Equipe">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
-      <Button layoutX="25.0" layoutY="88.0" mnemonicParsing="false" prefHeight="44.0" prefWidth="163.0" text="Período das Sprints">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Button>
       <Label layoutX="613.0" layoutY="31.0" prefHeight="21.0" prefWidth="67.0" text="Semestre">
          <font>
             <Font size="16.0" />
@@ -46,5 +36,44 @@
             <Font size="20.0" />
          </font>
       </Label>
+      <VBox alignment="CENTER" prefHeight="601.0" prefWidth="226.0" spacing="30.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#TrocarCSVScreen" prefHeight="44.0" prefWidth="200.0" text="Criar Equipe">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Período das Sprints">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Editar Aluno">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#DefinirPontuacao" prefHeight="44.0" prefWidth="200.0" text="Definir Limite Pontuaçao">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Definir Critérios">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Gerar relatório">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#VoltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
