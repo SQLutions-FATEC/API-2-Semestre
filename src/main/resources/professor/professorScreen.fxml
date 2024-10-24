@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
-      <Separator blendMode="DARKEN" layoutX="202.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
+      <Separator blendMode="DARKEN" layoutX="208.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
          <cursor>
             <Cursor fx:constant="OPEN_HAND" />
          </cursor>
@@ -21,44 +21,47 @@
             <Insets />
          </opaqueInsets>
       </Separator>
-   <VBox alignment="CENTER" prefHeight="601.0" prefWidth="226.0" spacing="30.0">
+   <VBox alignment="CENTER" layoutY="1.0" prefHeight="601.0" prefWidth="203.0" spacing="30.0">
       <children>
-         <Button mnemonicParsing="false" onAction="#trocarCSVScreen" prefHeight="44.0" prefWidth="200.0" text="Criar Equipe">
+         <Button mnemonicParsing="false" onAction="#trocarCSVScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Período das Sprints">
+         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Período das Sprints">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#editarAluno" prefHeight="44.0" prefWidth="200.0" text="Editar Aluno">
+         <Button mnemonicParsing="false" onAction="#editarAluno" prefHeight="44.0" prefWidth="198.0" text="Editar Aluno">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#definirPontuacao" prefHeight="44.0" prefWidth="200.0" text="Definir Limite Pontuaçao">
+         <Button mnemonicParsing="false" onAction="#definirPontuacao" prefHeight="44.0" prefWidth="198.0" text="Definir Limite Pontuaçao">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#definirCriteriosCSVScreen" prefHeight="44.0" prefWidth="200.0" text="Definir Critérios">
+         <Button mnemonicParsing="false" onAction="#definirCriteriosCSVScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Critérios">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="200.0" text="Gerar relatório">
+         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#voltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar">
+         <Button mnemonicParsing="false" onAction="#voltarPrincipalScreen" prefHeight="44.0" prefWidth="198.0" text="Deslogar">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
       </children>
+      <padding>
+         <Insets right="-5.0" />
+      </padding>
    </VBox>
 
 
