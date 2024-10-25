@@ -161,4 +161,12 @@ public class ProfessorController implements Initializable {
         stage.setTitle("Editar aluno");
         stage.show();
     }
+    public void definirPontuacao(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/professor/SetScore.fxml"));
+        Scene scene = new Scene(root);
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.show();
+    }
 }
