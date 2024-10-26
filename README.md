@@ -19,7 +19,7 @@ Estre projeto deverá ser capaz de permitir que alunos de um grupo avaliem seus 
 
 > Projeto baseado na metodologia ágil SCRUM, procurando desenvolver a Proatividade, Autonomia, Colaboração e Entrega de Resultados dos estudantes envolvidos
 
-📌 Status do Projeto: Sprint 2
+📌 Status do Projeto: Sprint 3
 
 ### 🏁 Entregas de Sprints
 Cada entrega foi realizada a partir da criação de uma tag em cada repositório (web e todos os microsserviços), além da criação de uma branch neste repositório com um relatório completo de tudo o que foi desenvolvido naquela sprint. Observe a relação a seguir:
@@ -27,7 +27,7 @@ Cada entrega foi realizada a partir da criação de uma tag em cada repositório
 | Sprint | Previsão |	Status |	Histórico |
 |--------|----------|--------|------------|
 | 01 | 29/09/2024 |	✔️ Concluída | [ver relatório](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-1) |
-| 02 | 20/10/2024	| Etapa futura | ver relatório |
+| 02 | 20/10/2024	| ✔️ Concluída | [ver relatório](https://github.com/SQLutions-FATEC/API-2-Semestre/tree/develop-2) |
 | 03 | 10/11/2024	| Etapa futura | ver relatório |
 | 04 | 01/12/2024	| Etapa futura | ver relatório |
 
@@ -132,7 +132,7 @@ Como planejamento foi feito wireframe para validação do fluxo com o cliente, a
 > 🔗 **Links gerais**<br>
 >
 > - Manual do usuário: TODO<br>
-> - Guia de instalação: TODO<br>
+> - Guia de instalação: [clique aqui para acessar](https://drive.google.com/file/d/1V-B9wRj7Xq34Bef8cKEu-fvkvedjF5vK/view?usp=sharing)<br>
 > - Modelagem do banco de dados: [clique aqui para acessar](https://lucid.app/lucidchart/d3db8d95-2b6a-473f-8f60-90e07a328f93/edit?invitationId=inv_a0329dad-38a0-4aa1-93a9-6037de6f0d62&page=0_0#)
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
