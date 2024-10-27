@@ -27,5 +27,4 @@ public class EquipeModel {
     public void setGithub(String github) {
         this.github = new SimpleStringProperty(github);
     }
-
 }

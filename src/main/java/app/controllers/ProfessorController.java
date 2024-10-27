@@ -49,16 +49,16 @@ public class ProfessorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
 
         try {
             connection = DatabaseConnection.getConnection(true);
 
             String sqlCount = "SELECT COUNT(*) FROM equipe";
             statement = connection.prepareStatement(sqlCount);
-            rs = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
-            if (rs.next() && rs.getInt(1) > 0) {
+            if (resultSet.next() && resultSet.getInt(1) > 0) {
                 carregarDadosEquipe();
                 labelAvisoEquipe.setText("Lista de Equipes");
                 labelAvisoDesc.setText("Segue a lista das equipes cadastradas:");
@@ -67,7 +67,7 @@ public class ProfessorController implements Initializable {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
+                if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {

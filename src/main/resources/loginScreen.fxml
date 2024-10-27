@@ -20,14 +20,14 @@
       </font>
    </Label>
 
-   <Label contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" text="Usuário" textOverrun="CENTER_ELLIPSIS" translateY="20.0" />
-   <TextField fx:id="emailField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="180.0" promptText="digite aqui">
+   <Label contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" text="Usuário" textOverrun="CENTER_ELLIPSIS" translateX="-60.0" translateY="20.0" />
+   <TextField fx:id="emailField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="300.0" promptText="digite aqui">
       <padding>
          <Insets left="8.0" top="6.0" />
       </padding></TextField>
 
-   <Label prefHeight="30.0" prefWidth="180.0" text="Senha" />
-   <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" promptText="digite aqui" translateY="-20.0" />
+   <Label prefHeight="30.0" prefWidth="180.0" text="Senha" translateX="-60.0" />
+   <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="digite aqui" translateY="-20.0" />
 
    <Button contentDisplay="CENTER" onAction="#handleLogin" prefHeight="40.0" prefWidth="100.0" text="Entrar" translateY="20.0">
       <font>
