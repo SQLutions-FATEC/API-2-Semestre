@@ -24,6 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class CriteriaController implements Initializable  {
@@ -34,6 +35,7 @@ public class CriteriaController implements Initializable  {
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
+    String currentPeriod = "Todos";
 
     @FXML
     public ChoiceBox<String> periodList;
@@ -54,8 +56,11 @@ public class CriteriaController implements Initializable  {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         criteriaName.setPromptText("Adicione um critério");
         criteriaDescription.setPromptText("Descreva o critério");
+        periodList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handlePeriodListSelectionChange(newValue);
+        });
         fetchPeriods();
-        fetchCriterias();
+        fetchCriterias(currentPeriod);
     }
 
     public void voltarTelaProfessor(ActionEvent event) throws IOException {
@@ -69,8 +74,6 @@ public class CriteriaController implements Initializable  {
     }
 
     private void fetchPeriods() {
-        periodList.setValue("Selecione um período");
-
         try {
             connection = DatabaseConnection.getConnection(true);
 
@@ -88,7 +91,7 @@ public class CriteriaController implements Initializable  {
                 periodOptionsList.add(semester + "º semestre - " + year);
             }
             periodList.getItems().addAll(periodOptionsList);
-            periodList.setValue("Todos");
+            periodList.setValue(currentPeriod);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
@@ -102,11 +105,23 @@ public class CriteriaController implements Initializable  {
         }
     }
 
-    private void fetchCriterias() {
+    private void fetchCriterias(String period) {
         try {
             connection = DatabaseConnection.getConnection(true);
 
-            String sqlCount = "SELECT nome, descricao FROM criterio ORDER BY nome";
+            String sqlCount;
+            if (Objects.equals(period, "Todos")) {
+                sqlCount = "SELECT nome, descricao FROM criterio ORDER BY nome";
+            } else {
+                String[] parts = period.split(" - ");
+                String semesterPart = parts[0];
+                String yearPart = parts[1];
+                String semesterNumber = semesterPart.split("º")[0];
+                int semester = Integer.parseInt(semesterNumber);
+                int year = Integer.parseInt(yearPart);
+                sqlCount = String.format("SELECT nome, descricao FROM criterio c JOIN criterio_periodo cp ON c.id = cp.criterio_id JOIN periodo p ON cp.periodo_id = p.id WHERE semestre = '%d' AND ano = '%d' ORDER BY nome", semester, year);
+            }
+
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
@@ -166,7 +181,7 @@ public class CriteriaController implements Initializable  {
 
             if (rowsAffected > 0) {
                 System.out.println("Critério adicionado com sucesso!");
-                fetchCriterias();
+                fetchCriterias(currentPeriod);
                 criteriaName.clear();
                 criteriaDescription.clear();
             } else {
@@ -182,5 +197,10 @@ public class CriteriaController implements Initializable  {
                 System.out.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
+    }
+
+    private void handlePeriodListSelectionChange(String period) {
+        currentPeriod = period;
+        fetchCriterias(period);
     }
 }
