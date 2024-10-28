@@ -6,14 +6,20 @@ import javafx.beans.property.StringProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class CriteriaModel {
+    private int id;
     private final StringProperty nome;
     private final StringProperty descricao;
     private final BooleanProperty selected;
 
-    public CriteriaModel(String nome, String descricao) {
+    public CriteriaModel(int id, String nome, String descricao) {
+        this.id = id;
         this.nome = new SimpleStringProperty(nome);
         this.descricao = new SimpleStringProperty(descricao);
         this.selected = new SimpleBooleanProperty(false);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNome() {

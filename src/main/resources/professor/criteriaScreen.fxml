@@ -16,7 +16,7 @@
                 <Font size="15.0" />
             </font>
         </Button>
-        <Button layoutX="612.0" layoutY="531.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
+        <Button layoutX="612.0" layoutY="531.0" mnemonicParsing="false" onAction="#addCriteriasToSemester" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
             <font>
                 <Font size="15.0" />
             </font>
