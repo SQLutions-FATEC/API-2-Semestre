@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CriteriaController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CriteriaController">
         <Button layoutX="48.0" layoutY="524.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="38.0" prefWidth="143.0" text="Voltar">
             <font>
                 <Font size="15.0" />
@@ -42,11 +42,11 @@
          <Font size="16.0" />
       </font>
    </Label>
-   <TableView layoutX="49.0" layoutY="151.0" prefHeight="335.0" prefWidth="700.0">
+   <TableView fx:id="tableCriteria" layoutX="49.0" layoutY="151.0" prefHeight="335.0" prefWidth="700.0">
      <columns>
-         <TableColumn prefWidth="50.0" />
-       <TableColumn prefWidth="200.0" text="Nome" />
-       <TableColumn minWidth="0.0" prefWidth="400.0" text="Descriçao" />
+         <TableColumn fx:id="colCheckbox" prefWidth="50.0" />
+       <TableColumn fx:id="colNome" prefWidth="200.0" text="Nome" />
+       <TableColumn fx:id="colDescricao" minWidth="0.0" prefWidth="449.0" text="Descriçao" />
      </columns>
    </TableView>
 </AnchorPane>
