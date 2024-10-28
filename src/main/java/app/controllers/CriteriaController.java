@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
 import app.models.CriteriaModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -38,7 +37,10 @@ public class CriteriaController implements Initializable  {
 
     @FXML
     public ChoiceBox<String> periodList;
-
+    @FXML
+    public TextField criteriaName;
+    @FXML
+    public TextArea criteriaDescription;
     @FXML
     public TableView<CriteriaModel> tableCriteria;
     @FXML
@@ -50,6 +52,8 @@ public class CriteriaController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        criteriaName.setPromptText("Adicione um critério");
+        criteriaDescription.setPromptText("Descreva o critério");
         fetchPeriods();
         fetchCriterias();
     }
@@ -75,6 +79,7 @@ public class CriteriaController implements Initializable  {
             resultSet = statement.executeQuery();
 
             ArrayList<String> periodOptionsList = new ArrayList<>();
+            periodOptionsList.add("Todos");
 
             while (resultSet.next()) {
                 String semester = resultSet.getString("semestre");
@@ -83,6 +88,7 @@ public class CriteriaController implements Initializable  {
                 periodOptionsList.add(semester + "º semestre - " + year);
             }
             periodList.getItems().addAll(periodOptionsList);
+            periodList.setValue("Todos");
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
@@ -126,6 +132,50 @@ public class CriteriaController implements Initializable  {
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void addCriteria() {
+        String name = criteriaName.getText().trim();
+        String description = criteriaDescription.getText().trim();
+
+        if (!Utils.isOnlyLetters(name)) {
+            System.out.println("Erro: O critério deve conter apenas letras.");
+            return;
+        }
+        if (!Utils.isOnlyLetters(description)) {
+            System.out.println("Erro: O critério deve conter apenas letras.");
+            return;
+        }
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            String sqlInsert = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
+            statement = connection.prepareStatement(sqlInsert);
+            statement.setString(1, name);
+            statement.setString(2, description);
+
+            int rowsAffected = statement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Critério adicionado com sucesso!");
+                fetchCriterias();
+                criteriaName.clear();
+                criteriaDescription.clear();
+            } else {
+                System.out.println("Falha ao adicionar o critério.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
