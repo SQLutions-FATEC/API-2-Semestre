@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.helpers.DatabaseConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -12,10 +13,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.sql.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class HomeController {
+public class LoginController {
     private final List<String> professores = List.of("professor@fatec.sp.gov.br");
     private final List<String> alunos = List.of("aluno@fatec.sp.gov.br");
     protected Stage stage;
@@ -78,5 +84,58 @@ public class HomeController {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void executeSQLFromFile(String filePath) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+
+        try {
+            connection = DatabaseConnection.getConnection(false);
+            statement = connection.createStatement();
+
+            InputStream inputStream = getClass().getResourceAsStream(filePath);
+
+            if (inputStream == null) {
+                throw new IllegalArgumentException("Arquivo SQL não encontrado: " + filePath);
+            }
+
+            String sql = new BufferedReader(new InputStreamReader(inputStream))
+                    .lines().collect(Collectors.joining("\n"));
+
+            String[] commands = sql.split(";");
+
+            for (String command : commands) {
+                if (!command.trim().isEmpty()) {
+                    statement.execute(command.trim());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+            throw new SQLException("Erro ao executar o arquivo SQL", e);
+        } finally {
+            try {
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    @FXML
+    private void fillDatabase() {
+        try {
+            executeSQLFromFile("/assets/sql/schema.sql");
+            System.out.println("Tabelas criadas com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro ao criar tabelas: " + e.getMessage());
+        }
+        try {
+            executeSQLFromFile("/assets/sql/dump.sql");
+            System.out.println("As tabelas foram populadas com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro ao popular as tabelas: " + e.getMessage());
+        }
     }
 }
