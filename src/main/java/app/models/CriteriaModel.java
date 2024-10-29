@@ -1,21 +1,22 @@
 package app.models;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
+
+import java.time.LocalDateTime;
 
 public class CriteriaModel {
     private int id;
     private final StringProperty nome;
     private final StringProperty descricao;
-    private final BooleanProperty selected;
+    private final SimpleObjectProperty<LocalDateTime> deletedAt;
+    private final BooleanProperty isDeleted;
 
     public CriteriaModel(int id, String nome, String descricao) {
         this.id = id;
         this.nome = new SimpleStringProperty(nome);
         this.descricao = new SimpleStringProperty(descricao);
-        this.selected = new SimpleBooleanProperty(false);
+        this.deletedAt = new SimpleObjectProperty<>(null);
+        this.isDeleted = new SimpleBooleanProperty(false);
     }
 
     public int getId() {
@@ -36,13 +37,18 @@ public class CriteriaModel {
         return descricao;
     }
 
-    public boolean isSelected() {
-        return selected.get();
+    public LocalDateTime getDeletedAt() {
+        return deletedAt.get();
     }
-    public void setSelected(boolean selected) {
-        this.selected.set(selected);
+    public BooleanProperty isDeletedProperty() {
+        return isDeleted;
     }
-    public BooleanProperty selectedProperty() {
-        return selected;
+    public void setDeletedAt(LocalDateTime dateTime) {
+        deletedAt.set(dateTime);
+        isDeleted.set(dateTime != null);
+    }
+    public void clearDeletedAt() {
+        deletedAt.set(null);
+        isDeleted.set(false);
     }
 }

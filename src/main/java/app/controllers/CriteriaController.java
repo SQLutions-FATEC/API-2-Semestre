@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -136,7 +137,7 @@ public class CriteriaController implements Initializable  {
 
                         ResultSet checkResult = checkStmt.executeQuery();
                         if (checkResult.next() && checkResult.getInt(1) > 0) {
-                            criteria.setSelected(true);
+                            criteria.setDeletedAt(LocalDateTime.now());
                         }
                     }
                 }
@@ -146,8 +147,31 @@ public class CriteriaController implements Initializable  {
 
             colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-            colCheckbox.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
-            colCheckbox.setCellFactory(CheckBoxTableCell.forTableColumn(colCheckbox));
+
+            colCheckbox.setCellValueFactory(cellData -> cellData.getValue().isDeletedProperty());
+            colCheckbox.setCellFactory(column -> new CheckBoxTableCell<CriteriaModel, Boolean>() {
+                @Override
+                public void updateItem(Boolean item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty || item == null) {
+                        setGraphic(null);
+                    } else {
+                        CheckBox checkBox = new CheckBox();
+                        checkBox.setSelected(item);
+
+                        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                            CriteriaModel criteriaModel = getTableView().getItems().get(getIndex());
+                            if (newValue) {
+                                criteriaModel.setDeletedAt(LocalDateTime.now());
+                            } else {
+                                criteriaModel.clearDeletedAt();
+                            }
+                        });
+
+                        setGraphic(checkBox);
+                    }
+                }
+            });
 
             tableCriteria.setItems(criteriaList);
         } catch (SQLException e) {
@@ -213,6 +237,61 @@ public class CriteriaController implements Initializable  {
         fetchCriterias(period);
     }
 
+//    @FXML
+//    private void addCriteriasToSemester() {
+//        if (currentPeriod.equals("Todos")) {
+//            System.out.println("Selecione um período válido.");
+//            return;
+//        }
+//        ObservableList<CriteriaModel> criteriaList = tableCriteria.getItems();
+//        if (criteriaList.isEmpty()) {
+//            System.out.println("Nenhum critério disponível na tabela.");
+//            return;
+//        }
+//        int[] curPeriod = Utils.getPeriodFromFilter(currentPeriod);
+//        try {
+//            connection = DatabaseConnection.getConnection(true);
+//
+//            String sqlSelectPeriodoId = String.format("SELECT id FROM periodo WHERE semestre = '%d' AND ano = '%d'", curPeriod[0], curPeriod[1]);
+//            statement = connection.prepareStatement(sqlSelectPeriodoId);
+//            resultSet = statement.executeQuery();
+//
+//            if (resultSet.next()) {
+//                int periodId = resultSet.getInt("id");
+//                String sqlInsert;
+//
+//                sqlInsert = "INSERT INTO criterio_periodo (criterio_id, periodo_id) VALUES (?, ?)";
+//                PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
+//
+//                for (CriteriaModel criteria : criteriaList) {
+//                    System.out.println(criteria);
+//                    int criteriaId = criteria.getId();
+//
+//                    insertStatement.setInt(1, criteriaId);
+//                    insertStatement.setInt(2, periodId);
+//                    insertStatement.addBatch();
+//                }
+//
+//                insertStatement.executeBatch();
+//                System.out.println("Critérios associados ao período com sucesso.");
+//
+//                insertStatement.close();
+//            } else {
+//                System.out.println("Período não encontrado.");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Erro ao associar critérios ao período: " + e.getMessage());
+//        } finally {
+//            try {
+//                if (resultSet != null) resultSet.close();
+//                if (statement != null) statement.close();
+//                if (connection != null) connection.close();
+//            } catch (SQLException e) {
+//                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+//            }
+//        }
+//    }
+
     @FXML
     private void addCriteriasToSemester() {
         if (currentPeriod.equals("Todos")) {
@@ -234,23 +313,41 @@ public class CriteriaController implements Initializable  {
 
             if (resultSet.next()) {
                 int periodId = resultSet.getInt("id");
-                String sqlInsert;
-
-                sqlInsert = "INSERT INTO criterio_periodo (criterio_id, periodo_id) VALUES (?, ?)";
-                PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
+                String sqlCheckExistence = "SELECT COUNT(*) FROM criterio_periodo WHERE criterio_id = ? AND periodo_id = ?";
+                String sqlInsertOrUpdate = "INSERT INTO criterio_periodo (criterio_id, periodo_id, deleted_at) VALUES (?, ?, ?) " +
+                        "ON DUPLICATE KEY UPDATE deleted_at = ?";
 
                 for (CriteriaModel criteria : criteriaList) {
                     int criteriaId = criteria.getId();
+                    boolean isDeleted = criteria.getDeletedAt() == null;
 
-                    insertStatement.setInt(1, criteriaId);
-                    insertStatement.setInt(2, periodId);
-                    insertStatement.addBatch();
+                    PreparedStatement checkStatement = connection.prepareStatement(sqlCheckExistence);
+                    checkStatement.setInt(1, criteriaId);
+                    checkStatement.setInt(2, periodId);
+                    ResultSet checkResultSet = checkStatement.executeQuery();
+
+                    if (checkResultSet.next() && checkResultSet.getInt(1) > 0) {
+                        PreparedStatement updateStatement = connection.prepareStatement(sqlInsertOrUpdate);
+                        updateStatement.setInt(1, criteriaId);
+                        updateStatement.setInt(2, periodId);
+                        updateStatement.setObject(3, isDeleted ? LocalDateTime.now() : null);
+                        updateStatement.setObject(4, isDeleted ? LocalDateTime.now() : null);
+                        updateStatement.executeUpdate();
+                        updateStatement.close();
+                    } else {
+                        PreparedStatement insertStatement = connection.prepareStatement(sqlInsertOrUpdate);
+                        insertStatement.setInt(1, criteriaId);
+                        insertStatement.setInt(2, periodId);
+                        insertStatement.setObject(3, isDeleted ? LocalDateTime.now() : null);
+                        insertStatement.setObject(4, isDeleted ? LocalDateTime.now() : null);
+                        insertStatement.executeUpdate();
+                        insertStatement.close();
+                    }
+
+                    checkStatement.close();
                 }
 
-                insertStatement.executeBatch();
                 System.out.println("Critérios associados ao período com sucesso.");
-
-                insertStatement.close();
             } else {
                 System.out.println("Período não encontrado.");
             }
@@ -266,4 +363,5 @@ public class CriteriaController implements Initializable  {
             }
         }
     }
+
 }

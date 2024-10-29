@@ -85,6 +85,7 @@ CREATE TABLE `criterio_periodo` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`criterio_id` INTEGER NOT NULL,
 	`periodo_id` INTEGER NOT NULL,
+    `deleted_at` DATETIME,
 	PRIMARY KEY(`id`)
 );
 
@@ -92,6 +93,7 @@ CREATE TABLE `equipe_periodo` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`periodo_id` INTEGER NOT NULL,
 	`equipe_id` INTEGER NOT NULL,
+    `deleted_at` DATETIME,
 	PRIMARY KEY(`id`)
 );
 
@@ -155,3 +157,9 @@ ADD CONSTRAINT unique_periodo UNIQUE (`semestre`, `ano`);
 
 ALTER TABLE `pontuacao`
 ADD CONSTRAINT unique_pontuacao UNIQUE (`sprint`, `equipe`);
+
+ALTER TABLE `criterio_periodo`
+ADD CONSTRAINT unique_criterio_periodo UNIQUE (`criterio_id`, `periodo_id`);
+
+ALTER TABLE `equipe_periodo`
+ADD CONSTRAINT unique_equipe_periodo UNIQUE (`equipe_id`, `periodo_id`);

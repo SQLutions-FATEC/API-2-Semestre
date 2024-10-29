@@ -8,8 +8,8 @@ INSERT INTO criterio (nome, descricao) VALUES
 
 INSERT INTO sprint (descricao, data_inicio, data_fim) VALUES ('Sprint 1', '2024-09-09', '2024-09-29'), ('Sprint 2', '2024-09-30', '2024-10-20'), ('Sprint 3', '2024-10-21', '2024-11-10'), ('Sprint 4', '2024-11-11', '2024-12-01');
 
-INSERT INTO equipe (nome, github) VALUES ('SQLutions', 'https://github.com/SQLutions-FATEC'), ('Atomic Delta', 'https://github.com/SQLutions-FATEC'),
-('Radônios', 'https://github.com/SQLutions-FATEC'), ('Zircônia', 'https://github.com/SQLutions-FATEC');
+INSERT INTO equipe (nome, github) VALUES ('SQLutions', 'https://github.com/SQLutions-FATEC'), ('Atomic Delta', 'https://github.com/Atomic-Delta'),
+('Radônios', 'https://github.com/Radonios'), ('Zircônia', 'https://github.com/Zirconia');
 
 INSERT INTO pontuacao (valor, sprint, equipe) VALUES
 -- Equipe 1
