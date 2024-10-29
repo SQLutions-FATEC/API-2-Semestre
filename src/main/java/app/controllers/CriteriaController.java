@@ -129,7 +129,7 @@ public class CriteriaController implements Initializable  {
                 if (!isAllPeriods) {
                     String checkAssociationSql = "SELECT COUNT(*) FROM criterio_periodo cp " +
                             "JOIN periodo p ON cp.periodo_id = p.id " +
-                            "WHERE cp.criterio_id = ? AND p.semestre = ? AND p.ano = ?";
+                            "WHERE cp.criterio_id = ? AND p.semestre = ? AND p.ano = ? AND cp.deleted_at IS NULL";
                     try (PreparedStatement checkStmt = connection.prepareStatement(checkAssociationSql)) {
                         checkStmt.setInt(1, id);
                         checkStmt.setInt(2, curPeriod[0]);
@@ -187,7 +187,6 @@ public class CriteriaController implements Initializable  {
         }
     }
 
-
     @FXML
     private void addCriteria() {
         String name = criteriaName.getText().trim();
@@ -236,61 +235,6 @@ public class CriteriaController implements Initializable  {
         currentPeriod = period;
         fetchCriterias(period);
     }
-
-//    @FXML
-//    private void addCriteriasToSemester() {
-//        if (currentPeriod.equals("Todos")) {
-//            System.out.println("Selecione um período válido.");
-//            return;
-//        }
-//        ObservableList<CriteriaModel> criteriaList = tableCriteria.getItems();
-//        if (criteriaList.isEmpty()) {
-//            System.out.println("Nenhum critério disponível na tabela.");
-//            return;
-//        }
-//        int[] curPeriod = Utils.getPeriodFromFilter(currentPeriod);
-//        try {
-//            connection = DatabaseConnection.getConnection(true);
-//
-//            String sqlSelectPeriodoId = String.format("SELECT id FROM periodo WHERE semestre = '%d' AND ano = '%d'", curPeriod[0], curPeriod[1]);
-//            statement = connection.prepareStatement(sqlSelectPeriodoId);
-//            resultSet = statement.executeQuery();
-//
-//            if (resultSet.next()) {
-//                int periodId = resultSet.getInt("id");
-//                String sqlInsert;
-//
-//                sqlInsert = "INSERT INTO criterio_periodo (criterio_id, periodo_id) VALUES (?, ?)";
-//                PreparedStatement insertStatement = connection.prepareStatement(sqlInsert);
-//
-//                for (CriteriaModel criteria : criteriaList) {
-//                    System.out.println(criteria);
-//                    int criteriaId = criteria.getId();
-//
-//                    insertStatement.setInt(1, criteriaId);
-//                    insertStatement.setInt(2, periodId);
-//                    insertStatement.addBatch();
-//                }
-//
-//                insertStatement.executeBatch();
-//                System.out.println("Critérios associados ao período com sucesso.");
-//
-//                insertStatement.close();
-//            } else {
-//                System.out.println("Período não encontrado.");
-//            }
-//        } catch (SQLException e) {
-//            System.out.println("Erro ao associar critérios ao período: " + e.getMessage());
-//        } finally {
-//            try {
-//                if (resultSet != null) resultSet.close();
-//                if (statement != null) statement.close();
-//                if (connection != null) connection.close();
-//            } catch (SQLException e) {
-//                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-//            }
-//        }
-//    }
 
     @FXML
     private void addCriteriasToSemester() {

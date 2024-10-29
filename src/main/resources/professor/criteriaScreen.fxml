@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CriteriaController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CriteriaController">
         <Button layoutX="48.0" layoutY="524.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="38.0" prefWidth="143.0" text="Voltar">
             <font>
                 <Font size="15.0" />
