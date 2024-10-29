@@ -10,6 +10,9 @@ public class Utils {
     }
 
     public static int[] getPeriodFromFilter(String period) {
+        if (!period.contains("-")) {
+            throw new IllegalArgumentException("A string não contém o caractere '-'.");
+        }
         String[] parts = period.split(" - ");
         String semesterPart = parts[0];
         String yearPart = parts[1];

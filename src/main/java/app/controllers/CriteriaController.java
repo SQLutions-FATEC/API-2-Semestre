@@ -111,8 +111,12 @@ public class CriteriaController implements Initializable  {
 
             String sqlCount;
             boolean isAllPeriods = Objects.equals(period, "Todos");
-            int[] curPeriod = isAllPeriods ? null : Utils.getPeriodFromFilter(period);
-
+            int[] curPeriod;
+            try {
+                curPeriod = isAllPeriods ? null : Utils.getPeriodFromFilter(period);
+            } catch (IllegalArgumentException error) {
+                throw error;
+            }
             sqlCount = "SELECT id, nome, descricao FROM criterio ORDER BY nome";
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
@@ -247,7 +251,12 @@ public class CriteriaController implements Initializable  {
             System.out.println("Nenhum critério disponível na tabela.");
             return;
         }
-        int[] curPeriod = Utils.getPeriodFromFilter(currentPeriod);
+        int[] curPeriod;
+        try {
+            curPeriod = Utils.getPeriodFromFilter(currentPeriod);
+        } catch (IllegalArgumentException error) {
+            throw error;
+        }
         try {
             connection = DatabaseConnection.getConnection(true);
 

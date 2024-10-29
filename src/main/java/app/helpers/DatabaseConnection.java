@@ -11,7 +11,7 @@ public class DatabaseConnection {
 
     private static final String DEFAULT_SCHEMA = "avaliador";
     private static final String USER = dotenv.get("DB_USER");
-    private static final String PASSWORD = dotenv.get("DB_PASSWORD");;
+    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
 
     public static Connection getConnection(boolean useDefaultSchema) throws SQLException {
         String URL = "jdbc:mysql://127.0.0.1:3306/";
