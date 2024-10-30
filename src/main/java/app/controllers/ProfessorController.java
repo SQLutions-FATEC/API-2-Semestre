@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -41,7 +42,6 @@ public class ProfessorController implements Initializable {
     public Label labelAvisoEquipe;
     @FXML
     public Label labelAvisoDesc;
-
 
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
@@ -153,6 +153,7 @@ public class ProfessorController implements Initializable {
         stage.setTitle("Editar aluno");
         stage.show();
     }
+
     public void definirPontuacao(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/professor/SetScore.fxml"));
         Scene scene = new Scene(root);
@@ -160,5 +161,30 @@ public class ProfessorController implements Initializable {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.show();
+    }
+
+    @FXML
+    public void gerarCsvButton(ActionEvent event) {
+        String semestreId = "2024";  // Ajuste conforme necessário
+        String sprintId = "1";  // Ajuste conforme necessário
+        String equipeId = "1";  // Ajuste conforme necessário
+
+        try (Connection conn = DatabaseConnection.getConnection(true)) {
+            if (conn == null) {
+                System.out.println("Erro ao conectar ao banco.");
+                return;
+            }
+
+            ConsultationDB consultaDB = new ConsultationDB(conn);
+            Map<String, Map<String, Double>> medias = consultaDB.obterMediaNotasPorEquipe(semestreId, sprintId, equipeId);
+
+            // Caminho adaptado para a pasta de downloads do sistema operacional
+            String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "/relatorio.csv";
+            CSVGerador.gerarCsv(medias, caminhoArquivo);
+
+            System.out.println("Arquivo CSV gerado com sucesso.");
+        } catch (Exception e) {
+            System.out.println("Erro ao gerar CSV: " + e.getMessage());
+        }
     }
 }
