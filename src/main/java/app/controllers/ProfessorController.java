@@ -11,9 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -37,6 +35,8 @@ public class ProfessorController implements Initializable {
     public TableColumn<EquipeModel, String> colNome;
     @FXML
     public TableColumn<EquipeModel, String> colGithub;
+    @FXML
+    public TableColumn<EquipeModel, Void> colVisualizar;
     @FXML
     public Label labelAvisoEquipe;
     @FXML
@@ -99,6 +99,25 @@ public class ProfessorController implements Initializable {
             colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
             colGithub.setCellValueFactory(new PropertyValueFactory<>("github"));
 
+            colVisualizar.setCellFactory(column -> new TableCell<>() {
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setGraphic(null);
+                    } else {
+                        Button btn = new Button("Visualizar");
+                        btn.setOnAction((ActionEvent event) -> {
+                            EquipeModel equipe = getTableView().getItems().get(getIndex());
+                            abrirNovaTela(equipe.getNome());
+                        });
+                        setGraphic(btn);
+                        setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                        setStyle("-fx-alignment: CENTER;");
+                    }
+                }
+            });
+
             tableEquipe.setItems(equipeList);
 
         } catch (SQLException e) {
@@ -111,6 +130,26 @@ public class ProfessorController implements Initializable {
             } catch (SQLException e) {
                 System.out.println("Erro ao fechar recursos: " + e.getMessage());
             }
+        }
+    }
+
+    private void abrirNovaTela(String nomeUsuario) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/averageScreen.fxml"));
+            Parent root = loader.load();
+
+            AverageController averageController = loader.getController();
+            averageController.inicializarDados(nomeUsuario);
+
+            stage = new Stage();
+            scene = new Scene(root, 800, 600);
+
+            stage.setScene(scene);
+            stage.setTitle("Médias");
+            stage.setResizable(false);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -154,7 +193,7 @@ public class ProfessorController implements Initializable {
         stage.show();
     }
     public void definirPontuacao(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/SetScore.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/professor/setScore.fxml"));
         Scene scene = new Scene(root);
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -1,0 +1,6 @@
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<VBox xmlns:fx="http://javafx.com/fxml" fx:controller="app.controllers.AverageController">
+    <Label fx:id="nomeLabel" text="Detalhes do usuário"/>
+    <!-- Outros elementos para detalhes -->
+</VBox>

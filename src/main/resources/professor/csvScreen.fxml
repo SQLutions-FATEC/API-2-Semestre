@@ -36,12 +36,12 @@
             <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="407.0" prefHeight="53.0" prefWidth="700.0" text="Equipe: Gamma Paradox">
+      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="407.0" prefHeight="53.0" prefWidth="700.0" text="Equipe: Exemplo">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="50.0" layoutY="460.0" prefHeight="73.0" prefWidth="700.0" text="Link do Github: https://github.com/Gamma_Paradox">
+      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="50.0" layoutY="460.0" prefHeight="73.0" prefWidth="700.0" text="Link do Github: https://github.com/Exemplo">
          <font>
             <Font size="20.0" />
          </font>
