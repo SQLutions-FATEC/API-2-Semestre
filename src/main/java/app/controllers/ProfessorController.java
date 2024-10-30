@@ -23,7 +23,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -165,26 +164,23 @@ public class ProfessorController implements Initializable {
 
     @FXML
     public void gerarCsvButton(ActionEvent event) {
-        String semestreId = "2024";  // Ajuste conforme necessário
-        String sprintId = "1";  // Ajuste conforme necessário
-        String equipeId = "1";  // Ajuste conforme necessário
+        try {
+            // Carrega a nova tela FXML (gerarCSVScreen.fxml)
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/gerarCSVScreen.fxml")));
 
-        try (Connection conn = DatabaseConnection.getConnection(true)) {
-            if (conn == null) {
-                System.out.println("Erro ao conectar ao banco.");
-                return;
-            }
+            // Obtém o Stage atual a partir do evento do botão
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            ConsultationDB consultaDB = new ConsultationDB(conn);
-            Map<String, Map<String, Double>> medias = consultaDB.obterMediaNotasPorEquipe(semestreId, sprintId, equipeId);
+            // Define a nova cena com o arquivo FXML carregado
+            stage.setScene(new Scene(root));
 
-            // Caminho adaptado para a pasta de downloads do sistema operacional
-            String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "/relatorio.csv";
-            CSVGerador.gerarCsv(medias, caminhoArquivo);
+            // Ajusta o título da nova janela
+            stage.setTitle("Gerar Relatório CSV");
 
-            System.out.println("Arquivo CSV gerado com sucesso.");
-        } catch (Exception e) {
-            System.out.println("Erro ao gerar CSV: " + e.getMessage());
+            // Exibe a nova cena
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("Erro ao carregar a tela de geração de CSV: " + e.getMessage());
         }
     }
 }
