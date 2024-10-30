@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.helpers.ConexaoBanco;
+import app.helpers.DatabaseConnection;
 import app.models.AlunoModel;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
@@ -24,7 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
-public class CSVController extends ConexaoBanco {
+public class CSVController extends DatabaseConnection {
 
     protected Stage stage;
     protected Parent root;
@@ -87,7 +87,7 @@ public class CSVController extends ConexaoBanco {
                     equipe = new EquipeModel(linha[0], linha[1]);
                     isPrimeiraLinha = false;
                     labelNomeEquipe.setText(equipe.getNome());
-                    labelGithubEquipe.setText(equipe.getLink_github());
+                    labelGithubEquipe.setText(equipe.getGithub());
                     continue;
                 }
 
@@ -134,13 +134,9 @@ public class CSVController extends ConexaoBanco {
         PreparedStatement statementEquipe = null;
 
         try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
-            }
+            connection = DatabaseConnection.getConnection(true);
 
-            statementEquipe = connection.prepareStatement("INSERT INTO equipe (nome, link_github) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
+            statementEquipe = connection.prepareStatement("INSERT INTO equipe (nome, github) VALUES (?, ?)", Statement.RETURN_GENERATED_KEYS);
             String nomeEquipe = labelNomeEquipe.getText();
             String linkGithub = labelGithubEquipe.getText();
             statementEquipe.setString(1, nomeEquipe);
@@ -155,15 +151,18 @@ public class CSVController extends ConexaoBanco {
                 }
             }
 
-            String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, id_equipe) VALUES (?, ?, ?, ?, ?)";
+            String sqlAluno = "INSERT INTO usuario (ra, nome, senha, email, tipo, equipe) VALUES (?, ?, ?, ?, ?, ?)";
             statementAluno = connection.prepareStatement(sqlAluno);
+
+            int typeStudent = 2;
 
             for (AlunoModel aluno : tableView.getItems()) {
                 statementAluno.setInt(1, aluno.getRa());
                 statementAluno.setString(2, aluno.getNome());
                 statementAluno.setString(3, aluno.getSenha());
                 statementAluno.setString(4, aluno.getEmail());
-                statementAluno.setInt(5, equipeId);
+                statementAluno.setInt(5, typeStudent);
+                statementAluno.setInt(6, equipeId);
                 try {
                     statementAluno.executeUpdate();
                 } catch (SQLException e) {

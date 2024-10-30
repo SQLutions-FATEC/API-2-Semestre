@@ -5,11 +5,11 @@ import javafx.beans.property.SimpleStringProperty;
 public class EquipeModel {
 
     private SimpleStringProperty nome;
-    private SimpleStringProperty link_github;
+    private SimpleStringProperty github;
 
-    public EquipeModel(String nome, String link_github){
+    public EquipeModel(String nome, String github){
         this.nome = new SimpleStringProperty(nome);
-        this.link_github = new SimpleStringProperty(link_github);
+        this.github = new SimpleStringProperty(github);
     }
 
     public String getNome() {
@@ -20,12 +20,11 @@ public class EquipeModel {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public String getLink_github() {
-        return link_github.get();
+    public String getGithub() {
+        return github.get();
     }
 
-    public void setLink_github(String link_github) {
-        this.link_github = new SimpleStringProperty(link_github);
+    public void setGithub(String github) {
+        this.github = new SimpleStringProperty(github);
     }
-
 }

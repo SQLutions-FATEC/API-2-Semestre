@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.helpers.ConexaoBanco;
+import app.helpers.DatabaseConnection;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,20 +49,16 @@ public class ProfessorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Connection connection = null;
         PreparedStatement statement = null;
-        ResultSet rs = null;
+        ResultSet resultSet = null;
 
         try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
-            }
+            connection = DatabaseConnection.getConnection(true);
 
             String sqlCount = "SELECT COUNT(*) FROM equipe";
             statement = connection.prepareStatement(sqlCount);
-            rs = statement.executeQuery();
+            resultSet = statement.executeQuery();
 
-            if (rs.next() && rs.getInt(1) > 0) {
+            if (resultSet.next() && resultSet.getInt(1) > 0) {
                 carregarDadosEquipe();
                 labelAvisoEquipe.setText("Lista de Equipes");
                 labelAvisoDesc.setText("Segue a lista das equipes cadastradas:");
@@ -71,7 +67,7 @@ public class ProfessorController implements Initializable {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
             try {
-                if (rs != null) rs.close();
+                if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
             } catch (SQLException e) {
@@ -86,26 +82,22 @@ public class ProfessorController implements Initializable {
         ResultSet resultSet = null;
 
         try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
-            }
+            connection = DatabaseConnection.getConnection(true);
 
-            String sql = "SELECT nome, link_github FROM equipe";
+            String sql = "SELECT nome, github FROM equipe";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
                 String nome = resultSet.getString("nome");
-                String github = resultSet.getString("link_github");
+                String github = resultSet.getString("github");
 
                 EquipeModel equipe = new EquipeModel(nome, github);
                 equipeList.add(equipe);
             }
 
             colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            colGithub.setCellValueFactory(new PropertyValueFactory<>("link_github"));
+            colGithub.setCellValueFactory(new PropertyValueFactory<>("github"));
 
             tableEquipe.setItems(equipeList);
 
@@ -123,7 +115,7 @@ public class ProfessorController implements Initializable {
     }
 
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/student/mainScreen.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
 
