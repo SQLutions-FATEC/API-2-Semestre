@@ -1,14 +1,31 @@
 package app.controllers;
 
+import app.helpers.DatabaseConnection;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 
-public class AverageController {
-    @FXML
-    private Label nomeLabel;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class AverageController implements Initializable {
+
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+    }
 
     public void inicializarDados(String nomeUsuario) {
-        nomeLabel.setText("Detalhes do usuário: " + nomeUsuario);
-        // Aqui você pode buscar e mostrar mais dados do usuário com base no nome
     }
 }

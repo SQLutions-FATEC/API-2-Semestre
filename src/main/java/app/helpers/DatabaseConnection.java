@@ -20,7 +20,7 @@ public class DatabaseConnection {
             URL = URL + DEFAULT_SCHEMA;
         }
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+            Connection conn = DriverManager.getConnection(URL+"?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", USER, PASSWORD);
             return conn;
         } catch (SQLException e) {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
@@ -28,3 +28,5 @@ public class DatabaseConnection {
         }
     }
 }
+
+

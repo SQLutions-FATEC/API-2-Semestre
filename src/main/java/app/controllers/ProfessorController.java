@@ -21,6 +21,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -41,16 +42,26 @@ public class ProfessorController implements Initializable {
     public Label labelAvisoEquipe;
     @FXML
     public Label labelAvisoDesc;
+    @FXML
+    public ChoiceBox<String> ChoiceBoxPeriodo;
 
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    String currentPeriod = "Todos";
 
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ChoiceBoxPeriodo.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handlePeriodListSelectionChange(newValue);
+        });
+        fetchPeriods();
+        fetchTeams();
+    }
 
+    private void fetchTeams() {
         try {
             connection = DatabaseConnection.getConnection(true);
 
@@ -63,6 +74,38 @@ public class ProfessorController implements Initializable {
                 labelAvisoEquipe.setText("Lista de Equipes");
                 labelAvisoDesc.setText("Segue a lista das equipes cadastradas:");
             }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    private void fetchPeriods() {
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            String sqlCount = "SELECT * FROM periodo ORDER BY ano";
+            statement = connection.prepareStatement(sqlCount);
+            resultSet = statement.executeQuery();
+
+            ArrayList<String> periodOptionsList = new ArrayList<>();
+            periodOptionsList.add("Todos");
+
+            while (resultSet.next()) {
+                String semester = resultSet.getString("semestre");
+                String year = resultSet.getString("ano");
+
+                periodOptionsList.add(semester + "º semestre - " + year);
+            }
+            ChoiceBoxPeriodo.getItems().addAll(periodOptionsList);
+            ChoiceBoxPeriodo.setValue(currentPeriod);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
@@ -151,6 +194,10 @@ public class ProfessorController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void handlePeriodListSelectionChange(String period) {
+        currentPeriod = period;
     }
 
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
