@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +49,8 @@ public class ProfessorController implements Initializable {
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
-    String currentPeriod = "Todos";
+    String[] period = Utils.obterSemestreEAnoAtual();
+    String currentPeriod;
 
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
@@ -96,7 +98,6 @@ public class ProfessorController implements Initializable {
             resultSet = statement.executeQuery();
 
             ArrayList<String> periodOptionsList = new ArrayList<>();
-            periodOptionsList.add("Todos");
 
             while (resultSet.next()) {
                 String semester = resultSet.getString("semestre");
@@ -105,7 +106,7 @@ public class ProfessorController implements Initializable {
                 periodOptionsList.add(semester + "º semestre - " + year);
             }
             ChoiceBoxPeriodo.getItems().addAll(periodOptionsList);
-            ChoiceBoxPeriodo.setValue(currentPeriod);
+            ChoiceBoxPeriodo.setValue(period[1] + " - " + period[0]);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {

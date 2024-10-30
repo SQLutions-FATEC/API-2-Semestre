@@ -1,4 +1,5 @@
 package app.helpers;
+import java.time.LocalDate;
 
 public class Utils {
     public static boolean isOnlyLetters(String input) {
@@ -21,5 +22,22 @@ public class Utils {
         int year = Integer.parseInt(yearPart);
 
         return new int[]{semester, year};
+    }
+
+    public static String[] obterSemestreEAnoAtual() {
+        LocalDate dataAtual = LocalDate.now();
+
+        int anoAtual = dataAtual.getYear();
+
+        int mesAtual = dataAtual.getMonthValue();
+
+        String semestre;
+        if (mesAtual >= 1 && mesAtual <= 6) {
+            semestre = "1º semestre";
+        } else {
+            semestre = "2º semestre";
+        }
+
+        return new String[] {String.valueOf(anoAtual), semestre};
     }
 }
