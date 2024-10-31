@@ -15,6 +15,9 @@ public class NotaModel {
         this.mediaNota = new SimpleDoubleProperty(mediaNota);
     }
 
+    public NotaModel(float id, int equipe, String nome, double valor, int semestreResult, int anoResult, String descricao) {
+    }
+
     public int getIdAluno() {
         return idAluno.get();
     }
