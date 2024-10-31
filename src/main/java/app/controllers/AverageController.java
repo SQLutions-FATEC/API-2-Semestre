@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -54,7 +55,7 @@ public class AverageController implements Initializable {
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
-            ObservableList<SprintModel> sprintOptionsList = FXCollections.observableArrayList();
+            ArrayList<String> sprintOptionsList = new ArrayList<>();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -62,9 +63,15 @@ public class AverageController implements Initializable {
                 Date dataInicio = resultSet.getDate("data_inicio");
                 Date dataFim = resultSet.getDate("data_fim");
 
-                SprintModel sprint = new SprintModel(id, descricao, dataInicio, dataFim);
+                new SprintModel(id, descricao, dataInicio, dataFim);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
+                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
+
+                sprintOptionsList.add(descricao + ": (" + formattedStartDate + " - " + formattedEndDate + ")");
             }
-            ChoiceBoxSprint.getItems().addAll(sprint);
+            ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
 //            ChoiceBoxPeriodo.setValue(period[1] + " - " + period[0]);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
