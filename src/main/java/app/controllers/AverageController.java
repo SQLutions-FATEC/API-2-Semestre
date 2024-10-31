@@ -11,7 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -21,11 +23,11 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class AverageController implements Initializable {
+public class AverageController {
     @FXML
     public ChoiceBox<String> ChoiceBoxSprint;
     @FXML
-    public TableView<AverageGradeModel> tableAverageGrades;
+    public TableView<AverageGradeModel> tableAverageGrades = new TableView<>();
 
     Connection connection = null;
     PreparedStatement statement = null;
@@ -38,24 +40,21 @@ public class AverageController implements Initializable {
     private final ObservableList<EquipeModel> studentList = FXCollections.observableArrayList();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void passData(int teamId, int periodId) {
+        selectedPeriodId = periodId;
+        selectedTeamId = teamId;
         ChoiceBoxSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
         });
         fetchSprint();
     }
 
-    public void passData(int teamId, int periodId) {
-        selectedPeriodId = periodId;
-        selectedTeamId = teamId;
-    }
-
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
         selectedSprintId = sprintIdMap.get(sprint);
         studentList.clear();
-        fetchGrades();
+        fetchCriterias();
+//        fetchGrades();
     }
 
     private void fetchSprint() {
@@ -92,6 +91,37 @@ public class AverageController implements Initializable {
                 sprintOptionsList.add("Todos");
                 ChoiceBoxSprint.setValue("Todos");
             }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    private void fetchCriterias() {
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            String sqlCount = String.format("SELECT c.nome as nome FROM criterio_periodo cp join criterio c on cp.criterio_id = c.id where cp.periodo_id = '%d'", selectedPeriodId);
+            statement = connection.prepareStatement(sqlCount);
+            resultSet = statement.executeQuery();
+
+            ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();
+
+            while (resultSet.next()) {
+                String criterioNome = resultSet.getString("nome");
+
+                TableColumn<AverageGradeModel, Double> column = new TableColumn<>(criterioNome);
+                column.setCellValueFactory(new PropertyValueFactory<>(criterioNome));
+                columns.add(column);
+            }
+            tableAverageGrades.getColumns().addAll(columns);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
