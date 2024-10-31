@@ -2,7 +2,6 @@ package app.controllers;
 
 import app.helpers.DatabaseConnection;
 import app.helpers.Utils;
-import app.models.CriteriaModel;
 import app.models.EquipeModel;
 import app.models.SprintModel;
 import javafx.collections.FXCollections;
@@ -10,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -18,7 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -32,8 +31,10 @@ public class AverageController implements Initializable {
     PreparedStatement statement = null;
     ResultSet resultSet = null;
     String currentSprint;
+    Integer selectedSprintId;
 
     private final ObservableList<EquipeModel> studentList = FXCollections.observableArrayList();
+    private final Map<String, Integer> sprintIdMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,6 +46,7 @@ public class AverageController implements Initializable {
 
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
+        selectedSprintId = sprintIdMap.get(sprint);
         studentList.clear();
 //        fetchGrades();
     }
@@ -61,24 +63,28 @@ public class AverageController implements Initializable {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String descricao = resultSet.getString("descricao");
+                String description = resultSet.getString("descricao");
                 Date dataInicio = resultSet.getDate("data_inicio");
                 Date dataFim = resultSet.getDate("data_fim");
 
-                new SprintModel(id, descricao, dataInicio, dataFim);
+                new SprintModel(id, description, dataInicio, dataFim);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
                 String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
 
-                sprintOptionsList.add(descricao + ": (" + formattedStartDate + " - " + formattedEndDate + ")");
+                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+                sprintOptionsList.add(sprintDescription);
+                sprintIdMap.put(sprintDescription, id);
             }
             ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
             String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
             if (currentSprint != null) {
+                ChoiceBoxSprint.setValue(currentSprint);
+            } else {
+                sprintOptionsList.add("Todos");
+                ChoiceBoxSprint.setValue("Todos");
             }
-            sprintOptionsList.add("Todos");
-            ChoiceBoxSprint.setValue("Todos");
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
