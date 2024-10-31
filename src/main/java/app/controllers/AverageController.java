@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
 import app.models.CriteriaModel;
 import app.models.EquipeModel;
 import app.models.SprintModel;
@@ -17,6 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -72,7 +74,11 @@ public class AverageController implements Initializable {
                 sprintOptionsList.add(descricao + ": (" + formattedStartDate + " - " + formattedEndDate + ")");
             }
             ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
-//            ChoiceBoxPeriodo.setValue(period[1] + " - " + period[0]);
+            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+            if (currentSprint != null) {
+            }
+            sprintOptionsList.add("Todos");
+            ChoiceBoxSprint.setValue("Todos");
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
