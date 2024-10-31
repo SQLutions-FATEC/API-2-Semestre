@@ -1,5 +1,7 @@
 package app.controllers;
 
+import app.helpers.DatabaseConnection;
+
 import java.sql.*;
 import java.util.*;
 
@@ -10,25 +12,54 @@ public class ConsultationDB {
         this.conn = conn;
     }
 
+    public String pegarCriterios() throws SQLException {
+        Connection conn = DatabaseConnection.getConnection(true);
+
+        String sql = """
+                SELECT distinct criterio.nome AS criterio
+                FROM nota
+                JOIN criterio ON nota.criterio = criterio.id
+                JOIN periodo ON periodo.id = ?
+                WHERE periodo.id = ?
+                GROUP BY criterio.nome
+            """;
+
+        StringBuilder criterioSQL = new StringBuilder();
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, String.valueOf(1));
+            pstmt.setString(2, String.valueOf(1));
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                criterioSQL.append(",");
+                criterioSQL.append(rs.getString("criterio"));
+            }
+        }
+
+        return criterioSQL.toString();
+    }
+
     public Map<String, Map<String, Double>> obterMediaNotasPorEquipe(String semestreId, String sprintId, String equipeId) throws SQLException {
         String sql = """
-    SELECT 
-        e.nome AS equipe_nome,
-        u.nome AS aluno_nome,
-        c.descricao AS criterio_descricao,
-        AVG(n.valor) AS media_nota
-    FROM 
-        nota n
-    JOIN usuario u ON n.avaliado = u.ra
-    JOIN criterio c ON n.criterio = c.id
-    JOIN equipe e ON u.equipe = e.id
-    JOIN periodo s ON s.id = ?  -- Tabela onde o semestre é armazenado
-    JOIN sprint sp ON sp.id = ? AND n.sprint = sp.id
-    WHERE 
-        e.id = ?
-    GROUP BY 
-        e.nome, u.nome, c.descricao
-    """;
+            SELECT
+              usuario.nome AS aluno_nome,
+              criterio.nome AS criterio_nome,
+              AVG(nota.valor) AS media_nota
+            FROM
+              nota
+            JOIN usuario ON nota.avaliado = usuario.ra
+            JOIN criterio ON nota.criterio = criterio.id
+            JOIN equipe ON usuario.equipe = equipe.id
+            JOIN periodo ON periodo.id = 1
+            JOIN sprint ON sprint.id = 2 AND nota.sprint = sprint.id
+            WHERE
+              equipe.id = 1
+            GROUP BY
+              usuario.nome, criterio.nome
+            ORDER BY
+              usuario.nome, criterio.nome
+        """;
 
         Map<String, Map<String, Double>> medias = new HashMap<>();
 

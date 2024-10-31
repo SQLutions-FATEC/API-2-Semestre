@@ -1,14 +1,22 @@
 package app.controllers;
 
+import app.helpers.DatabaseConnection;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class CSVGerador {
-    public static void gerarCsv(Map<String, Map<String, Double>> medias, String caminhoArquivo) throws IOException {
+    public static void gerarCsv(Map<String, Map<String, Double>> medias, String caminhoArquivo) throws IOException, SQLException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
-            writer.write("Usuário,Critério,Média");
+            Connection conn = DatabaseConnection.getConnection(true);
+            ConsultationDB CDB = new ConsultationDB(conn);
+
+            writer.write("Usuario");
+            writer.write(CDB.pegarCriterios());
             writer.newLine();
 
             for (Map.Entry<String, Map<String, Double>> entry : medias.entrySet()) {
