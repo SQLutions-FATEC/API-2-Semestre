@@ -60,7 +60,6 @@ public class ProfessorController implements Initializable {
             handlePeriodListSelectionChange(newValue);
         });
         fetchPeriods();
-        fetchTeams();
     }
 
     private void fetchTeams() {
@@ -127,16 +126,17 @@ public class ProfessorController implements Initializable {
 
         try {
             connection = DatabaseConnection.getConnection(true);
-
-            String sql = "SELECT nome, github FROM equipe";
+            int[] curPeriod = Utils.getPeriodFromFilter(currentPeriod);
+            String sql = String.format("SELECT e.id,e.nome,e.github from equipe_periodo ep join periodo p on ep.periodo_id = p.id join equipe e on ep.equipe_id = e.id where p.semestre = '%d' and p.ano = '%d'", curPeriod[0], curPeriod[1] );
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String nome = resultSet.getString("nome");
                 String github = resultSet.getString("github");
 
-                EquipeModel equipe = new EquipeModel(nome, github);
+                EquipeModel equipe = new EquipeModel(id, nome, github);
                 equipeList.add(equipe);
             }
 
@@ -199,6 +199,8 @@ public class ProfessorController implements Initializable {
 
     private void handlePeriodListSelectionChange(String period) {
         currentPeriod = period;
+        equipeList.clear();
+        carregarDadosEquipe();
     }
 
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {

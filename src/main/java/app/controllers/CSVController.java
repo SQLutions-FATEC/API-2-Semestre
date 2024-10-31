@@ -84,7 +84,7 @@ public class CSVController extends DatabaseConnection {
                         System.out.println("Linha da equipe inválida: " + line);
                         return;
                     }
-                    equipe = new EquipeModel(linha[0], linha[1]);
+                    equipe = new EquipeModel(0, linha[0], linha[1]);
                     isPrimeiraLinha = false;
                     labelNomeEquipe.setText(equipe.getNome());
                     labelGithubEquipe.setText(equipe.getGithub());
