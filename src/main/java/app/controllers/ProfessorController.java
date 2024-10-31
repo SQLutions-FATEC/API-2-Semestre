@@ -22,9 +22,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ProfessorController implements Initializable {
     protected Stage stage;
@@ -51,8 +49,10 @@ public class ProfessorController implements Initializable {
     ResultSet resultSet = null;
     String[] period = Utils.obterSemestreEAnoAtual();
     String currentPeriod;
+    Integer selectedPeriodId;
 
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
+    private final Map<String, Integer> periodIdMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -99,10 +99,13 @@ public class ProfessorController implements Initializable {
             ArrayList<String> periodOptionsList = new ArrayList<>();
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String semester = resultSet.getString("semestre");
                 String year = resultSet.getString("ano");
 
-                periodOptionsList.add(semester + "º semestre - " + year);
+                String periodDescription = semester + "º semestre - " + year;
+                periodOptionsList.add(periodDescription);
+                periodIdMap.put(periodDescription, id);
             }
             ChoiceBoxPeriodo.getItems().addAll(periodOptionsList);
             ChoiceBoxPeriodo.setValue(period[1] + " - " + period[0]);
@@ -153,7 +156,7 @@ public class ProfessorController implements Initializable {
                         Button btn = new Button("Visualizar");
                         btn.setOnAction((ActionEvent event) -> {
                             EquipeModel equipe = getTableView().getItems().get(getIndex());
-                            abrirNovaTela(equipe.getNome());
+                            abrirNovaTela(equipe.getId(), selectedPeriodId);
                         });
                         setGraphic(btn);
                         setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -177,13 +180,13 @@ public class ProfessorController implements Initializable {
         }
     }
 
-    private void abrirNovaTela(String nomeUsuario) {
+    private void abrirNovaTela(int teamId, int periodId) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/averageScreen.fxml"));
             Parent root = loader.load();
 
             AverageController averageController = loader.getController();
-            averageController.inicializarDados(nomeUsuario);
+            averageController.passData(teamId, periodId);
 
             stage = new Stage();
             scene = new Scene(root, 800, 600);
@@ -199,6 +202,7 @@ public class ProfessorController implements Initializable {
 
     private void handlePeriodListSelectionChange(String period) {
         currentPeriod = period;
+        selectedPeriodId = periodIdMap.get(period);
         equipeList.clear();
         carregarDadosEquipe();
     }

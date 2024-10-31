@@ -32,6 +32,8 @@ public class AverageController implements Initializable {
     ResultSet resultSet = null;
     String currentSprint;
     Integer selectedSprintId;
+    Integer selectedPeriodId;
+    Integer selectedTeamId;
 
     private final ObservableList<EquipeModel> studentList = FXCollections.observableArrayList();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
@@ -44,11 +46,16 @@ public class AverageController implements Initializable {
         fetchSprint();
     }
 
+    public void passData(int teamId, int periodId) {
+        selectedPeriodId = periodId;
+        selectedTeamId = teamId;
+    }
+
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
         selectedSprintId = sprintIdMap.get(sprint);
         studentList.clear();
-//        fetchGrades();
+        fetchGrades();
     }
 
     private void fetchSprint() {
@@ -98,6 +105,50 @@ public class AverageController implements Initializable {
         }
     }
 
-    public void inicializarDados(String nomeUsuario) {
+    private void fetchGrades() {
+        try {
+//            connection = DatabaseConnection.getConnection(true);
+
+            String sqlCount = String.format("SELECT * FROM sprint", selectedTeamId, selectedPeriodId, selectedSprintId);
+//            statement = connection.prepareStatement(sqlCount);
+//            resultSet = statement.executeQuery();
+//
+//            ArrayList<String> sprintOptionsList = new ArrayList<>();
+//
+//            while (resultSet.next()) {
+//                int id = resultSet.getInt("id");
+//                String description = resultSet.getString("descricao");
+//                Date dataInicio = resultSet.getDate("data_inicio");
+//                Date dataFim = resultSet.getDate("data_fim");
+//
+//                new SprintModel(id, description, dataInicio, dataFim);
+//
+//                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+//                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
+//                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
+//
+//                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+//                sprintOptionsList.add(sprintDescription);
+//                sprintIdMap.put(sprintDescription, id);
+//            }
+//            ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
+//            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+//            if (currentSprint != null) {
+//                ChoiceBoxSprint.setValue(currentSprint);
+//            } else {
+//                sprintOptionsList.add("Todos");
+//                ChoiceBoxSprint.setValue("Todos");
+//            }
+//        } catch (SQLException e) {
+//            System.out.println("Erro no SQL: " + e.getMessage());
+//        } finally {
+//            try {
+//                if (resultSet != null) resultSet.close();
+//                if (statement != null) statement.close();
+//                if (connection != null) connection.close();
+//            } catch (SQLException e) {
+//                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+//            }
+//        }
     }
 }
