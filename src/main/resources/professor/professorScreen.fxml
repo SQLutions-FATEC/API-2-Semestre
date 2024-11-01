@@ -13,14 +13,14 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
-      <Separator blendMode="DARKEN" layoutX="208.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
-         <cursor>
-            <Cursor fx:constant="OPEN_HAND" />
-         </cursor>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Separator>
+   <Separator blendMode="DARKEN" layoutX="208.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
+      <cursor>
+         <Cursor fx:constant="OPEN_HAND" />
+      </cursor>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+   </Separator>
    <VBox alignment="CENTER" layoutY="1.0" prefHeight="601.0" prefWidth="203.0" spacing="30.0">
       <children>
          <Button mnemonicParsing="false" onAction="#trocarCSVScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
@@ -63,28 +63,27 @@
          <Insets right="-5.0" />
       </padding>
    </VBox>
-
-
-<Label layoutX="613.0" layoutY="31.0" prefHeight="21.0" prefWidth="67.0" text="Semestre">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <ChoiceBox layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
-      <Label fx:id="labelAvisoEquipe" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
-         <font>
-            <Font size="30.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelAvisoDesc" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <TableView fx:id="tableEquipe" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
-        <columns>
-          <TableColumn fx:id="colNome" prefWidth="250.0" text="Nome" />
-            <TableColumn fx:id="colGithub" prefWidth="250.0" text="Link do GitHub" />
-        </columns>
-      </TableView>
+   <Label layoutX="613.0" layoutY="31.0" prefHeight="21.0" prefWidth="67.0" text="Período">
+      <font>
+         <Font size="16.0" />
+      </font>
+   </Label>
+   <ChoiceBox fx:id="ChoiceBoxPeriodo" layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
+   <Label fx:id="labelAvisoEquipe" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
+      <font>
+         <Font size="30.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelAvisoDesc" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
+   <TableView fx:id="tableEquipe" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
+      <columns>
+         <TableColumn fx:id="colNome" prefWidth="125.0" text="Nome" />
+         <TableColumn fx:id="colGithub" prefWidth="250.0" text="Link do GitHub" />
+         <TableColumn fx:id="colVisualizar" prefWidth="125.0" text="Visualizar" />
+      </columns>
+   </TableView>
 </AnchorPane>

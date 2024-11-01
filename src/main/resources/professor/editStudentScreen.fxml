@@ -3,35 +3,48 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
-      <Button layoutX="14.0" layoutY="434.0" mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
+      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="364.0" layoutY="434.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Deletar usuário">
+      <Button layoutX="450.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Deletar usuário">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="527.0" layoutY="434.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
+      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <ChoiceBox layoutX="35.0" layoutY="64.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="35.0" layoutY="177.0" prefWidth="150.0" />
-      <Label layoutX="35.0" layoutY="32.0" prefHeight="21.0" prefWidth="67.0" text="Usuário">
+      <ChoiceBox layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <ChoiceBox layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="79.0" text="Usuários">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <Label layoutX="35.0" layoutY="144.0" prefHeight="25.0" prefWidth="150.0" text="Mudar para equipe">
+      <Label layoutX="350.0" layoutY="35.0" prefHeight="25.0" prefWidth="170.0" text="Mudar para equipe">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
+   <TableView layoutX="50.0" layoutY="270.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="700.0">
+     <columns>
+       <TableColumn prefWidth="150.0" text="Nome" />
+       <TableColumn prefWidth="100.0" text="RA" />
+         <TableColumn prefWidth="150.0" text="Email" />
+         <TableColumn prefWidth="300.0" text="Equipe" />
+     </columns>
+   </TableView>
+   <TextField layoutX="50.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+   <Button layoutX="320.0" layoutY="145.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="30.0" text="Selecionar" />
 </AnchorPane>

@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class UserModel {
-
     private SimpleIntegerProperty ra;
     private SimpleStringProperty nome;
     private SimpleStringProperty email;
