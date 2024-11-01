@@ -15,7 +15,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,6 +38,7 @@ public class AverageController {
 
     private final ObservableList<EquipeModel> studentList = FXCollections.observableArrayList();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
+    ArrayList<String> sprintOptionsList = new ArrayList<>();
 
     public void passData(int teamId, int periodId) {
         selectedPeriodId = periodId;
@@ -65,8 +65,6 @@ public class AverageController {
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
-            ArrayList<String> sprintOptionsList = new ArrayList<>();
-
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String description = resultSet.getString("descricao");
@@ -88,8 +86,7 @@ public class AverageController {
             if (currentSprint != null) {
                 ChoiceBoxSprint.setValue(currentSprint);
             } else {
-                sprintOptionsList.add("Todos");
-                ChoiceBoxSprint.setValue("Todos");
+                ChoiceBoxSprint.setValue(sprintOptionsList.get(0));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
@@ -156,50 +153,10 @@ public class AverageController {
         }
     }
 
-
     private void fetchGrades() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
-
-            String sqlCount = String.format(
-                    "SELECT u.nome AS usuario_nome, c.nome AS criterio, AVG(n.valor) AS media_nota FROM nota n " +
-                    "JOIN usuario u ON u.id = n.avaliado " +
-                    "JOIN periodo p ON p.id = n.periodo " +
-                    "JOIN sprint s ON s.id = n.sprint " +
-                    "JOIN criterio c ON n.criterio = c.id " +
-                    "WHERE p.id = '%d' AND s.id = '%d' AND u.equipe = '%d' " +
-                    "GROUP BY u.nome, c.nome", selectedPeriodId, selectedSprintId, selectedTeamId);
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
-
-            Map<String, AverageGradeModel> alunosMap = new HashMap<>();
-
-            while (resultSet.next()) {
-                String nomeAluno = resultSet.getString("usuario_nome");
-                String criterio = resultSet.getString("criterio");
-                Double mediaNota = resultSet.getDouble("media_nota");
-
-                AverageGradeModel aluno = alunosMap.getOrDefault(nomeAluno, new AverageGradeModel(nomeAluno));
-                aluno.setAverage(criterio, mediaNota);
-                alunosMap.put(nomeAluno, aluno);
-            }
-
-            ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(alunosMap.values());
-            tableAverageGrades.setItems(data);
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-//        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
-//        List<AverageGradeModel> notas = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
-//        ObservableList<AverageGradeModel> observableNotas = FXCollections.observableArrayList(notas);
-//        tableAverageGrades.setItems(observableNotas);
+        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+        Map<String, AverageGradeModel> studentsMap = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
+        ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
+        tableAverageGrades.setItems(data);
     }
 }

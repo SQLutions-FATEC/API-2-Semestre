@@ -2,35 +2,37 @@ package app.helpers;
 
 import app.models.AverageGradeModel;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AverageGradeDAO {
+    private Map<String, AverageGradeModel> studentsMap = new HashMap<>();
 
-    public List<AverageGradeModel> fetchAverages(int teamId, int periodId, int sprintId) {
-        List<AverageGradeModel> notas = new ArrayList<>();
+    public Map<String, AverageGradeModel> fetchAverages(int teamId, int periodId, int sprintId) {
+        String sql = String.format(
+                "SELECT u.nome AS usuario_nome, c.nome AS criterio, AVG(n.valor) AS media_nota FROM nota n " +
+                        "JOIN usuario u ON u.id = n.avaliado " +
+                        "JOIN periodo p ON p.id = n.periodo " +
+                        "JOIN sprint s ON s.id = n.sprint " +
+                        "JOIN criterio c ON n.criterio = c.id " +
+                        "WHERE p.id = '%d' AND s.id = '%d' AND u.equipe = '%d' " +
+                        "GROUP BY u.nome, c.nome", periodId, sprintId, teamId);
 
-        String sql = String.format("SELECT u.nome AS userName, AVG(n.valor) AS gradeAverage, c.nome AS criteriaName FROM nota n JOIN usuario u ON u.id = n.avaliado JOIN periodo p ON p.id = n.periodo JOIN sprint s ON s.id = n.sprint WHERE p.id = '%d' AND s.id = '%d' AND u.equipe = '%d' GROUP BY u.equipe, u.nome, p.semestre, p.ano, s.descricao;", periodId, sprintId, teamId);
-
-        try (Connection connection = DatabaseConnection.getConnection(true);
-             PreparedStatement statement = connection.prepareStatement(sql)) {
-
-            ResultSet resultSet = statement.executeQuery();
-
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
-                String userName = resultSet.getString("userName");
-                double gradeAverage = resultSet.getDouble("gradeAverage");
-                String criteriaName = resultSet.getString("criteriaName");
+                String studentName = resultSet.getString("usuario_nome");
+                String criteria = resultSet.getString("criterio");
+                Double averageGrade = resultSet.getDouble("media_nota");
 
-//                notas.add(new AverageGradeModel(userName, gradeAverage, criteriaName));
+                AverageGradeModel student = studentsMap.getOrDefault(studentName, new AverageGradeModel(studentName));
+                student.setAverage(criteria, averageGrade);
+                studentsMap.put(studentName, student);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("Erro no SQL de fetchAverages: " + e.getMessage());
         }
-        return notas;
+        return studentsMap;
     }
 }
