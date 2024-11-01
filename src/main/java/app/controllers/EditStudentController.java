@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.helpers.DatabaseConnection;
+import app.DAOs.UserDAO;
 import app.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,18 +22,9 @@ import javafx.geometry.Side;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class EditStudentController implements Initializable {
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
-    ObservableList<UserModel> studentList = FXCollections.observableArrayList();
-
     @FXML
     public TableView<UserModel> tableStudent;
     @FXML
@@ -49,6 +40,7 @@ public class EditStudentController implements Initializable {
     @FXML
     public TextField studentSearch;
 
+    ObservableList<UserModel> studentList = FXCollections.observableArrayList();
     private ContextMenu suggestionsMenu = new ContextMenu();
 
     @Override
@@ -58,33 +50,8 @@ public class EditStudentController implements Initializable {
     }
 
     private void fetchStudents() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sqlCount = "SELECT u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL ORDER BY u.nome";
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                Integer ra = resultSet.getInt("ra");
-                String name = resultSet.getString("nome");
-                String email = resultSet.getString("email");
-                String password = resultSet.getString("senha");
-                Integer teamId = resultSet.getInt("equipe");
-
-                UserModel user = new UserModel(ra, name, email, password, teamId);
-                studentList.add(user);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
+        UserDAO UserDAO = new UserDAO();
+        studentList = UserDAO.fetchStudents();
     }
 
     private void configureAutocomplete() {
