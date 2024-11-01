@@ -52,24 +52,24 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 #### ✅ Requisitos Funcionais
 
-| ID | Descrição                                                   | Prioridade  | Fator | Sprint |
-|:--:|-------------------------------------------------------------|:-----------:|:-----:|:-----:|
-| 1  | Alunos preencherem avaliações de outros membros             |   🔴 Alta   |   1   |   2   |
-| 2  | Apresentar as médias ao professor                           |   🔴 Alta   |   2   |   3   |
-| 3  | Receber dados das equipes e seus integrantes (arquivo .csv) |   🔴 Alta   |   3   |   2   |
-| 4  | Gerar relatórios dos valores calculados                     |   🔴 Alta   |   4   |   3   |
-| 5  | Período de início e fim de avaliação dos alunos             |  🟡 Média   |   5   |   4   |
-| 6  | Identificar o usuário (Login)                               |  🟡 Média   |   6   |   4   |
-| 7  | Aluno visualiza avaliações anteriores                       |  🟢 Baixa   |   7   |   2   |
+| ID | Descrição                                                   | Prioridade | Fator | Sprint |
+|:--:|-------------------------------------------------------------|:----------:|:-----:|:------:|
+| 1  | Alunos preencherem avaliações de outros membros             |  🔴 Alta   |   1   |   2    |
+| 2  | Apresentar as médias ao professor                           |  🔴 Alta   |   2   |   3    |
+| 3  | Receber dados das equipes e seus integrantes (arquivo .csv) |  🔴 Alta   |   3   |   2    |
+| 4  | Gerar relatórios dos valores calculados                     |  🔴 Alta   |   4   |   3    |
+| 5  | Período de início e fim de avaliação dos alunos             |  🟡 Média  |   5   |   4    |
+| 6  | Identificar o usuário (Login)                               |  🟡 Média  |   6   |   4    |
+| 7  | Aluno visualiza avaliações anteriores                       |  🟢 Baixa  |   7   |   2    |
 
 
 #### ✔️ Requisitos Não Funcionais
 
-| ID | Descrição |
-|:--:|-----------|
-| 7 | Linguagem de programação: Java |
-| 8 | Banco de Dados com modelo relacional |
-| 9 | Acesso ao Banco de Dados com JDBC |
+| ID | Descrição                            |
+|:--:|--------------------------------------|
+| 7  | Linguagem de programação: Java       |
+| 8  | Banco de Dados com modelo relacional |
+| 9  | Acesso ao Banco de Dados com JDBC    |
 
 ### Backlog das Sprints
 
@@ -77,7 +77,7 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 | ID | Descrição |
 |:--:|-----------|
-| x | x |
+| x  | x         |
 
 #### Sprint 2
 
@@ -119,11 +119,11 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 |   7   | 4  |   3    | Aluno     | Visualiza o histórico de avaliações                                                                              | Para obter um feedback real no andamento do projeto                                  |
 |   3   | 5  |   3    | Professor | Gerencia alunos e equipes antes do início do projeto                                                             | Para fornecer os acessos aos alunos                                                  |
 |   3   | 6  |   3    | Professor | Edita os alunos e equipes ao longo do projeto                                                                    | Para remanejar os alunos entre as equipes                                            |
+|   5   | 11 |   3    | Professor | Define quantidade de sprints no projeto                                                                          | Para ter flexibilidade em caso de aumento ou redução do tempo do projeto             |
 |   5   | 7  |   4    | Professor | Define as datas de cada sprint                                                                                   | Para definir controles sobre o período de acesso dos alunos na plataforma            |
 |   5   | 8  |   4    | Professor | Edita as datas de cada sprint                                                                                    | Para contornar imprevistos que venham a surgir no calendário acadêmico               |
 |   6   | 9  |   4    | Usuário   | Faz login com a sua crendencial                                                                                  | Para acessar funcionalidades que correspondam à função do usuário                    |
 |   1   | 10 |   4    | Professor | Altera critérios que serão avaliados entre os integrantes em cada projeto                                        | Para ter flexibilidade e trazer o que é pertinente ao mercado ao longo dos anos      |
-|       | 11 |   x    | Professor | Define quantidade de sprints no projeto                                                                          | Para ter flexibilidade em caso de aumento ou redução do tempo do projeto             |
 
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
