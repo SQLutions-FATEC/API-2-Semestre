@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class LoginController {
-    private final List<String> professores = List.of("professor@fatec.sp.gov.br");
-    private final List<String> alunos = List.of("aluno@fatec.sp.gov.br");
+    private final List<String> professores = List.of("professor");
+    private final List<String> alunos = List.of("aluno");
     protected Stage stage;
     protected Parent root;
 

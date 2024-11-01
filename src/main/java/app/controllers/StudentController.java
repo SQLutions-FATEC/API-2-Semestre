@@ -1,11 +1,16 @@
 package app.controllers;
 
+import app.helpers.DatabaseConnection;
 import app.models.Aluno;
+import app.models.SprintModel;
+import app.helpers.Utils;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,17 +18,27 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.sql.*;
 import java.io.IOException;
-import java.util.Objects;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-public class StudentController {
+public class StudentController implements Initializable {
     protected Stage stage;
     protected Parent root;
     protected Scene scene;
+    String currentSprint;
+    Integer selectedSprintId;
+    Integer selectedPeriodId;
+    Integer selectedTeamId;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
 
     @FXML
     private TableView<Aluno> tableView;
@@ -32,102 +47,134 @@ public class StudentController {
     private TableColumn<Aluno, String> colunaAluno;
 
     @FXML
-    private TableColumn<Aluno, Integer> colunaProatividade;
-
-    @FXML
-    private TableColumn<Aluno, Integer> colunaAutonomia;
-
-    @FXML
-    private TableColumn<Aluno, Integer> colunaColaboracao;
-
-    @FXML
-    private TableColumn<Aluno, Integer> colunaEntrega;
-
-    @FXML
-    private ComboBox<String> MudarSprint;
+    private ComboBox<String> choiceBoxMudarSprint;
 
     @FXML
     private Label LabelNumeroSprint;
 
-    private ObservableList<Aluno> alunos;
-
-    @FXML
-    public void initialize() {
-        colunaAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        colunaProatividade.setCellValueFactory(new PropertyValueFactory<>("proatividade"));
-        colunaAutonomia.setCellValueFactory(new PropertyValueFactory<>("autonomia"));
-        colunaColaboracao.setCellValueFactory(new PropertyValueFactory<>("colaboracao"));
-        colunaEntrega.setCellValueFactory(new PropertyValueFactory<>("entrega"));
-
-        colunaProatividade.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(0, 1, 2, 3)));
-        colunaAutonomia.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(0, 1, 2, 3)));
-        colunaColaboracao.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(0, 1, 2, 3)));
-        colunaEntrega.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(0, 1, 2, 3)));
-
-        colunaProatividade.setOnEditCommit(event -> {
-            Aluno aluno = event.getRowValue();
-            aluno.setProatividade(event.getNewValue());
-        });
-
-        colunaAutonomia.setOnEditCommit(event -> {
-            Aluno aluno = event.getRowValue();
-            aluno.setAutonomia(event.getNewValue());
-        });
-
-        colunaColaboracao.setOnEditCommit(event -> {
-            Aluno aluno = event.getRowValue();
-            aluno.setColaboracao(event.getNewValue());
-        });
-
-        colunaEntrega.setOnEditCommit(event -> {
-            Aluno aluno = event.getRowValue();
-            aluno.setEntrega(event.getNewValue());
-        });
-
-        MudarSprint.getItems().addAll("Sprint 1", "Sprint 2", "Sprint 3", "Sprint 4");
-        MudarSprint.setOnAction(event -> atualizarDataSprint());
-
-        alunos = FXCollections.observableArrayList();
-        tableView.setItems(alunos);
-
-        adicionarDados();
-    }
-
-    @FXML
-    private void enviarNotas() {
-        for (Aluno aluno : alunos) {
-            System.out.println("Aluno: " + aluno.getNome());
-            System.out.println("Proatividade: " + aluno.getProatividade());
-            System.out.println("Autonomia: " + aluno.getAutonomia());
-            System.out.println("Colaboração: " + aluno.getColaboracao());
-            System.out.println("Entrega: " + aluno.getEntrega());
-        }
-    }
-
     @FXML
     private Label LabelDataSprint;
 
-    private void atualizarDataSprint() {
-        String selectedSprint = MudarSprint.getSelectionModel().getSelectedItem();
-        if (selectedSprint != null) {
-            LabelNumeroSprint.setText(selectedSprint);
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        fetchSprint();
+    }
 
-            switch (selectedSprint) {
-                case "Sprint 1":
-                    LabelDataSprint.setText("09/09/2024 a 29/09/2024");
-                    break;
-                case "Sprint 2":
-                    LabelDataSprint.setText("30/09/2024 a 20/10/2024");
-                    break;
-                case "Sprint 3":
-                    LabelDataSprint.setText("21/10/2024 a 10/11/2024");
-                    break;
-                case "Sprint 4":
-                    LabelDataSprint.setText("11/11/2024 a 01/12/2024");
-                    break;
-                default:
-                    LabelDataSprint.setText("Selecione uma Sprint");
-                    break;
+    public void passData(int teamId, int periodId) {
+        selectedPeriodId = periodId;
+        selectedTeamId = teamId;
+        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handleSprintListSelectionChange(newValue);
+        });
+        fetchSprint();
+    }
+
+    private final ObservableList<Aluno> studentList = FXCollections.observableArrayList();
+    private final Map<String, Integer> sprintIdMap = new HashMap<>();
+    ArrayList<String> sprintOptionsList = new ArrayList<>();
+
+    private void handleSprintListSelectionChange(String sprint) {
+        currentSprint = sprint;
+        selectedSprintId = sprintIdMap.get(sprint);
+        studentList.clear();
+        fetchCriterias();
+    }
+
+    private void fetchCriterias() {
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            //tá dando erro e isso aq é importante
+            //tableview.getColumns().clear();
+
+            String sqlCount = String.format(
+                    "SELECT c.nome AS nome FROM criterio_periodo cp " +
+                            "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = '%d'", selectedPeriodId);
+            statement = connection.prepareStatement(sqlCount);
+            resultSet = statement.executeQuery();
+
+            ObservableList<TableColumn<Aluno, Integer>> columns = FXCollections.observableArrayList();
+
+            TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Nome");
+            colunaAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            int colunaAlunoWidth = 100;
+            nomeColumn.setPrefWidth(colunaAlunoWidth);
+            tableView.getColumns().add(colunaAluno);
+
+            while (resultSet.next()) {
+                String criterioNome = resultSet.getString("nome");
+
+                TableColumn<Aluno, Integer> column = new TableColumn<>(criterioNome);
+                columns.add(column);
+            }
+            tableView.getColumns().addAll(columns);
+
+            double larguraTabela = 580;
+            double larguraRestante = larguraTabela - colunaAlunoWidth;
+            double larguraPorColuna = larguraRestante / columns.size();
+
+            for (TableColumn<Aluno, Integer> column : columns) {
+                String criterioNome = column.getText();
+                column.setCellValueFactory(cellData ->
+                        new SimpleIntegerProperty(cellData.getValue().getAverage(criterioNome)).asObject()
+                );
+                column.setPrefWidth(larguraPorColuna);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    private void fetchSprint() {
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            String sqlCount = String.format("SELECT * FROM sprint s WHERE s.periodo = 1 ORDER BY s.data_inicio");
+            statement = connection.prepareStatement(sqlCount);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String description = resultSet.getString("descricao");
+                Date dataInicio = resultSet.getDate("data_inicio");
+                Date dataFim = resultSet.getDate("data_fim");
+
+                new SprintModel(id, description, dataInicio, dataFim);
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
+                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
+
+                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+                sprintOptionsList.add(sprintDescription);
+                sprintIdMap.put(sprintDescription, id);
+                LabelDataSprint.setText(sprintDescription);
+
+            }
+            choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
+            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+            if (currentSprint != null) {
+                choiceBoxMudarSprint.setValue(currentSprint);
+            } else {
+                choiceBoxMudarSprint.setValue(sprintOptionsList.get(0));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
     }
@@ -142,15 +189,4 @@ public class StudentController {
         stage.show();
     }
 
-    private void adicionarDados() {
-        alunos.add(new Aluno("Augusto Piatto", 0, 0, 0, 0));
-        alunos.add(new Aluno("Bryan de Assis", 0, 0, 0, 0));
-        alunos.add(new Aluno("Cainã Melo", 0, 0, 0, 0));
-        alunos.add(new Aluno("Davi Soares", 0, 0, 0, 0));
-        alunos.add(new Aluno("Enzo Lemos", 0, 0, 0, 0));
-        alunos.add(new Aluno("Glória Felix", 0, 0, 0, 0));
-        alunos.add(new Aluno("João Paulista", 0, 0, 0, 0));
-        alunos.add(new Aluno("Lucas Eduardo", 0, 0, 0, 0));
-        alunos.add(new Aluno("Tiago Torres", 0, 0, 0, 0));
-    }
 }

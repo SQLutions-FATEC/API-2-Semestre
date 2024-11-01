@@ -1,8 +1,7 @@
+
 package app.helpers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -20,12 +19,33 @@ public class DatabaseConnection {
             URL = URL + DEFAULT_SCHEMA;
         }
         try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexão bem-sucedida com o banco de dados!");
-            return conn;
+            return DriverManager.getConnection(URL + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", USER, PASSWORD);
         } catch (SQLException e) {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
             throw e;
+        }
+    }
+
+    public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
+        Connection connection = getConnection(true);
+        PreparedStatement statement = connection.prepareStatement(sql);
+        setParameters(statement, params);
+        return statement.executeQuery();
+    }
+
+    private static void setParameters(PreparedStatement statement, Object... params) throws SQLException {
+        for (int index = 0; index < params.length; index++) {
+            statement.setObject(index + 1, params[index]);
+        }
+    }
+
+    public static void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+        try {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar recursos: " + e.getMessage());
         }
     }
 }

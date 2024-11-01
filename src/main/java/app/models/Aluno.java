@@ -1,53 +1,26 @@
 package app.models;
 
+import java.util.Map;
+
 public class Aluno {
     private String nome;
-    private int proatividade;
-    private int autonomia;
-    private int colaboracao;
-    private int entrega;
+    private Map<String, Integer> notas;
 
-    public Aluno(String nome, int proatividade, int autonomia, int colaboracao, int entrega) {
+    public Aluno(String nome, Map<String, Integer> notas) {
         this.nome = nome;
-        this.proatividade = proatividade;
-        this.autonomia = autonomia;
-        this.colaboracao = colaboracao;
-        this.entrega = entrega;
+        this.notas = notas;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public int getProatividade() {
-        return proatividade;
+    public void setAverage(String criteria, Integer nota) {
+        notas.put(criteria, nota);
     }
 
-    public void setProatividade(int proatividade) {
-        this.proatividade = proatividade;
+    public Integer getAverage(String criteria) {
+        return notas.getOrDefault(criteria, 0);
     }
 
-    public int getAutonomia() {
-        return autonomia;
-    }
-
-    public void setAutonomia(int autonomia) {
-        this.autonomia = autonomia;
-    }
-
-    public int getColaboracao() {
-        return colaboracao;
-    }
-
-    public void setColaboracao(int colaboracao) {
-        this.colaboracao = colaboracao;
-    }
-
-    public int getEntrega() {
-        return entrega;
-    }
-
-    public void setEntrega(int entrega) {
-        this.entrega = entrega;
-    }
 }
