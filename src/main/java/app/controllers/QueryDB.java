@@ -3,7 +3,6 @@ package app.controllers;
 import app.helpers.DatabaseConnection;
 
 import java.sql.*;
-import java.util.*;
 
 public class QueryDB {
     private final Connection conn;

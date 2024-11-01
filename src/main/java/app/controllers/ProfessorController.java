@@ -164,14 +164,12 @@ public class ProfessorController implements Initializable {
 
     @FXML
     public void gerarCsvButton(ActionEvent event) {
-        // Define o caminho do arquivo CSV na pasta de downloads
         String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "/relatorio.csv";
 
         try {
-            // Gera o arquivo CSV
             CSVGerador.gerarCsv(caminhoArquivo);
         } catch (SQLException e) {
-            e.printStackTrace(); // Registra o erro no console para debug
+            e.printStackTrace();
         }
     }
 }
