@@ -165,19 +165,14 @@ public class ProfessorController implements Initializable {
     @FXML
     public void gerarCsvButton(ActionEvent event) {
         try {
-            // Carrega a nova tela FXML (gerarCSVScreen.fxml)
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/gerarCSVScreen.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/professorScreen.fxml")));
 
-            // Obtém o Stage atual a partir do evento do botão
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Define a nova cena com o arquivo FXML carregado
             stage.setScene(new Scene(root));
 
-            // Ajusta o título da nova janela
             stage.setTitle("Gerar Relatório CSV");
 
-            // Exibe a nova cena
             stage.show();
         } catch (IOException e) {
             System.out.println("Erro ao carregar a tela de geração de CSV: " + e.getMessage());
