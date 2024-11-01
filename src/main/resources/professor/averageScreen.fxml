@@ -12,7 +12,6 @@
    <children>
       <TableView fx:id="tableAverageGrades" layoutX="12.0" layoutY="72.0" prefHeight="315.0" prefWidth="577.0">
         <columns>
-          <TableColumn prefWidth="150.0" text="Aluno" />
         </columns>
       </TableView>
       <Label layoutX="-62.0" layoutY="26.0" text="Label" />

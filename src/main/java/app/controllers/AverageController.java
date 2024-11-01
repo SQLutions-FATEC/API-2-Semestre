@@ -109,17 +109,22 @@ public class AverageController {
         try {
             connection = DatabaseConnection.getConnection(true);
 
+            tableAverageGrades.getColumns().clear();
+
             String sqlCount = String.format("SELECT c.nome as nome FROM criterio_periodo cp join criterio c on cp.criterio_id = c.id where cp.periodo_id = '%d'", selectedPeriodId);
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
             ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();
 
+            TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
+            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            tableAverageGrades.getColumns().add(nomeColumn);
+
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
 
                 TableColumn<AverageGradeModel, Double> column = new TableColumn<>(criterioNome);
-                column.setCellValueFactory(new PropertyValueFactory<>(criterioNome));
                 columns.add(column);
             }
             tableAverageGrades.getColumns().addAll(columns);
@@ -142,6 +147,7 @@ public class AverageController {
             }
         }
     }
+
 
     private void fetchGrades() {
         try {
