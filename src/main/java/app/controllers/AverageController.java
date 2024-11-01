@@ -10,7 +10,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -62,7 +61,7 @@ public class AverageController {
         try {
             connection = DatabaseConnection.getConnection(true);
 
-            String sqlCount = "SELECT * FROM sprint";
+            String sqlCount = String.format("SELECT * FROM sprint s WHERE s.periodo = '%d' ORDER BY s.data_inicio", selectedPeriodId);
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
@@ -111,7 +110,9 @@ public class AverageController {
 
             tableAverageGrades.getColumns().clear();
 
-            String sqlCount = String.format("SELECT c.nome as nome FROM criterio_periodo cp join criterio c on cp.criterio_id = c.id where cp.periodo_id = '%d'", selectedPeriodId);
+            String sqlCount = String.format(
+                    "SELECT c.nome AS nome FROM criterio_periodo cp " +
+                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = '%d'", selectedPeriodId);
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
@@ -160,7 +161,8 @@ public class AverageController {
         try {
             connection = DatabaseConnection.getConnection(true);
 
-            String sqlCount = String.format("SELECT u.nome AS usuario_nome, c.nome AS criterio, AVG(n.valor) AS media_nota FROM nota n " +
+            String sqlCount = String.format(
+                    "SELECT u.nome AS usuario_nome, c.nome AS criterio, AVG(n.valor) AS media_nota FROM nota n " +
                     "JOIN usuario u ON u.id = n.avaliado " +
                     "JOIN periodo p ON p.id = n.periodo " +
                     "JOIN sprint s ON s.id = n.sprint " +
