@@ -22,10 +22,6 @@ public class UserModel {
         return ra.get();
     }
 
-    public void setRa(Integer ra) {
-        this.ra = new SimpleIntegerProperty(ra);
-    }
-
     public String getNome() {
         return nome.get();
     }
@@ -38,24 +34,7 @@ public class UserModel {
         return email.get();
     }
 
-    public void setEmail(String email) {
-        this.email = new SimpleStringProperty(email);
-    }
-
     public String getSenha() {
         return senha.get();
     }
-
-    public void setSenha(String senha) {
-        this.senha = new SimpleStringProperty(senha);
-    }
-
-    public Integer getId_equipe() {
-        return id_equipe.get();
-    }
-
-    public void setId_equipe(Integer id_equipe) {
-        this.id_equipe = new SimpleIntegerProperty(id_equipe);
-    }
-
 }
