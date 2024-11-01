@@ -6,6 +6,7 @@ import app.helpers.Utils;
 import app.models.EquipeModel;
 import app.models.AverageGradeModel;
 import app.models.SprintModel;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -44,17 +45,21 @@ public class AverageController {
         selectedPeriodId = periodId;
         selectedTeamId = teamId;
         ChoiceBoxSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            handleSprintListSelectionChange(newValue);
+            try {
+                handleSprintListSelectionChange(newValue);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         });
         fetchSprint();
     }
 
-    private void handleSprintListSelectionChange(String sprint) {
+    private void handleSprintListSelectionChange(String sprint) throws SQLException {
         currentSprint = sprint;
         selectedSprintId = sprintIdMap.get(sprint);
         studentList.clear();
         fetchCriterias();
-//        fetchGrades();
+        fetchGrades();
     }
 
     private void fetchSprint() {
@@ -122,6 +127,13 @@ public class AverageController {
                 columns.add(column);
             }
             tableAverageGrades.getColumns().addAll(columns);
+
+            for (TableColumn<AverageGradeModel, Double> column : columns) {
+                String criterioNome = column.getText();
+                column.setCellValueFactory(cellData ->
+                        new SimpleDoubleProperty(cellData.getValue().getAverage(criterioNome)).asObject()
+                );
+            }
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
@@ -135,10 +147,37 @@ public class AverageController {
         }
     }
 
-    private void fetchGrades() {
-        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
-        List<AverageGradeModel> notas = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
-        ObservableList<AverageGradeModel> observableNotas = FXCollections.observableArrayList(notas);
-        tableAverageGrades.setItems(observableNotas);
+    private void fetchGrades() throws SQLException {
+        String mediaQuery = "SELECT u.nome AS usuario_nome, c.nome AS criterio, AVG(n.valor) AS media_nota FROM nota n " +
+                "JOIN usuario u ON u.id = n.avaliado " +
+                "JOIN periodo p ON p.id = n.periodo " +
+                "JOIN sprint s ON s.id = n.sprint " +
+                "JOIN criterio c ON n.criterio_id = c.id " +
+                "WHERE p.id = 1 AND s.id = 1 AND u.equipe = 1 " +
+                "GROUP BY u.nome, c.nome";
+        PreparedStatement stmtMedia = connection.prepareStatement(mediaQuery);
+        ResultSet rsMedia = stmtMedia.executeQuery();
+
+        Map<String, AverageGradeModel> alunosMap = new HashMap<>();
+
+        while (rsMedia.next()) {
+            String nomeAluno = rsMedia.getString("usuario_nome");
+            String criterio = rsMedia.getString("criterio");
+            Double mediaNota = rsMedia.getDouble("media_nota");
+
+            AverageGradeModel aluno = alunosMap.getOrDefault(nomeAluno, new AverageGradeModel(nomeAluno));
+            aluno.setAverage(criterio, mediaNota);
+            alunosMap.put(nomeAluno, aluno);
+        }
+
+        ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(alunosMap.values());
+        tableAverageGrades.setItems(data);
+
+
+
+//        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+//        List<AverageGradeModel> notas = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
+//        ObservableList<AverageGradeModel> observableNotas = FXCollections.observableArrayList(notas);
+//        tableAverageGrades.setItems(observableNotas);
     }
 }

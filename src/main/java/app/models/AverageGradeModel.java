@@ -1,32 +1,26 @@
 package app.models;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AverageGradeModel {
+    private String name;
+    private Map<String, Double> averages;
 
-    private SimpleIntegerProperty idAluno;
-    private SimpleIntegerProperty idCriterio;
-    private SimpleDoubleProperty mediaNota;
-
-    public AverageGradeModel(int idAluno, int idCriterio, double mediaNota) {
-        this.idAluno = new SimpleIntegerProperty(idAluno);
-        this.idCriterio = new SimpleIntegerProperty(idCriterio);
-        this.mediaNota = new SimpleDoubleProperty(mediaNota);
+    public AverageGradeModel(String nome) {
+        this.name = nome;
+        this.averages = new HashMap<>();
     }
 
-    public AverageGradeModel(float id, int equipe, String nome, double valor, int semestreResult, int anoResult, String descricao) {
+    public String getNome() {
+        return name;
     }
 
-    public int getIdAluno() {
-        return idAluno.get();
+    public void setAverage(String criteria, Double average) {
+        averages.put(criteria, average);
     }
 
-    public int getIdCriterio() {
-        return idCriterio.get();
-    }
-
-    public double getMediaNota() {
-        return mediaNota.get();
+    public Double getAverage(String criteria) {
+        return averages.getOrDefault(criteria, 0.0);
     }
 }
