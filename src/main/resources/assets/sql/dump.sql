@@ -27,7 +27,7 @@ INSERT INTO tipo_usuario (descricao) VALUES ('professor'), ('aluno');
 
 INSERT INTO criterio_periodo (criterio_id, periodo_id) VALUES
 (1, 1), (2, 1), (3, 1),
-(2, 2), (3, 2), (4, 2);
+(2, 2), (3, 2), (4, 1);
 
 INSERT INTO equipe_periodo (periodo_id, equipe_id) VALUES
 (1, 1), (1, 2), (1, 3), (1, 4),
