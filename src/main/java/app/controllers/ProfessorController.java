@@ -189,7 +189,7 @@ public class ProfessorController implements Initializable {
             averageController.passData(teamId, periodId);
 
             stage = new Stage();
-            scene = new Scene(root, 800, 600);
+            scene = new Scene(root, 600, 400);
 
             stage.setScene(scene);
             stage.setTitle("Médias");

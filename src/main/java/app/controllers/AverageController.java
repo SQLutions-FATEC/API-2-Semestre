@@ -119,6 +119,8 @@ public class AverageController {
 
             TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
             nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            int nomeColumnWidth = 100;
+            nomeColumn.setPrefWidth(nomeColumnWidth);
             tableAverageGrades.getColumns().add(nomeColumn);
 
             while (resultSet.next()) {
@@ -129,11 +131,16 @@ public class AverageController {
             }
             tableAverageGrades.getColumns().addAll(columns);
 
+            double larguraTabela = 580;
+            double larguraRestante = larguraTabela - nomeColumnWidth;
+            double larguraPorColuna = larguraRestante / columns.size();
+
             for (TableColumn<AverageGradeModel, Double> column : columns) {
                 String criterioNome = column.getText();
                 column.setCellValueFactory(cellData ->
                         new SimpleDoubleProperty(cellData.getValue().getAverage(criterioNome)).asObject()
                 );
+                column.setPrefWidth(larguraPorColuna);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
