@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="40.0" prefWidth="800.0">
+         <children>
+            <Label text="Definir Data das Sprints">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="40.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" text="Ano">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="-10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="80.0" prefHeight="80.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <ComboBox prefWidth="150.0" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="400.0" layoutY="40.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" text="Sprint">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="-10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="200.0" layoutY="80.0" prefHeight="80.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <ComboBox prefWidth="150.0" />
+         </children>
+      </HBox>
+      <VBox alignment="TOP_CENTER" layoutY="160.0" prefHeight="200.0" prefWidth="400.0" spacing="20.0">
+         <children>
+            <Label text="Data de Inicio">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="400.0" layoutY="160.0" prefHeight="200.0" prefWidth="400.0" spacing="20.0">
+         <children>
+            <Label text="Data de Fim">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <DatePicker />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+      </VBox>
+      <HBox alignment="CENTER" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" spacing="120.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Confirmar" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="200.0" layoutY="40.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" text="Semestre">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="-10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="400.0" layoutY="80.0" prefHeight="80.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Button mnemonicParsing="false" prefWidth="150.0" text="Nova Sprint" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="360.0" prefHeight="190.0" prefWidth="800.0">
+         <children>
+            <TableView maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
+              <columns>
+                <TableColumn prefWidth="100.0" text="Sprint" />
+                <TableColumn prefWidth="150.0" text="Data de Inicio" />
+                  <TableColumn prefWidth="150.0" text="Data de Fim" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="600.0" layoutY="40.0" prefHeight="40.0" prefWidth="200.0">
+         <children>
+            <Label alignment="BOTTOM_CENTER" text="Sprint Criada">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets right="-10.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="600.0" layoutY="80.0" prefHeight="80.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <Label />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
