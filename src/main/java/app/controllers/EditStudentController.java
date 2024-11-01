@@ -1,20 +1,18 @@
 package app.controllers;
 
+import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
+import app.models.TeamModel;
 import app.models.UserModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import app.helpers.Utils;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
@@ -36,22 +34,36 @@ public class EditStudentController implements Initializable {
     @FXML
     public TableColumn<UserModel, String> colTeam;
     @FXML
-    public ChoiceBox<String> teamList;
+    public ChoiceBox<String> teamChoiceBox;
     @FXML
     public TextField studentSearch;
 
     ObservableList<UserModel> studentList = FXCollections.observableArrayList();
+    ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
     private ContextMenu suggestionsMenu = new ContextMenu();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        studentSearch.setPromptText("Digite para pesquisar");
         fetchStudents();
+        fetchTeams();
         configureAutocomplete();
     }
 
     private void fetchStudents() {
-        UserDAO UserDAO = new UserDAO();
-        studentList = UserDAO.fetchStudents();
+        UserDAO userDAO = new UserDAO();
+        studentList = userDAO.fetchStudents();
+    }
+
+    private void fetchTeams() {
+        TeamDAO teamDAO = new TeamDAO();
+        teamList = teamDAO.fetchTeams();
+        ObservableList<String> teamNames = FXCollections.observableArrayList();
+        for (TeamModel team : teamList) {
+            teamNames.add(team.getName());
+        }
+        teamChoiceBox.getItems().addAll(teamNames);
+        teamChoiceBox.setValue(teamNames.get(0));
     }
 
     private void configureAutocomplete() {
@@ -95,12 +107,7 @@ public class EditStudentController implements Initializable {
         }
     }
 
-    public void voltarProfessorScreen(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/professorScreen.fxml"));
-        Scene scene = new Scene(root);
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    public void homeScreen(ActionEvent event) throws IOException {
+        Utils.setScreen(event, "/professor/professorScreen.fxml");
     }
 }

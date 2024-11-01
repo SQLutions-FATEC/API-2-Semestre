@@ -35,7 +35,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutY="501.0" prefHeight="100.0" prefWidth="800.0" spacing="50.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#voltarProfessorScreen" text="Voltar" />
+            <Button mnemonicParsing="false" onAction="#homeScreen" text="Voltar" />
             <Button mnemonicParsing="false" text="Confirmar" />
          </children>
       </HBox>

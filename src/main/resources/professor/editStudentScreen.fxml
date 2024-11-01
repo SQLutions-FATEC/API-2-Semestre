@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
-      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
+      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#homeScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>
@@ -25,7 +25,7 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="teamList" layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <ChoiceBox fx:id="teamChoiceBox" layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="79.0" text="Usuários">
          <font>
             <Font size="16.0" />
