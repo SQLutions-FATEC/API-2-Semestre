@@ -184,11 +184,17 @@ public class StudentController implements Initializable {
             statementNota = connection.prepareStatement(sqlNota);
 
             for (NotaModel nota : tableView.getItems()) {
-                
+                statementNota.setInt(1, nota.getValor());
+                statementNota.setInt(2, nota.getAvaliador());
+                statementNota.setInt(3, nota.getAvaliado());
+                statementNota.setInt(4, nota.getCriterio());
+                statementNota.setInt(5, nota.getPeriodo());
+                statementNota.setInt(6, nota.getSprint());
+
                 try {
                     statementNota.executeUpdate();
                 } catch (SQLException e) {
-                    System.out.println("Erro: " + e.getMessage());
+                    System.out.println("Erro: "+ e.getMessage());
                 }
             }
 
@@ -208,6 +214,7 @@ public class StudentController implements Initializable {
             }
         }
     }
+
 
 
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
