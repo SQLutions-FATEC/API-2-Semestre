@@ -173,6 +173,42 @@ public class StudentController implements Initializable {
         }
     }
 
+    public void ConfirmarNotas() {
+        Connection connection = null;
+        PreparedStatement statementNota = null;
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
+            statementNota = connection.prepareStatement(sqlNota);
+
+            for (NotaModel nota : tableView.getItems()) {
+                
+                try {
+                    statementNota.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+            }
+
+            System.out.println("Notas registradas no banco de dados com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (statementNota != null) {
+                    statementNota.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
