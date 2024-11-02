@@ -4,6 +4,8 @@ import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
 import app.models.TeamModel;
 import app.models.UserModel;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -38,6 +40,7 @@ public class EditStudentController implements Initializable {
     @FXML
     public TextField studentSearch;
 
+    ObservableList<UserModel> studentTableData = FXCollections.observableArrayList();
     ObservableList<UserModel> studentList = FXCollections.observableArrayList();
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
     private ContextMenu suggestionsMenu = new ContextMenu();
@@ -45,6 +48,12 @@ public class EditStudentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         studentSearch.setPromptText("Digite para pesquisar");
+        colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
+        colRA.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRa()).asObject().asString());
+        colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+        colTeam.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEquipeId()).asObject().asString());
+        tableStudent.setItems(studentTableData);
+
         fetchStudents();
         fetchTeams();
         configureAutocomplete();
@@ -77,12 +86,6 @@ public class EditStudentController implements Initializable {
                 suggestionsMenu.show(studentSearch, Side.BOTTOM, 0, 0);
             }
         });
-
-        studentSearch.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-            if (!isNowFocused) {
-                suggestionsMenu.hide();
-            }
-        });
     }
 
     private void updateSuggestions(String text) {
@@ -95,6 +98,7 @@ public class EditStudentController implements Initializable {
             MenuItem suggestionItem = new MenuItem(student.getNome());
             suggestionItem.setOnAction(event -> {
                 studentSearch.setText(student.getNome());
+                addStudentToTable(student);
                 suggestionsMenu.hide();
             });
             suggestionsMenu.getItems().add(suggestionItem);
@@ -104,6 +108,13 @@ public class EditStudentController implements Initializable {
             suggestionsMenu.show(studentSearch, Side.BOTTOM, 0, 0);
         } else {
             suggestionsMenu.hide();
+        }
+    }
+
+    private void addStudentToTable(UserModel selectedStudent) {
+//        parei aqui, tem que resetar a tabela a cada aluno que adicionar e tem que usar o nome da equipe ao inves do id
+        if (!studentTableData.contains(selectedStudent)) {
+            studentTableData.add(selectedStudent);
         }
     }
 

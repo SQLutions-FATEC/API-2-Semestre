@@ -8,14 +8,14 @@ public class UserModel {
     private SimpleStringProperty nome;
     private SimpleStringProperty email;
     private SimpleStringProperty senha;
-    private SimpleIntegerProperty id_equipe;
+    private SimpleIntegerProperty equipeId;
 
-    public UserModel(int ra, String nome, String email, String senha, int id_equipe) {
+    public UserModel(int ra, String nome, String email, String senha, int equipeId) {
         this.ra = new SimpleIntegerProperty(ra);
         this.nome = new SimpleStringProperty(nome);
         this.email = new SimpleStringProperty(email);
         this.senha = new SimpleStringProperty(senha);
-        this.id_equipe = new SimpleIntegerProperty(id_equipe);
+        this.equipeId = new SimpleIntegerProperty(equipeId);
     }
 
     public Integer getRa() {
@@ -36,5 +36,9 @@ public class UserModel {
 
     public String getSenha() {
         return senha.get();
+    }
+
+    public int getEquipeId() {
+        return equipeId.get();
     }
 }
