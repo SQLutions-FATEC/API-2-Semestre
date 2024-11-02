@@ -23,6 +23,8 @@ import javafx.geometry.Side;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditStudentController implements Initializable {
     @FXML
@@ -44,6 +46,7 @@ public class EditStudentController implements Initializable {
     ObservableList<UserModel> studentList = FXCollections.observableArrayList();
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
     private ContextMenu suggestionsMenu = new ContextMenu();
+    private Map<Integer, String> teamNamesMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,11 +54,16 @@ public class EditStudentController implements Initializable {
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
         colRA.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRa()).asObject().asString());
         colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
-        colTeam.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getEquipeId()).asObject().asString());
+        colTeam.setCellValueFactory(cellData -> {
+            Integer teamId = cellData.getValue().getEquipeId();
+            String teamName = teamNamesMap.getOrDefault(teamId, "Equipe Desconhecida"); // Recupera o nome ou uma alternativa
+            return new SimpleStringProperty(teamName);
+        });
         tableStudent.setItems(studentTableData);
 
         fetchStudents();
         fetchTeams();
+        fetchTeamNames();
         configureAutocomplete();
     }
 
@@ -73,6 +81,11 @@ public class EditStudentController implements Initializable {
         }
         teamChoiceBox.getItems().addAll(teamNames);
         teamChoiceBox.setValue(teamNames.get(0));
+    }
+
+    private void fetchTeamNames() {
+        TeamDAO teamDAO = new TeamDAO();
+        teamNamesMap = teamDAO.fetchTeamNames();
     }
 
     private void configureAutocomplete() {
@@ -112,8 +125,8 @@ public class EditStudentController implements Initializable {
     }
 
     private void addStudentToTable(UserModel selectedStudent) {
-//        parei aqui, tem que resetar a tabela a cada aluno que adicionar e tem que usar o nome da equipe ao inves do id
         if (!studentTableData.contains(selectedStudent)) {
+            studentTableData.clear();
             studentTableData.add(selectedStudent);
         }
     }
