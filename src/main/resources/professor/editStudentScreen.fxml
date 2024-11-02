@@ -20,12 +20,12 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
+      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#changeStudentTeam" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="teamChoiceBox" layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <ChoiceBox fx:id="teamChoiceBox" layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#setTeamId" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="79.0" text="Alunos">
          <font>
             <Font size="16.0" />

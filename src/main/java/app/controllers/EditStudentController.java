@@ -47,6 +47,7 @@ public class EditStudentController implements Initializable {
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
     private ContextMenu suggestionsMenu = new ContextMenu();
     private Map<Integer, String> teamNamesMap = new HashMap<>();
+    private int selectedTeamId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,8 +64,9 @@ public class EditStudentController implements Initializable {
 
         fetchStudents();
         fetchTeams();
-        fetchTeamNames();
+//        fetchTeamNames();
         configureAutocomplete();
+        setTeamId();
     }
 
     private void fetchStudents() {
@@ -78,15 +80,16 @@ public class EditStudentController implements Initializable {
         ObservableList<String> teamNames = FXCollections.observableArrayList();
         for (TeamModel team : teamList) {
             teamNames.add(team.getName());
+            teamNamesMap.put(team.getId(), team.getName());
         }
         teamChoiceBox.getItems().addAll(teamNames);
         teamChoiceBox.setValue(teamNames.getFirst());
     }
 
-    private void fetchTeamNames() {
-        TeamDAO teamDAO = new TeamDAO();
-        teamNamesMap = teamDAO.fetchTeamNames();
-    }
+//    private void fetchTeamNames() {
+//        TeamDAO teamDAO = new TeamDAO();
+//        teamNamesMap = teamDAO.fetchTeamNames();
+//    }
 
     private void configureAutocomplete() {
         studentSearch.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -132,6 +135,15 @@ public class EditStudentController implements Initializable {
         }
     }
 
+    private void updateTeamNameInTable() {
+        UserModel selectedStudent = studentTableData.getFirst();
+
+        if (selectedStudent != null) {
+            selectedStudent.setEquipeId(selectedTeamId);
+            tableStudent.refresh();
+        }
+    }
+
     @FXML
     private void deleteStudent() {
         int ra = studentTableData.getFirst().getRa();
@@ -143,6 +155,27 @@ public class EditStudentController implements Initializable {
             studentSearch.setText("");
             studentList.removeIf(student -> student.getRa() == ra);
         }
+    }
+
+    @FXML
+    private void changeStudentTeam() {
+        int ra = studentTableData.getFirst().getRa();
+        UserDAO userDAO = new UserDAO();
+        userDAO.updateStudentTeam(ra, selectedTeamId);
+        updateTeamNameInTable();
+        studentSearch.setText("");
+    }
+
+    @FXML
+    private void setTeamId() {
+        teamChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            for (Map.Entry<Integer, String> entry : teamNamesMap.entrySet()) {
+                if (entry.getValue().equals(newValue)) {
+                    selectedTeamId = entry.getKey();
+                    break;
+                }
+            }
+        });
     }
 
     @FXML

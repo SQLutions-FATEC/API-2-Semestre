@@ -25,7 +25,6 @@ public class UserModel {
     public String getNome() {
         return nome.get();
     }
-
     public void setNome(String nome) {
         this.nome = new SimpleStringProperty(nome);
     }
@@ -40,5 +39,8 @@ public class UserModel {
 
     public int getEquipeId() {
         return equipeId.get();
+    }
+    public void setEquipeId(int id) {
+        this.equipeId = new SimpleIntegerProperty(id);
     }
 }
