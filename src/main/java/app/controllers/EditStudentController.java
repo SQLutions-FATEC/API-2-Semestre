@@ -179,7 +179,7 @@ public class EditStudentController implements Initializable {
     }
 
     @FXML
-    public void professorScreen(ActionEvent event) throws IOException {
-        Utils.setScreen(event, "/professor/professorScreen.fxml");
+    public void goToProfessorScreen(ActionEvent event) throws IOException {
+        Utils.setScreen(event, "/professor/professorScreen.fxml", "Tela do professor");
     }
 }

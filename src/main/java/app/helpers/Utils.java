@@ -82,11 +82,12 @@ public class Utils {
         return null;
     }
 
-    public static void setScreen(ActionEvent event, String screenFile) throws IOException {
+    public static void setScreen(ActionEvent event, String screenFile, String sceneName) throws IOException {
         Parent root = FXMLLoader.load(Utils.class.getResource(screenFile));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setScene(scene);
+        stage.setTitle(sceneName);
         stage.show();
     }
 }
