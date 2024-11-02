@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -49,11 +48,7 @@
     </HBox>
   </HBox>
   <HBox alignment="CENTER" prefHeight="340.0" prefWidth="200.0">
-    <TableView fx:id="tableView" editable="true" prefHeight="220.0" prefWidth="600.0">
-      <columns>
-        <TableColumn fx:id="colunaAluno" prefWidth="200.0" text="Aluno" />
-      </columns>
-    </TableView>
+    <TableView fx:id="tableView" editable="true" prefHeight="220.0" prefWidth="600.0" />
   </HBox>
   <HBox alignment="CENTER" layoutX="50.0" prefHeight="120.0" prefWidth="600.0" spacing="30.0">
     <Button layoutX="54.0" layoutY="517.0" mnemonicParsing="false" onAction="#voltarPrincipalScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar" />
