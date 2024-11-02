@@ -20,7 +20,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-
 import java.net.URL;
 import java.sql.*;
 import java.io.IOException;
@@ -41,10 +40,7 @@ public class StudentController implements Initializable {
     ResultSet resultSet = null;
 
     @FXML
-    private TableView<Aluno> tableView;
-
-    @FXML
-    private TableColumn<Aluno, String> colunaAluno;
+    public TableView<Aluno> tableView;
 
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
@@ -58,14 +54,13 @@ public class StudentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fetchSprint();
+        fetchCriterias();
     }
 
     public void passData(int teamId, int periodId) {
         selectedPeriodId = periodId;
         selectedTeamId = teamId;
-        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            handleSprintListSelectionChange(newValue);
-        });
+        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> handleSprintListSelectionChange(newValue));
         fetchSprint();
     }
 
@@ -84,22 +79,21 @@ public class StudentController implements Initializable {
         try {
             connection = DatabaseConnection.getConnection(true);
 
-            //tá dando erro e isso aq é importante
-            //tableview.getColumns().clear();
+            tableView.getColumns().clear();
 
             String sqlCount = String.format(
                     "SELECT c.nome AS nome FROM criterio_periodo cp " +
-                            "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = '%d'", selectedPeriodId);
+                            "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
             ObservableList<TableColumn<Aluno, Integer>> columns = FXCollections.observableArrayList();
 
-            TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Nome");
-            colunaAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Aluno");
+            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
             int colunaAlunoWidth = 100;
             nomeColumn.setPrefWidth(colunaAlunoWidth);
-            tableView.getColumns().add(colunaAluno);
+            tableView.getColumns().add(nomeColumn);
 
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
@@ -164,7 +158,7 @@ public class StudentController implements Initializable {
             if (currentSprint != null) {
                 choiceBoxMudarSprint.setValue(currentSprint);
             } else {
-                choiceBoxMudarSprint.setValue(sprintOptionsList.get(0));
+                choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
