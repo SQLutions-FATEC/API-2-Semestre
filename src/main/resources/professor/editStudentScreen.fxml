@@ -10,12 +10,12 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
-      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#homeScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
+      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#professorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="450.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" text="Deletar usuário">
+      <Button layoutX="450.0" layoutY="525.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="38.0" prefWidth="143.0" text="Deletar aluno">
          <font>
             <Font size="15.0" />
          </font>
@@ -26,7 +26,7 @@
          </font>
       </Button>
       <ChoiceBox fx:id="teamChoiceBox" layoutX="350.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
-      <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="79.0" text="Usuários">
+      <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="79.0" text="Alunos">
          <font>
             <Font size="16.0" />
          </font>

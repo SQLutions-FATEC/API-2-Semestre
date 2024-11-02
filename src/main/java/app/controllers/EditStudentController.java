@@ -56,7 +56,7 @@ public class EditStudentController implements Initializable {
         colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
         colTeam.setCellValueFactory(cellData -> {
             Integer teamId = cellData.getValue().getEquipeId();
-            String teamName = teamNamesMap.getOrDefault(teamId, "Equipe Desconhecida"); // Recupera o nome ou uma alternativa
+            String teamName = teamNamesMap.getOrDefault(teamId, "Equipe Desconhecida");
             return new SimpleStringProperty(teamName);
         });
         tableStudent.setItems(studentTableData);
@@ -69,7 +69,7 @@ public class EditStudentController implements Initializable {
 
     private void fetchStudents() {
         UserDAO userDAO = new UserDAO();
-        studentList = userDAO.fetchStudents();
+        studentList = userDAO.selectStudents();
     }
 
     private void fetchTeams() {
@@ -80,7 +80,7 @@ public class EditStudentController implements Initializable {
             teamNames.add(team.getName());
         }
         teamChoiceBox.getItems().addAll(teamNames);
-        teamChoiceBox.setValue(teamNames.get(0));
+        teamChoiceBox.setValue(teamNames.getFirst());
     }
 
     private void fetchTeamNames() {
@@ -112,6 +112,7 @@ public class EditStudentController implements Initializable {
             suggestionItem.setOnAction(event -> {
                 studentSearch.setText(student.getNome());
                 addStudentToTable(student);
+                studentSearch.setText("");
                 suggestionsMenu.hide();
             });
             suggestionsMenu.getItems().add(suggestionItem);
@@ -131,7 +132,21 @@ public class EditStudentController implements Initializable {
         }
     }
 
-    public void homeScreen(ActionEvent event) throws IOException {
+    @FXML
+    private void deleteStudent() {
+        int ra = studentTableData.getFirst().getRa();
+        UserDAO userDAO = new UserDAO();
+        int rowsAffected = userDAO.deleteStudent(ra);
+
+        if (rowsAffected != 0) {
+            studentTableData.clear();
+            studentSearch.setText("");
+            studentList.removeIf(student -> student.getRa() == ra);
+        }
+    }
+
+    @FXML
+    public void professorScreen(ActionEvent event) throws IOException {
         Utils.setScreen(event, "/professor/professorScreen.fxml");
     }
 }
