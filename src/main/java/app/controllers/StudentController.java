@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.helpers.DatabaseConnection;
 import app.models.Aluno;
+import app.models.NotaModel;
 import app.models.SprintModel;
 import app.helpers.Utils;
 import javafx.beans.property.SimpleIntegerProperty;
