@@ -51,21 +51,19 @@ public class Utils {
         return new int[]{semester, year};
     }
 
-    public static String[] obterSemestreEAnoAtual() {
-        LocalDate dataAtual = LocalDate.now();
+    public static String[] getCurrentSemesterAndYear() {
+        LocalDate currentDate = LocalDate.now();
+        int currentYear = currentDate.getYear();
+        int currentMonth = currentDate.getMonthValue();
 
-        int anoAtual = dataAtual.getYear();
-
-        int mesAtual = dataAtual.getMonthValue();
-
-        String semestre;
-        if (mesAtual >= 1 && mesAtual <= 6) {
-            semestre = "1º semestre";
+        String semester;
+        if (currentMonth >= 1 && currentMonth <= 6) {
+            semester = "1º semestre";
         } else {
-            semestre = "2º semestre";
+            semester = "2º semestre";
         }
 
-        return new String[] {String.valueOf(anoAtual), semestre};
+        return new String[] {String.valueOf(currentYear), semester};
     }
     
     public static String getCurrentSprint(ArrayList<String> sprints) {

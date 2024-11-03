@@ -60,6 +60,7 @@ public class CriteriaController implements Initializable  {
 
     private void fetchPeriods() {
         ArrayList<String> periodOptionsList = new ArrayList<>();
+        String[] currentPeriod = Utils.getCurrentSemesterAndYear();
 
         PeriodDAO periodDAO = new PeriodDAO();
         periodList = periodDAO.selectPeriods();
@@ -71,7 +72,7 @@ public class CriteriaController implements Initializable  {
         }
 
         periodChoiceBox.getItems().addAll(periodOptionsList);
-        periodChoiceBox.setValue(String.format("%dº semestre - %d", periodList.getFirst().getSemester(), periodList.getFirst().getYear()));
+        periodChoiceBox.setValue(currentPeriod[1] + " - " + currentPeriod[0]);
     }
 
     private void fetchCriterias(int periodId) {
