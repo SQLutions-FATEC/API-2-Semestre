@@ -69,7 +69,7 @@
       </font>
    </Label>
    <ChoiceBox fx:id="periodChoiceBox" layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
-   <Label fx:id="title" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
+   <Label fx:id="title" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhuma Equipe Encontrada">
       <font>
          <Font size="30.0" />
       </font>

@@ -29,7 +29,7 @@ public class CriteriaDAO {
         return criteriaId;
     }
 
-    public ObservableList<CriteriaModel> selectPeriodCriterias(int selectedPeriodId) {
+    public ObservableList<CriteriaModel> selectCriteriasByPeriod(int selectedPeriodId) {
         String sql = "SELECT * FROM criterio ORDER BY nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
@@ -51,12 +51,12 @@ public class CriteriaDAO {
                         criteria.setDeletedAt(LocalDateTime.now());
                     }
                 } catch (SQLException e) {
-                    System.out.println("Erro no segundo SQL de selectPeriodCriterias: " + e.getMessage());
+                    System.out.println("Erro no segundo SQL de selectCriteriasByPeriod: " + e.getMessage());
                 }
                 criteriaList.add(criteria);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectPeriodCriterias: " + e.getMessage());
+            System.out.println("Erro no SQL de selectCriteriasByPeriod: " + e.getMessage());
         }
         return criteriaList;
     }

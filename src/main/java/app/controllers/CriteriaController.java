@@ -77,7 +77,7 @@ public class CriteriaController implements Initializable  {
 
     private void fetchCriterias(int periodId) {
         CriteriaDAO criteriaDAO = new CriteriaDAO();
-        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectPeriodCriterias(periodId);
+        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectCriteriasByPeriod(periodId);
 
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
