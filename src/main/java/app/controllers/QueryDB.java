@@ -80,7 +80,7 @@ public class QueryDB {
             sql = """
                     SELECT AVG(nota.valor) AS media_nota
                     FROM nota
-                    JOIN usuario ON nota.avaliado = usuario.ra
+                    JOIN usuario ON nota.avaliado = usuario.id
                     JOIN criterio ON nota.criterio = criterio.id
                     JOIN equipe ON usuario.equipe = equipe.id
                     JOIN periodo ON periodo.id = ?
@@ -101,7 +101,7 @@ public class QueryDB {
                 mediaGeral.append(aluno[i]);
 
                 while (rs.next()) {
-                    float media = rs.getFloat("media_nota");
+                    int media = Math.round(rs.getFloat("media_nota"));
 
                     mediaGeral.append(",").append(media);
                 }
