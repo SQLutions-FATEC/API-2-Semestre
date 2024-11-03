@@ -42,7 +42,7 @@ public class QueryDB {
     public String calcMediaGeralEquipe(int periodoID, int sprintID, int equipeID) throws SQLException {
         Connection conn = DatabaseConnection.getConnection(true);
 
-        String sql = "SELECT nome FROM usuario where equipe = ?";
+        String sql = "SELECT COUNT(*) FROM usuario WHERE equipe = ?";
 
         String[] aluno;
         int i = 0;
@@ -54,11 +54,13 @@ public class QueryDB {
 
             int count = 0;
             while (rs.next()) {
-                count++;
+                count = rs.getInt(1);
             }
 
             aluno = new String[count];
         }
+
+        sql = "SELECT nome FROM usuario where equipe = ?";
 
         try (PreparedStatement pstmtEquipe = conn.prepareStatement(sql)) {
             pstmtEquipe.setInt(1, equipeID);
