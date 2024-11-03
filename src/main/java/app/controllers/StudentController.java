@@ -68,6 +68,7 @@ public class StudentController implements Initializable {
     private final ObservableList<Aluno> studentList = FXCollections.observableArrayList();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
     ArrayList<String> sprintOptionsList = new ArrayList<>();
+    private static final ObservableList<Integer> criteriaOptions = FXCollections.observableArrayList(0, 1, 2, 3);
 
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
@@ -183,13 +184,13 @@ public class StudentController implements Initializable {
             String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
             statementNota = connection.prepareStatement(sqlNota);
 
-            for (NotaModel nota : tableView.getItems()) {
-                statementNota.setInt(1, nota.getValor());
-                statementNota.setInt(2, nota.getAvaliador());
-                statementNota.setInt(3, nota.getAvaliado());
-                statementNota.setInt(4, nota.getCriterio());
-                statementNota.setInt(5, nota.getPeriodo());
-                statementNota.setInt(6, nota.getSprint());
+            for (NotaModel Nota : tableView.getItems()) {
+                statementNota.setInt(1, Nota.getValor());
+                statementNota.setInt(2, Nota.getAvaliador());
+                statementNota.setInt(3, Nota.getAvaliado());
+                statementNota.setInt(4, Nota.getCriterio());
+                statementNota.setInt(5, Nota.getPeriodo());
+                statementNota.setInt(6, Nota.getSprint());
 
                 try {
                     statementNota.executeUpdate();
