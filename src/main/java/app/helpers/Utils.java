@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -136,5 +137,21 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setAlert(String type, String title, String text) {
+        Alert.AlertType alertType = switch (type.toUpperCase()) {
+            case "INFORMATION" -> Alert.AlertType.INFORMATION;
+            case "ERROR" -> Alert.AlertType.ERROR;
+            case "WARNING" -> Alert.AlertType.WARNING;
+            case "CONFIRMATION" -> Alert.AlertType.CONFIRMATION;
+            default -> Alert.AlertType.NONE;
+        };
+
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
     }
 }
