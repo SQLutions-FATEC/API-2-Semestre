@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
@@ -33,6 +34,7 @@ public class StudentController implements Initializable {
     protected Parent root;
     protected Scene scene;
     String currentSprint;
+    Integer periodID;
     Integer selectedSprintId;
     Integer selectedPeriodId;
     Integer selectedTeamId;
@@ -80,16 +82,7 @@ public class StudentController implements Initializable {
     private void fetchCriterias() {
         try {
             connection = DatabaseConnection.getConnection(true);
-
             tableView.getColumns().clear();
-
-            String sqlCount = String.format(
-                    "SELECT c.nome AS nome FROM criterio_periodo cp " +
-                            "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
-
-            ObservableList<TableColumn<Aluno, Integer>> columns = FXCollections.observableArrayList();
 
             TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Aluno");
             nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
@@ -97,25 +90,31 @@ public class StudentController implements Initializable {
             nomeColumn.setPrefWidth(colunaAlunoWidth);
             tableView.getColumns().add(nomeColumn);
 
+            String sql = "SELECT c.nome AS criterioNome FROM criterio_periodo cp " +
+                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, selectedPeriodId);
+            resultSet = statement.executeQuery();
+
             while (resultSet.next()) {
-                String criterioNome = resultSet.getString("nome");
+                String criterioNome = resultSet.getString("criterioNome");
 
                 TableColumn<Aluno, Integer> column = new TableColumn<>(criterioNome);
-                columns.add(column);
-            }
-            tableView.getColumns().addAll(columns);
-
-            double larguraTabela = 580;
-            double larguraRestante = larguraTabela - colunaAlunoWidth;
-            double larguraPorColuna = larguraRestante / columns.size();
-
-            for (TableColumn<Aluno, Integer> column : columns) {
-                String criterioNome = column.getText();
                 column.setCellValueFactory(cellData ->
                         new SimpleIntegerProperty(cellData.getValue().getAverage(criterioNome)).asObject()
                 );
-                column.setPrefWidth(larguraPorColuna);
+
+                column.setCellFactory(ComboBoxTableCell.forTableColumn(criteriaOptions));
+
+                column.setOnEditCommit(event -> {
+                    Aluno aluno = event.getRowValue();
+                    aluno.setAverage(criterioNome, event.getNewValue());
+                });
+
+                tableView.getColumns().add(column);
             }
+            tableView.setItems(studentList);
+
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
@@ -175,46 +174,46 @@ public class StudentController implements Initializable {
         }
     }
 
-    public void ConfirmarNotas() {
-        Connection connection = null;
-        PreparedStatement statementNota = null;
-
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
-            statementNota = connection.prepareStatement(sqlNota);
-
-            for (NotaModel Nota : tableView.getItems()) {
-                statementNota.setInt(1, Nota.getValor());
-                statementNota.setInt(2, Nota.getAvaliador());
-                statementNota.setInt(3, Nota.getAvaliado());
-                statementNota.setInt(4, Nota.getCriterio());
-                statementNota.setInt(5, Nota.getPeriodo());
-                statementNota.setInt(6, Nota.getSprint());
-
-                try {
-                    statementNota.executeUpdate();
-                } catch (SQLException e) {
-                    System.out.println("Erro: "+ e.getMessage());
-                }
-            }
-
-            System.out.println("Notas registradas no banco de dados com sucesso!");
-        } catch (SQLException e) {
-            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (statementNota != null) {
-                    statementNota.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-    }
+//    public void ConfirmarNotas() {
+//        Connection connection = null;
+//        PreparedStatement statementNota = null;
+//
+//        try {
+//            connection = DatabaseConnection.getConnection(true);
+//            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
+//            statementNota = connection.prepareStatement(sqlNota);
+//
+//            for (NotaModel Nota : tableView.getItems()) {
+//                statementNota.setInt(1, Nota.getValor());
+//                statementNota.setInt(2, Nota.getAvaliador());
+//                statementNota.setInt(3, Nota.getAvaliado());
+//                statementNota.setInt(4, Nota.getCriterio());
+//                statementNota.setInt(5, Nota.getPeriodo());
+//                statementNota.setInt(6, Nota.getSprint());
+//
+//                try {
+//                    statementNota.executeUpdate();
+//                } catch (SQLException e) {
+//                    System.out.println("Erro: "+ e.getMessage());
+//                }
+//            }
+//
+//            System.out.println("Notas registradas no banco de dados com sucesso!");
+//        } catch (SQLException e) {
+//            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+//        } finally {
+//            try {
+//                if (statementNota != null) {
+//                    statementNota.close();
+//                }
+//                if (connection != null) {
+//                    connection.close();
+//                }
+//            } catch (SQLException e) {
+//                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+//            }
+//        }
+//    }
 
 
 
