@@ -2,7 +2,6 @@ package app.controllers;
 
 import app.DAOs.CriteriaDAO;
 import app.DAOs.PeriodDAO;
-import app.helpers.DatabaseConnection;
 import app.helpers.Utils;
 import app.models.CriteriaModel;
 import app.models.PeriodModel;
@@ -17,16 +16,11 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
-import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
 public class CriteriaController implements Initializable  {
     protected Scene scene;
-
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
 
     @FXML
     public ChoiceBox<String> periodChoiceBox;
@@ -117,7 +111,7 @@ public class CriteriaController implements Initializable  {
 
     private void handlePeriodListSelectionChange(String period) {
         PeriodModel selectedPeriod = periodMap.getOrDefault(period, null);
-        int selectedPeriodId = (selectedPeriod != null) ? selectedPeriod.getId() : 0;
+        selectedPeriodId = (selectedPeriod != null) ? selectedPeriod.getId() : 0;
         currentPeriod = period;
         fetchCriterias(selectedPeriodId);
     }
@@ -128,117 +122,38 @@ public class CriteriaController implements Initializable  {
         String description = criteriaDescription.getText().trim();
 
         if (!Utils.isOnlyLetters(name)) {
-            System.out.println("Erro: O critério deve conter apenas letras.");
+            Utils.setAlert("ERROR", "Adição de critério", "O critério deve conter apenas letras");
             return;
         }
         if (!Utils.isOnlyLetters(description)) {
-            System.out.println("Erro: O critério deve conter apenas letras.");
+            Utils.setAlert("ERROR", "Adição de critério", "A descrição deve conter apenas letras");
             return;
         }
 
-        try {
-            connection = DatabaseConnection.getConnection(true);
+        CriteriaDAO criteriaDAO = new CriteriaDAO();
+        int criteriaId = criteriaDAO.createCriteria(name, description);
 
-            String sqlInsert = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
-            statement = connection.prepareStatement(sqlInsert);
-            statement.setString(1, name);
-            statement.setString(2, description);
-
-            int rowsAffected = statement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Critério adicionado com sucesso!");
-                fetchCriterias(selectedPeriodId);
-                criteriaName.clear();
-                criteriaDescription.clear();
-            } else {
-                System.out.println("Falha ao adicionar o critério.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        if (criteriaId != 0) {
+            Utils.setAlert("INFORMATION", "Adição de critério", "O critério foi adicionado com sucesso");
+            fetchCriterias(selectedPeriodId);
+            criteriaName.clear();
+            criteriaDescription.clear();
+        } else {
+            Utils.setAlert("ERROR", "Adição de critério", "Falha na adição do critério");
         }
-        Utils.setAlert("INFORMATION", "Adição de critério", "O critério foi adicionado com sucesso");
     }
 
     @FXML
     private void addCriteriasToSemester() {
         ObservableList<CriteriaModel> criteriaList = tableCriteria.getItems();
         if (criteriaList.isEmpty()) {
-            System.out.println("Nenhum critério disponível na tabela.");
+            Utils.setAlert("INFORMATION", "Seleção de critérios", "Nenhum critério disponível na tabela");
             return;
         }
-        int[] curPeriod;
-        try {
-            curPeriod = Utils.getPeriodFromFilter(currentPeriod);
-        } catch (IllegalArgumentException error) {
-            throw error;
-        }
-        try {
-            connection = DatabaseConnection.getConnection(true);
 
-            String sqlSelectPeriodoId = String.format("SELECT id FROM periodo WHERE semestre = '%d' AND ano = '%d'", curPeriod[0], curPeriod[1]);
-            statement = connection.prepareStatement(sqlSelectPeriodoId);
-            resultSet = statement.executeQuery();
+        CriteriaDAO criteriaDAO = new CriteriaDAO();
+        criteriaDAO.updateCriteriaToPeriod(selectedPeriodId, criteriaList);
 
-            if (resultSet.next()) {
-                int periodId = resultSet.getInt("id");
-                String sqlCheckExistence = "SELECT COUNT(*) FROM criterio_periodo WHERE criterio_id = ? AND periodo_id = ?";
-                String sqlInsertOrUpdate = "INSERT INTO criterio_periodo (criterio_id, periodo_id, deleted_at) VALUES (?, ?, ?) " +
-                        "ON DUPLICATE KEY UPDATE deleted_at = ?";
-
-                for (CriteriaModel criteria : criteriaList) {
-                    int criteriaId = criteria.getId();
-                    boolean isDeleted = criteria.getDeletedAt() == null;
-
-                    PreparedStatement checkStatement = connection.prepareStatement(sqlCheckExistence);
-                    checkStatement.setInt(1, criteriaId);
-                    checkStatement.setInt(2, periodId);
-                    ResultSet checkResultSet = checkStatement.executeQuery();
-
-                    if (checkResultSet.next() && checkResultSet.getInt(1) > 0) {
-                        PreparedStatement updateStatement = connection.prepareStatement(sqlInsertOrUpdate);
-                        updateStatement.setInt(1, criteriaId);
-                        updateStatement.setInt(2, periodId);
-                        updateStatement.setObject(3, isDeleted ? LocalDateTime.now() : null);
-                        updateStatement.setObject(4, isDeleted ? LocalDateTime.now() : null);
-                        updateStatement.executeUpdate();
-                        updateStatement.close();
-                    } else {
-                        PreparedStatement insertStatement = connection.prepareStatement(sqlInsertOrUpdate);
-                        insertStatement.setInt(1, criteriaId);
-                        insertStatement.setInt(2, periodId);
-                        insertStatement.setObject(3, isDeleted ? LocalDateTime.now() : null);
-                        insertStatement.setObject(4, isDeleted ? LocalDateTime.now() : null);
-                        insertStatement.executeUpdate();
-                        insertStatement.close();
-                    }
-
-                    checkStatement.close();
-                }
-
-                System.out.println("Critérios associados ao período com sucesso.");
-            } else {
-                System.out.println("Período não encontrado.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao associar critérios ao período: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
         Utils.setAlert("INFORMATION", "Seleção de critérios", "Os critérios foram associados com sucesso");
     }
-
 }
