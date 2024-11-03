@@ -134,7 +134,7 @@ public class CriteriaController implements Initializable  {
         int criteriaId = criteriaDAO.createCriteria(name, description);
 
         if (criteriaId != 0) {
-            Utils.setAlert("INFORMATION", "Adição de critério", "O critério foi adicionado com sucesso");
+            Utils.setAlert("CONFIRMATION", "Adição de critério", "O critério foi adicionado com sucesso");
             fetchCriterias(selectedPeriodId);
             criteriaName.clear();
             criteriaDescription.clear();
@@ -154,6 +154,6 @@ public class CriteriaController implements Initializable  {
         CriteriaDAO criteriaDAO = new CriteriaDAO();
         criteriaDAO.updateCriteriaToPeriod(selectedPeriodId, criteriaList);
 
-        Utils.setAlert("INFORMATION", "Seleção de critérios", "Os critérios foram associados com sucesso");
+        Utils.setAlert("CONFIRMATION", "Seleção de critérios", "Os critérios foram associados com sucesso");
     }
 }

@@ -109,7 +109,7 @@ public class AddStudentController {
 
         UserDAO userDAO = new UserDAO();
         userDAO.createStudents(tableView.getItems(), teamId);
-        Utils.setAlert("INFORMATION", "Adição de alunos", "Os alunos foram adicionados com sucesso");
+        Utils.setAlert("CONFIRMATION", "Adição de alunos", "Os alunos foram adicionados com sucesso");
         tableView.getItems().clear();
     }
 
