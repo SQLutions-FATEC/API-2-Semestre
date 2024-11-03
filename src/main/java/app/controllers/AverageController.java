@@ -77,7 +77,7 @@ public class AverageController {
 
     private void fetchCriterias() {
         CriteriaDAO criteriaDAO = new CriteriaDAO();
-        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectCriteriasByPeriod(selectedPeriodId);
+        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectActiveCriteriasByPeriod(selectedPeriodId);
 
         tableAverageGrades.getColumns().clear();
         ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();

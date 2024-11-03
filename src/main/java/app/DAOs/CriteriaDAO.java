@@ -61,6 +61,27 @@ public class CriteriaDAO {
         return criteriaList;
     }
 
+    public ObservableList<CriteriaModel> selectActiveCriteriasByPeriod(int selectedPeriodId) {
+        String sql = String.format("SELECT * FROM criterio c JOIN criterio_periodo cp ON cp.criterio_id = c.id WHERE cp.periodo_id = %d AND c.deleted_at IS NULL AND cp.deleted_at IS NULL ORDER BY c.nome", selectedPeriodId);
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("nome");
+                String description = resultSet.getString("descricao");
+                Timestamp timestamp = resultSet.getTimestamp("deleted_at");
+                LocalDateTime deletedAt = (timestamp != null) ? timestamp.toLocalDateTime() : null;
+
+                CriteriaModel criteria = new CriteriaModel(id, name, description, deletedAt);
+
+                criteriaList.add(criteria);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectActiveCriteriasByPeriod: " + e.getMessage());
+        }
+        return criteriaList;
+    }
+
     public void updateCriteriaToPeriod(int selectedPeriodId, ObservableList<CriteriaModel> criteriaList) {
         String sqlSelectPeriodoId = String.format("SELECT id FROM periodo WHERE id = %d", selectedPeriodId);
         int periodId = 0;
