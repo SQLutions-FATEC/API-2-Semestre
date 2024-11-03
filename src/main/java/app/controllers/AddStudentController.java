@@ -1,13 +1,12 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
 import app.models.UserModel;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -24,7 +23,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 
-public class CSVController extends DatabaseConnection {
+public class AddStudentController extends DatabaseConnection {
 
     protected Stage stage;
     protected Parent root;
@@ -190,13 +189,8 @@ public class CSVController extends DatabaseConnection {
         }
     }
 
-    public void voltarTelaProfessor(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
-        root = loader.load();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        stage.setScene(new Scene(root));
-        stage.setTitle("Tela do Professor");
-        stage.show();
+    @FXML
+    public void goToProfessorScreen(ActionEvent event) {
+        Utils.setScreen(event, "professorScreen");
     }
 }

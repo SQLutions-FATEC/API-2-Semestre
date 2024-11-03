@@ -1,4 +1,5 @@
 package app.helpers;
+import app.controllers.AverageController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class Utils {
     public static boolean isOnlyLetters(String input) {
@@ -82,12 +84,57 @@ public class Utils {
         return null;
     }
 
-    public static void setScreen(ActionEvent event, String screenFile, String sceneName) throws IOException {
-        Parent root = FXMLLoader.load(Utils.class.getResource(screenFile));
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.setTitle(sceneName);
-        stage.show();
+    public static void setScreen(ActionEvent event, String screenFile) {
+        Map<String, String[]> files = new HashMap<>();
+
+        files.put("studentScreen", new String[]{"/student/studentScreen.fxml", "Tela do aluno"});
+        files.put("professorScreen", new String[]{"/professor/professorScreen.fxml", "Tela do professor"});
+        files.put("criteriaScreen", new String[]{"/professor/criteriaScreen.fxml", "Definir critérios"});
+        files.put("addStudentScreen", new String[]{"/professor/addStudentScreen.fxml", "Adicionar aluno"});
+        files.put("editStudentScreen", new String[]{"/professor/editStudentScreen.fxml", "Editar aluno"});
+        files.put("setScore", new String[]{"/professor/setScore.fxml", "Definir pontuação"});
+
+        String screenFXML = files.get(screenFile)[0];
+        String screenName = files.get(screenFile)[1];
+
+        try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Utils.class.getResource(screenFXML)));
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle(screenName);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setPopup(String screenFile, int height, int width, Consumer<Object> controllerAction) {
+        Map<String, String[]> files = new HashMap<>();
+
+        files.put("averageScreen", new String[]{"/professor/averageScreen.fxml", "Médias"});
+
+        String screenFXML = files.get(screenFile)[0];
+        String screenName = files.get(screenFile)[1];
+
+        try {
+            FXMLLoader loader = new FXMLLoader(Utils.class.getResource(screenFXML));
+            Parent root = loader.load();
+
+            Object controller = loader.getController();
+            if (controllerAction != null) {
+                controllerAction.accept(controller);
+            }
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root, width, height);
+
+            stage.setScene(scene);
+            stage.setTitle(screenName);
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

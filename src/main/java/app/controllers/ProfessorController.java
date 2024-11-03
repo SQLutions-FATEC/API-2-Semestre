@@ -156,7 +156,7 @@ public class ProfessorController implements Initializable {
                         Button btn = new Button("Visualizar");
                         btn.setOnAction((ActionEvent event) -> {
                             EquipeModel equipe = getTableView().getItems().get(getIndex());
-                            abrirNovaTela(equipe.getId(), selectedPeriodId);
+                            openPopup(equipe.getId(), selectedPeriodId);
                         });
                         setGraphic(btn);
                         setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -180,24 +180,12 @@ public class ProfessorController implements Initializable {
         }
     }
 
-    private void abrirNovaTela(int teamId, int periodId) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/averageScreen.fxml"));
-            Parent root = loader.load();
-
-            AverageController averageController = loader.getController();
-            averageController.passData(teamId, periodId);
-
-            stage = new Stage();
-            scene = new Scene(root, 600, 400);
-
-            stage.setScene(scene);
-            stage.setTitle("Médias");
-            stage.setResizable(false);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void openPopup(int teamId, int periodId) {
+        Utils.setPopup("averageScreen", 600, 400, controller -> {
+            if (controller instanceof AverageController) {
+                ((AverageController) controller).passData(teamId, periodId);
+            }
+        });
     }
 
     private void handlePeriodListSelectionChange(String period) {
@@ -207,51 +195,28 @@ public class ProfessorController implements Initializable {
         carregarDadosEquipe();
     }
 
-    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
+    @FXML
+    public void goToLoginScreen(ActionEvent event) {
+        Utils.setScreen(event, "loginScreen");
     }
 
-    public void trocarCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/csvScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Insira um arquivo CSV");
-        stage.show();
+    @FXML
+    public void goToAddStudentScreen(ActionEvent event) {
+        Utils.setScreen(event, "addStudentScreen");
     }
 
-    public void definirCriteriosCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriaScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Critérios");
-        stage.show();
+    @FXML
+    public void goToCriteriaScreen(ActionEvent event) {
+        Utils.setScreen(event, "criteriaScreen");
     }
 
-    public void editarAluno(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/editStudentScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Editar aluno");
-        stage.show();
+    @FXML
+    public void goToEditStudentScreen(ActionEvent event) {
+        Utils.setScreen(event, "editStudentScreen");
     }
-    public void definirPontuacao(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/professor/setScore.fxml"));
-        Scene scene = new Scene(root);
 
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+    @FXML
+    public void goToSetScoreScreen(ActionEvent event) {
+        Utils.setScreen(event, "setScore");
     }
 }

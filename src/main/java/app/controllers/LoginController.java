@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -45,38 +46,20 @@ public class LoginController {
         }
 
         if (alunos.contains(email)) {
-            loadStudentScreen(event);
+            goToStudentScreen(event);
         } else if (professores.contains(email)) {
-            loadProfessorScreen(event);
+            goToProfessorScreen(event);
         } else {
             showAlert("Acesso negado", "Email não autorizado.");
         }
     }
 
-    private void loadStudentScreen(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/student/studentScreen.fxml"));
-            root = loader.load();
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Avaliação de Alunos");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void goToStudentScreen(ActionEvent event) {
+        Utils.setScreen(event, "studentScreen");
     }
 
-    private void loadProfessorScreen(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
-            root = loader.load();
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.setTitle("Tela do Professor");
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void goToProfessorScreen(ActionEvent event) {
+        Utils.setScreen(event, "professorScreen");
     }
 
     private void showAlert(String title, String message) {

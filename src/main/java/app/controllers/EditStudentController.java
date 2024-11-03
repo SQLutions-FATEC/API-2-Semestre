@@ -180,6 +180,6 @@ public class EditStudentController implements Initializable {
 
     @FXML
     public void goToProfessorScreen(ActionEvent event) throws IOException {
-        Utils.setScreen(event, "/professor/professorScreen.fxml", "Tela do professor");
+        Utils.setScreen(event, "professorScreen");
     }
 }

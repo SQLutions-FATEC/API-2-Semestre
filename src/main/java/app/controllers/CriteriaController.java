@@ -63,14 +63,9 @@ public class CriteriaController implements Initializable  {
         fetchPeriods();
     }
 
-    public void voltarTelaProfessor(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/professor/professorScreen.fxml"));
-        root = loader.load();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        stage.setScene(new Scene(root));
-        stage.setTitle("Tela do Professor");
-        stage.show();
+    @FXML
+    public void goToProfessorScreen(ActionEvent event) {
+        Utils.setScreen(event, "professorScreen");
     }
 
     private void fetchPeriods() {

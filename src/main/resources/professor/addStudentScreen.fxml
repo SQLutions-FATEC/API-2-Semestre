@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CSVController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AddStudentController">
       <Button fx:id="buttonEnviarCSV" layoutX="666.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="40.0" prefWidth="120.0" text="Inserir csv">
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="40.0" prefWidth="120.0" text="Voltar">
+      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="40.0" prefWidth="120.0" text="Voltar">
          <font>
             <Font size="17.0" />
          </font></Button>
