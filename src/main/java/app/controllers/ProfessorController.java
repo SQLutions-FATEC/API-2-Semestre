@@ -175,7 +175,7 @@ public class ProfessorController implements Initializable {
 
     @FXML
     public void gerarCsvButton(ActionEvent event) {
-        String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "/relatorio.csv";
+        String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "\\relatorio.csv";
 
         try {
             CSVGerador.gerarCsv(caminhoArquivo);
