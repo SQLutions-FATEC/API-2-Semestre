@@ -74,13 +74,12 @@ public class StudentController implements Initializable {
 
     private void fetchAlunos() throws SQLException {
         connection = DatabaseConnection.getConnection(true);
-        String sql = String.format("SELECT c.nome AS nome FROM criterio_periodo cp " +
-                "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
+        String sql = String.format("SELECT us.nome AS nome FROM usuario us " +
+                " WHERE us.equipe = 1");
         statement = connection.prepareStatement(sql);
         resultSet = statement.executeQuery();
 
     }
-
 
 
     private void handleSprintListSelectionChange(String sprint) {
@@ -94,7 +93,7 @@ public class StudentController implements Initializable {
         try {
             connection = DatabaseConnection.getConnection(true);
             tableView.getColumns().clear();
-            String sql = String.format("SELECT * FROM AS nome FROM criterio_periodo cp " +
+            String sql = String.format("SELECT * FROM criterio_periodo cp " +
                     "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
@@ -106,7 +105,6 @@ public class StudentController implements Initializable {
             int colunaAlunoWidth = 100;
             nomeColumn.setPrefWidth(colunaAlunoWidth);
             tableView.getColumns().add(nomeColumn);
-            fetchAlunos();
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
                 TableColumn<Aluno, Integer> column = new TableColumn<>(criterioNome);
