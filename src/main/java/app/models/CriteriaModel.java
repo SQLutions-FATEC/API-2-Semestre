@@ -26,16 +26,6 @@ public class CriteriaModel {
     public String getNome() {
         return nome.get();
     }
-    public StringProperty nomeProperty() {
-        return nome;
-    }
-
-    public String getDescricao() {
-        return descricao.get();
-    }
-    public StringProperty descricaoProperty() {
-        return descricao;
-    }
 
     public LocalDateTime getDeletedAt() {
         return deletedAt.get();

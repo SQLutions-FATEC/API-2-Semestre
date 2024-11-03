@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.SprintDAO;
 import app.helpers.DatabaseConnection;
 import app.DAOs.AverageGradeDAO;
 import app.helpers.Utils;
@@ -24,7 +25,7 @@ import java.util.*;
 
 public class AverageController {
     @FXML
-    public ChoiceBox<String> ChoiceBoxSprint;
+    public ChoiceBox<String> sprintChoiceBox;
     @FXML
     public TableView<AverageGradeModel> tableAverageGrades = new TableView<>();
 
@@ -43,7 +44,7 @@ public class AverageController {
     public void passData(int teamId, int periodId) {
         selectedPeriodId = periodId;
         selectedTeamId = teamId;
-        ChoiceBoxSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        sprintChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
         });
         fetchSprint();
@@ -58,46 +59,25 @@ public class AverageController {
     }
 
     private void fetchSprint() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
+        SprintDAO sprintDAO = new SprintDAO();
+        ObservableList<SprintModel> sprintList = sprintDAO.selectSprint(selectedPeriodId);
 
-            String sqlCount = String.format("SELECT * FROM sprint s WHERE s.periodo = '%d' ORDER BY s.data_inicio", selectedPeriodId);
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
+        for (SprintModel sprint : sprintList) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
+            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String description = resultSet.getString("descricao");
-                Date dataInicio = resultSet.getDate("data_inicio");
-                Date dataFim = resultSet.getDate("data_fim");
+            String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+            sprintOptionsList.add(sprintDescription);
+            sprintIdMap.put(sprintDescription, sprint.getId());
+        }
 
-                new SprintModel(id, description, dataInicio, dataFim);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
-                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
-
-                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
-                sprintOptionsList.add(sprintDescription);
-                sprintIdMap.put(sprintDescription, id);
-            }
-            ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
-            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
-            if (currentSprint != null) {
-                ChoiceBoxSprint.setValue(currentSprint);
-            } else {
-                ChoiceBoxSprint.setValue(sprintOptionsList.get(0));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        sprintChoiceBox.getItems().addAll(sprintOptionsList);
+        String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+        if (currentSprint != null) {
+            sprintChoiceBox.setValue(currentSprint);
+        } else {
+            sprintChoiceBox.setValue(sprintOptionsList.getFirst());
         }
     }
 

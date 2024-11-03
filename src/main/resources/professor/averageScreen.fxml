@@ -18,6 +18,6 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ChoiceBox fx:id="ChoiceBoxSprint" layoutX="10.0" layoutY="37.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="sprintChoiceBox" layoutX="10.0" layoutY="37.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

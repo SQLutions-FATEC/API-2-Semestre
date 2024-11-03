@@ -181,7 +181,7 @@ public class ProfessorController implements Initializable {
     }
 
     private void openPopup(int teamId, int periodId) {
-        Utils.setPopup("averageScreen", 600, 400, controller -> {
+        Utils.setPopup("averageScreen", 400, 600, controller -> {
             if (controller instanceof AverageController) {
                 ((AverageController) controller).passData(teamId, periodId);
             }
