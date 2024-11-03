@@ -1,5 +1,4 @@
 package app.helpers;
-import app.controllers.AverageController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -21,34 +20,6 @@ public class Utils {
         }
 
         return input.matches("[a-zA-ZÀ-ÿ\\s]+");
-    }
-
-    public static int[] getPeriodFromFilter(String period) {
-        if (!period.contains("-")) {
-            throw new IllegalArgumentException("A string não contém o caractere '-'.");
-        }
-        String[] parts = period.split(" - ");
-        String semesterPart = parts[0];
-        String yearPart = parts[1];
-        String semesterNumber = semesterPart.split("º")[0];
-        int semester = Integer.parseInt(semesterNumber);
-        int year = Integer.parseInt(yearPart);
-
-        return new int[]{semester, year};
-    }
-
-    public static int[] getSprintFromFilter(String sprint) {
-        if (!sprint.contains("-")) {
-            throw new IllegalArgumentException("A string não contém o caractere '-'.");
-        }
-        String[] parts = sprint.split(" - ");
-        String semesterPart = parts[0];
-        String yearPart = parts[1];
-        String semesterNumber = semesterPart.split("º")[0];
-        int semester = Integer.parseInt(semesterNumber);
-        int year = Integer.parseInt(yearPart);
-
-        return new int[]{semester, year};
     }
 
     public static String[] getCurrentSemesterAndYear() {
