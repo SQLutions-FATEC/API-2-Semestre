@@ -1,5 +1,6 @@
 package app.models;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Aluno {
@@ -8,18 +9,18 @@ public class Aluno {
 
     public Aluno(String nome, Map<String, Integer> notas) {
         this.nome = nome;
-        this.notas = notas;
+        this.notas = new HashMap<>();
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setAverage(String criteria, Integer nota) {
+    public void setNotas(String criteria, Integer nota) {
         notas.put(criteria, nota);
     }
 
-    public Integer getAverage(String criteria) {
+    public Integer getNotas(String criteria) {
         return notas.getOrDefault(criteria, 0);
     }
 

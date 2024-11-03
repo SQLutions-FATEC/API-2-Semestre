@@ -56,8 +56,8 @@ public class StudentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fetchSprint();
         fetchCriterias();
+        fetchSprint();
     }
 
     public void passData(int teamId, int periodId) {
@@ -72,6 +72,17 @@ public class StudentController implements Initializable {
     ArrayList<String> sprintOptionsList = new ArrayList<>();
     private static final ObservableList<Integer> criteriaOptions = FXCollections.observableArrayList(0, 1, 2, 3);
 
+    private void fetchAlunos() throws SQLException {
+        connection = DatabaseConnection.getConnection(true);
+        String sql = String.format("SELECT c.nome AS nome FROM criterio_periodo cp " +
+                "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
+        statement = connection.prepareStatement(sql);
+        resultSet = statement.executeQuery();
+
+    }
+
+
+
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
         selectedSprintId = sprintIdMap.get(sprint);
@@ -83,36 +94,36 @@ public class StudentController implements Initializable {
         try {
             connection = DatabaseConnection.getConnection(true);
             tableView.getColumns().clear();
+            String sql = String.format("SELECT * FROM AS nome FROM criterio_periodo cp " +
+                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            ObservableList<TableColumn<Aluno, Integer>> columns = FXCollections.observableArrayList();
 
             TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Aluno");
             nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
             int colunaAlunoWidth = 100;
             nomeColumn.setPrefWidth(colunaAlunoWidth);
             tableView.getColumns().add(nomeColumn);
-
-            String sql = "SELECT c.nome AS criterioNome FROM criterio_periodo cp " +
-                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setInt(1, selectedPeriodId);
-            resultSet = statement.executeQuery();
-
+            fetchAlunos();
             while (resultSet.next()) {
-                String criterioNome = resultSet.getString("criterioNome");
-
+                String criterioNome = resultSet.getString("nome");
                 TableColumn<Aluno, Integer> column = new TableColumn<>(criterioNome);
                 column.setCellValueFactory(cellData ->
-                        new SimpleIntegerProperty(cellData.getValue().getAverage(criterioNome)).asObject()
+                        new SimpleIntegerProperty(cellData.getValue().getNotas(criterioNome)).asObject()
                 );
 
                 column.setCellFactory(ComboBoxTableCell.forTableColumn(criteriaOptions));
 
                 column.setOnEditCommit(event -> {
                     Aluno aluno = event.getRowValue();
-                    aluno.setAverage(criterioNome, event.getNewValue());
+                    aluno.setNotas(criterioNome, event.getNewValue());
                 });
 
-                tableView.getColumns().add(column);
+                columns.add(column);
             }
+            tableView.getColumns().addAll(columns);
             tableView.setItems(studentList);
 
         } catch (SQLException e) {
@@ -132,7 +143,7 @@ public class StudentController implements Initializable {
         try {
             connection = DatabaseConnection.getConnection(true);
 
-            String sqlCount = String.format("SELECT * FROM sprint s WHERE s.periodo = 1 ORDER BY s.data_inicio");
+            String sqlCount = "SELECT * FROM sprint";
             statement = connection.prepareStatement(sqlCount);
             resultSet = statement.executeQuery();
 
