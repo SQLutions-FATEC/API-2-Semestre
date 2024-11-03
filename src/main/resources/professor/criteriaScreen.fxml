@@ -26,7 +26,7 @@
                 <Font size="16.0" />
             </font>
         </Label>
-   <ChoiceBox fx:id="periodList" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+   <ChoiceBox fx:id="periodChoiceBox" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
    <Label layoutX="50.0" layoutY="35.0" prefHeight="21.0" prefWidth="83.0" text="Periodo">
       <font>
          <Font size="16.0" />
@@ -47,8 +47,8 @@
    <TableView fx:id="tableCriteria" layoutX="50.0" layoutY="235.0" prefHeight="250.0" prefWidth="700.0">
      <columns>
          <TableColumn fx:id="colCheckbox" prefWidth="50.0" />
-       <TableColumn fx:id="colNome" prefWidth="200.0" text="Nome" />
-       <TableColumn fx:id="colDescricao" minWidth="0.0" prefWidth="449.0" text="Descriçao" />
+       <TableColumn fx:id="colName" prefWidth="200.0" text="Nome" />
+       <TableColumn fx:id="colDescription" minWidth="0.0" prefWidth="449.0" text="Descriçao" />
      </columns>
    </TableView>
 </AnchorPane>

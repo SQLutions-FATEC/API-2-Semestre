@@ -12,7 +12,7 @@ import java.util.Date;
 public class SprintDAO {
     ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
-    public ObservableList<SprintModel> selectSprint(int selectedPeriodId) {
+    public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
         String sql = String.format("SELECT * FROM sprint s WHERE s.periodo = '%d' ORDER BY s.data_inicio", selectedPeriodId);
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
@@ -26,7 +26,7 @@ public class SprintDAO {
                 sprintList.add(sprint);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectTeams: " + e.getMessage());
+            System.out.println("Erro no SQL de selectSprints: " + e.getMessage());
         }
         return sprintList;
     }

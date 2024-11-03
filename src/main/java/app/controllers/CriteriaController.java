@@ -1,45 +1,35 @@
 package app.controllers;
 
+import app.DAOs.CriteriaDAO;
+import app.DAOs.PeriodDAO;
 import app.helpers.DatabaseConnection;
 import app.helpers.Utils;
 import app.models.CriteriaModel;
+import app.models.PeriodModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CriteriaController implements Initializable  {
-    protected Stage stage;
-    protected Parent root;
     protected Scene scene;
 
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
-    String currentPeriod = "Todos";
 
     @FXML
-    public ChoiceBox<String> periodList;
+    public ChoiceBox<String> periodChoiceBox;
     @FXML
     public TextField criteriaName;
     @FXML
@@ -49,15 +39,21 @@ public class CriteriaController implements Initializable  {
     @FXML
     public TableColumn<CriteriaModel, Boolean> colCheckbox;
     @FXML
-    public TableColumn<CriteriaModel, String> colNome;
+    public TableColumn<CriteriaModel, String> colName;
     @FXML
-    public TableColumn<CriteriaModel, String> colDescricao;
+    public TableColumn<CriteriaModel, String> colDescription;
+
+    String currentPeriod = null;
+    int selectedPeriodId = 0;
+
+    ObservableList<PeriodModel> periodList = FXCollections.observableArrayList();
+    Map<String, PeriodModel> periodMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         criteriaName.setPromptText("Adicione um critério");
         criteriaDescription.setPromptText("Descreva o critério");
-        periodList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });
         fetchPeriods();
@@ -69,121 +65,61 @@ public class CriteriaController implements Initializable  {
     }
 
     private void fetchPeriods() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
+        ArrayList<String> periodOptionsList = new ArrayList<>();
 
-            String sqlCount = "SELECT * FROM periodo ORDER BY ano";
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
+        PeriodDAO periodDAO = new PeriodDAO();
+        periodList = periodDAO.selectPeriods();
 
-            ArrayList<String> periodOptionsList = new ArrayList<>();
-            periodOptionsList.add("Todos");
-
-            while (resultSet.next()) {
-                String semester = resultSet.getString("semestre");
-                String year = resultSet.getString("ano");
-
-                periodOptionsList.add(semester + "º semestre - " + year);
-            }
-            periodList.getItems().addAll(periodOptionsList);
-            periodList.setValue(currentPeriod);
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        for (PeriodModel period : periodList) {
+            String periodName = String.format("%dº semestre - %d", period.getSemester(), period.getYear());
+            periodOptionsList.add(periodName);
+            periodMap.put(periodName, period);
         }
+
+        periodChoiceBox.getItems().addAll(periodOptionsList);
+        periodChoiceBox.setValue(String.format("%dº semestre - %d", periodList.getFirst().getSemester(), periodList.getFirst().getYear()));
     }
 
-    private void fetchCriterias(String period) {
-        try {
-            connection = DatabaseConnection.getConnection(true);
+    private void fetchCriterias(int periodId) {
+        CriteriaDAO criteriaDAO = new CriteriaDAO();
+        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectPeriodCriterias(periodId);
 
-            String sqlCount;
-            boolean isAllPeriods = Objects.equals(period, "Todos");
-            int[] curPeriod;
-            try {
-                curPeriod = isAllPeriods ? null : Utils.getPeriodFromFilter(period);
-            } catch (IllegalArgumentException error) {
-                throw error;
-            }
-            sqlCount = "SELECT id, nome, descricao FROM criterio ORDER BY nome";
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
 
-            ObservableList<CriteriaModel> criteriaList = FXCollections.observableArrayList();
+        colCheckbox.setCellValueFactory(cellData -> cellData.getValue().isDeletedProperty());
+        colCheckbox.setCellFactory(column -> new CheckBoxTableCell<CriteriaModel, Boolean>() {
+            @Override
+            public void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setGraphic(null);
+                } else {
+                    CheckBox checkBox = new CheckBox();
+                    checkBox.setSelected(item);
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String nome = resultSet.getString("nome");
-                String descricao = resultSet.getString("descricao");
-
-                CriteriaModel criteria = new CriteriaModel(id, nome, descricao);
-
-                if (!isAllPeriods) {
-                    String checkAssociationSql = "SELECT COUNT(*) FROM criterio_periodo cp " +
-                            "JOIN periodo p ON cp.periodo_id = p.id " +
-                            "WHERE cp.criterio_id = ? AND p.semestre = ? AND p.ano = ? AND cp.deleted_at IS NULL";
-                    try (PreparedStatement checkStmt = connection.prepareStatement(checkAssociationSql)) {
-                        checkStmt.setInt(1, id);
-                        checkStmt.setInt(2, curPeriod[0]);
-                        checkStmt.setInt(3, curPeriod[1]);
-
-                        ResultSet checkResult = checkStmt.executeQuery();
-                        if (checkResult.next() && checkResult.getInt(1) > 0) {
-                            criteria.setDeletedAt(LocalDateTime.now());
+                    checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                        CriteriaModel criteriaModel = getTableView().getItems().get(getIndex());
+                        if (newValue) {
+                            criteriaModel.setDeletedAt(LocalDateTime.now());
+                        } else {
+                            criteriaModel.clearDeletedAt();
                         }
-                    }
+                    });
+
+                    setGraphic(checkBox);
                 }
-
-                criteriaList.add(criteria);
             }
+        });
 
-            colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            colDescricao.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+        tableCriteria.setItems(criteriaList);
+    }
 
-            colCheckbox.setCellValueFactory(cellData -> cellData.getValue().isDeletedProperty());
-            colCheckbox.setCellFactory(column -> new CheckBoxTableCell<CriteriaModel, Boolean>() {
-                @Override
-                public void updateItem(Boolean item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (empty || item == null) {
-                        setGraphic(null);
-                    } else {
-                        CheckBox checkBox = new CheckBox();
-                        checkBox.setSelected(item);
-
-                        checkBox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                            CriteriaModel criteriaModel = getTableView().getItems().get(getIndex());
-                            if (newValue) {
-                                criteriaModel.setDeletedAt(LocalDateTime.now());
-                            } else {
-                                criteriaModel.clearDeletedAt();
-                            }
-                        });
-
-                        setGraphic(checkBox);
-                    }
-                }
-            });
-
-            tableCriteria.setItems(criteriaList);
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
+    private void handlePeriodListSelectionChange(String period) {
+        PeriodModel selectedPeriod = periodMap.getOrDefault(period, null);
+        int selectedPeriodId = (selectedPeriod != null) ? selectedPeriod.getId() : 0;
+        currentPeriod = period;
+        fetchCriterias(selectedPeriodId);
     }
 
     @FXML
@@ -212,7 +148,7 @@ public class CriteriaController implements Initializable  {
 
             if (rowsAffected > 0) {
                 System.out.println("Critério adicionado com sucesso!");
-                fetchCriterias(currentPeriod);
+                fetchCriterias(selectedPeriodId);
                 criteriaName.clear();
                 criteriaDescription.clear();
             } else {
@@ -228,19 +164,11 @@ public class CriteriaController implements Initializable  {
                 System.out.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
-    }
-
-    private void handlePeriodListSelectionChange(String period) {
-        currentPeriod = period;
-        fetchCriterias(period);
+        Utils.setAlert("INFORMATION", "Adição de critério", "O critério foi adicionado com sucesso");
     }
 
     @FXML
     private void addCriteriasToSemester() {
-        if (currentPeriod.equals("Todos")) {
-            System.out.println("Selecione um período válido.");
-            return;
-        }
         ObservableList<CriteriaModel> criteriaList = tableCriteria.getItems();
         if (criteriaList.isEmpty()) {
             System.out.println("Nenhum critério disponível na tabela.");
@@ -310,6 +238,7 @@ public class CriteriaController implements Initializable  {
                 System.out.println("Erro ao fechar recursos: " + e.getMessage());
             }
         }
+        Utils.setAlert("INFORMATION", "Seleção de critérios", "Os critérios foram associados com sucesso");
     }
 
 }

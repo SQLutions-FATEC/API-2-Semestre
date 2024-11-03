@@ -60,7 +60,7 @@ public class AverageController {
 
     private void fetchSprint() {
         SprintDAO sprintDAO = new SprintDAO();
-        ObservableList<SprintModel> sprintList = sprintDAO.selectSprint(selectedPeriodId);
+        ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
 
         for (SprintModel sprint : sprintList) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
