@@ -61,4 +61,22 @@ public class TeamDAO {
         }
         return teamList;
     }
+
+    public ObservableList<TeamModel> selectTeamsWithoutScoreByPeriod(int periodId, int sprintId) {
+        String sql = String.format("SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id JOIN pontuacao p ON p.equipe = e.id WHERE ep.periodo_id = %d AND p.sprint = %d AND p.valor is NULL ORDER BY e.nome", periodId, sprintId);
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("nome");
+                String github = resultSet.getString("github");
+
+                TeamModel team = new TeamModel(id, name, github);
+                teamList.add(team);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectTeamsByPeriod: " + e.getMessage());
+        }
+        return teamList;
+    }
 }

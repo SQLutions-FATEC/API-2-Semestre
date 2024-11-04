@@ -33,9 +33,7 @@ public class ProfessorController implements Initializable {
     public ChoiceBox<String> periodChoiceBox;
 
     String[] period = Utils.getCurrentSemesterAndYear();
-    String currentPeriod;
     Integer selectedPeriodId;
-
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
     Map<String, PeriodModel> periodMap = new HashMap<>();
 
@@ -105,7 +103,6 @@ public class ProfessorController implements Initializable {
     private void handlePeriodListSelectionChange(String period) {
         PeriodModel selectedPeriod = periodMap.getOrDefault(period, null);
         selectedPeriodId = (selectedPeriod != null) ? selectedPeriod.getId() : 0;
-        currentPeriod = period;
         teamList.clear();
         fetchTeams();
     }
