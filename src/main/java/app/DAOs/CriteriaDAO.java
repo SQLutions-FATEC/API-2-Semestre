@@ -16,11 +16,11 @@ public class CriteriaDAO {
     ObservableList<CriteriaModel> criteriaList = FXCollections.observableArrayList();
 
     public int createCriteria(String name, String description) {
-        String sql = String.format("INSERT INTO criterio (nome, descricao) VALUES ('%s', '%s')", name, description);
+        String sql = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
         int criteriaId = 0;
 
         try {
-            criteriaId = DatabaseConnection.executeUpdate(sql);
+            criteriaId = DatabaseConnection.executeUpdate(sql, name, description);
         } catch (SQLException e) {
             System.out.println("Erro no SQL de createCriteria: " + e.getMessage());
         } finally {
@@ -34,19 +34,19 @@ public class CriteriaDAO {
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
+                int criterioId = resultSet.getInt("id");
                 String name = resultSet.getString("nome");
                 String description = resultSet.getString("descricao");
                 Timestamp timestamp = resultSet.getTimestamp("deleted_at");
                 LocalDateTime deletedAt = (timestamp != null) ? timestamp.toLocalDateTime() : null;
 
-                String checkAssociationSql = String.format("SELECT COUNT(*) FROM criterio_periodo cp " +
+                String checkAssociationSql = "SELECT COUNT(*) FROM criterio_periodo cp " +
                         "JOIN periodo p ON cp.periodo_id = p.id " +
-                        "WHERE cp.criterio_id = %d AND p.id = %d AND cp.deleted_at IS NULL", id, selectedPeriodId);
+                        "WHERE cp.criterio_id = %d AND p.id = %d AND cp.deleted_at IS NULL";
 
-                CriteriaModel criteria = new CriteriaModel(id, name, description, deletedAt);
+                CriteriaModel criteria = new CriteriaModel(criterioId, name, description, deletedAt);
 
-                try(ResultSet checkResult = DatabaseConnection.executeQuery(checkAssociationSql)) {
+                try(ResultSet checkResult = DatabaseConnection.executeQuery(checkAssociationSql, criterioId, selectedPeriodId)) {
                     if (checkResult.next() && checkResult.getInt(1) > 0) {
                         criteria.setDeletedAt(LocalDateTime.now());
                     }
@@ -62,9 +62,9 @@ public class CriteriaDAO {
     }
 
     public ObservableList<CriteriaModel> selectActiveCriteriasByPeriod(int selectedPeriodId) {
-        String sql = String.format("SELECT * FROM criterio c JOIN criterio_periodo cp ON cp.criterio_id = c.id WHERE cp.periodo_id = %d AND c.deleted_at IS NULL AND cp.deleted_at IS NULL ORDER BY c.nome", selectedPeriodId);
+        String sql = "SELECT * FROM criterio c JOIN criterio_periodo cp ON cp.criterio_id = c.id WHERE cp.periodo_id = ? AND c.deleted_at IS NULL AND cp.deleted_at IS NULL ORDER BY c.nome";
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("nome");
@@ -83,10 +83,10 @@ public class CriteriaDAO {
     }
 
     public void updateCriteriaToPeriod(int selectedPeriodId, ObservableList<CriteriaModel> criteriaList) {
-        String sqlSelectPeriodoId = String.format("SELECT id FROM periodo WHERE id = %d", selectedPeriodId);
+        String sqlSelectPeriodId = "SELECT id FROM periodo WHERE id = ?";
         int periodId = 0;
 
-        try (ResultSet resultSet = DatabaseConnection.executeQuery(sqlSelectPeriodoId)) {
+        try (ResultSet resultSet = DatabaseConnection.executeQuery(sqlSelectPeriodId, selectedPeriodId)) {
             while (resultSet.next()) {
                 periodId = resultSet.getInt("id");
 
@@ -95,20 +95,20 @@ public class CriteriaDAO {
                     boolean isDeleted = criteria.getDeletedAt() == null;
                     String deletedAtValue = isDeleted ? "'" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "'" : "NULL" ;
 
-                    String sqlCheckExistence = String.format("SELECT COUNT(*) FROM criterio_periodo WHERE criterio_id = %d AND periodo_id = %d", criteriaId, periodId);
-                    String sqlInsertOrUpdate = String.format("INSERT INTO criterio_periodo (criterio_id, periodo_id, deleted_at) VALUES (%d, %d, %s) " +
-                            "ON DUPLICATE KEY UPDATE deleted_at = %s", criteriaId, periodId, deletedAtValue, deletedAtValue);
+                    String sqlCheckExistence = "SELECT COUNT(*) FROM criterio_periodo WHERE criterio_id = ? AND periodo_id = ?";
+                    String sqlInsertOrUpdate = "INSERT INTO criterio_periodo (criterio_id, periodo_id, deleted_at) VALUES (?, ?, ?) " +
+                            "ON DUPLICATE KEY UPDATE deleted_at = ?";
 
-                    try (ResultSet checkResultSet = DatabaseConnection.executeQuery(sqlCheckExistence)) {
+                    try (ResultSet checkResultSet = DatabaseConnection.executeQuery(sqlCheckExistence, criteriaId, periodId)) {
                         if (checkResultSet.next() && checkResultSet.getInt(1) > 0) {
                             try {
-                                DatabaseConnection.executeUpdate(sqlInsertOrUpdate);
+                                DatabaseConnection.executeUpdate(sqlInsertOrUpdate, criteriaId, periodId, deletedAtValue, deletedAtValue);
                             } catch (SQLException e) {
                                 System.out.println("Erro no terceiro SQL de updateCriteriaToPeriod: " + e.getMessage());
                             }
                         } else {
                             try {
-                                DatabaseConnection.executeUpdate(sqlInsertOrUpdate);
+                                DatabaseConnection.executeUpdate(sqlInsertOrUpdate, criteriaId, periodId, deletedAtValue, deletedAtValue);
                             } catch (SQLException e) {
                                 System.out.println("Erro no quarto SQL de updateCriteriaToPeriod: " + e.getMessage());
                             }

@@ -13,9 +13,9 @@ public class SprintDAO {
     ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
-        String sql = String.format("SELECT * FROM sprint s WHERE s.periodo = '%d' ORDER BY s.data_inicio", selectedPeriodId);
+        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String description = resultSet.getString("descricao");

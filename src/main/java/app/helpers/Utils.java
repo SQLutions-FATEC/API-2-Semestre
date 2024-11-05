@@ -57,6 +57,7 @@ public class Utils {
     public static void setScreen(ActionEvent event, String screenFile) {
         Map<String, String[]> files = new HashMap<>();
 
+        files.put("loginScreen", new String[]{"/loginScreen.fxml", "Tela de login"});
         files.put("studentScreen", new String[]{"/student/studentScreen.fxml", "Tela do aluno"});
         files.put("professorScreen", new String[]{"/professor/professorScreen.fxml", "Tela do professor"});
         files.put("criteriaScreen", new String[]{"/professor/criteriaScreen.fxml", "Definir critérios"});

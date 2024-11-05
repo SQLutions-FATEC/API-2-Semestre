@@ -85,6 +85,7 @@ public class EditStudentController implements Initializable {
 
         teamChoiceBox.getItems().addAll(teamNames);
         teamChoiceBox.setValue(teamNames.get(0));
+        selectedTeamId = teamList.get(0).getId();
     }
 
     private void configureAutocomplete() {
@@ -150,6 +151,7 @@ public class EditStudentController implements Initializable {
             studentTableData.clear();
             studentSearch.setText("");
             studentList.removeIf(student -> student.getRa() == ra);
+            Utils.setAlert("CONFIRMATION", "Adição de critério", "O critério foi adicionado com sucesso");
         }
     }
 

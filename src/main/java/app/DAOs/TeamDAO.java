@@ -13,11 +13,11 @@ public class TeamDAO {
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
 
     public int createTeam(String teamName, String teamGithub) {
-        String sql = String.format("INSERT INTO equipe (nome, github) VALUES ('%s', '%s')", teamName, teamGithub);
+        String sql = "INSERT INTO equipe (nome, github) VALUES (?, ?)";
         int generatedKey = 0;
 
         try {
-            generatedKey = DatabaseConnection.executeUpdate(sql);
+            generatedKey = DatabaseConnection.executeUpdate(sql, teamName, teamGithub);
         } catch (SQLException e) {
             System.out.println("Erro no SQL de createTeam: " + e.getMessage());
         } finally {
@@ -45,9 +45,9 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeamsByPeriod(int periodId) {
-        String sql = String.format("SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id WHERE ep.periodo_id = %d ORDER BY e.nome", periodId);
+        String sql = "SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id WHERE ep.periodo_id = ? ORDER BY e.nome";
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodId)) {
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
                 String name = resultSet.getString("nome");
