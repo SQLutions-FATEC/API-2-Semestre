@@ -1,8 +1,6 @@
 package app.helpers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -17,15 +15,38 @@ public class DatabaseConnection {
         String URL = "jdbc:mysql://127.0.0.1:3306/";
 
         if (useDefaultSchema) {
-            URL = URL + DEFAULT_SCHEMA;
+            URL = URL + DEFAULT_SCHEMA + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         }
         try {
-            Connection conn = DriverManager.getConnection( "jdbc:mysql://127.0.0.1:3306/avaliador?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", USER, PASSWORD);
-            System.out.println("Conexão bem-sucedida com o banco de dados!");
-            return conn;
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
             throw e;
         }
     }
+
+    public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
+        Connection connection = getConnection(true);
+        PreparedStatement statement = connection.prepareStatement(sql);
+        setParameters(statement, params);
+        return statement.executeQuery();
+    }
+
+    private static void setParameters(PreparedStatement statement, Object... params) throws SQLException {
+        for (int index = 0; index < params.length; index++) {
+            statement.setObject(index + 1, params[index]);
+        }
+    }
+
+    public static void closeResources(Connection connection, PreparedStatement statement, ResultSet resultSet) {
+        try {
+            if (resultSet != null) resultSet.close();
+            if (statement != null) statement.close();
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            System.out.println("Erro ao fechar recursos: " + e.getMessage());
+        }
+    }
 }
+
+
