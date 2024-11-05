@@ -42,7 +42,7 @@ public class CriteriaDAO {
 
                 String checkAssociationSql = "SELECT COUNT(*) FROM criterio_periodo cp " +
                         "JOIN periodo p ON cp.periodo_id = p.id " +
-                        "WHERE cp.criterio_id = %d AND p.id = %d AND cp.deleted_at IS NULL";
+                        "WHERE cp.criterio_id = ? AND p.id = ? AND cp.deleted_at IS NULL";
 
                 CriteriaModel criteria = new CriteriaModel(criterioId, name, description, deletedAt);
 
@@ -93,7 +93,7 @@ public class CriteriaDAO {
                 for (CriteriaModel criteria : criteriaList) {
                     int criteriaId = criteria.getId();
                     boolean isDeleted = criteria.getDeletedAt() == null;
-                    String deletedAtValue = isDeleted ? "'" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + "'" : "NULL" ;
+                    String deletedAtValue = isDeleted ? LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) : null;
 
                     String sqlCheckExistence = "SELECT COUNT(*) FROM criterio_periodo WHERE criterio_id = ? AND periodo_id = ?";
                     String sqlInsertOrUpdate = "INSERT INTO criterio_periodo (criterio_id, periodo_id, deleted_at) VALUES (?, ?, ?) " +
