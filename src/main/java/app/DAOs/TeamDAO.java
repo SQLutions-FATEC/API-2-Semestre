@@ -63,12 +63,11 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeamsWithoutScoreByPeriod(int periodId, int sprintId) {
-        String sql = String.format("" +
-                "SELECT e.* FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
-                "JOIN periodo p ON ep.periodo_id = p.id WHERE p.id = %d " +
-                "AND NOT EXISTS (SELECT %d FROM pontuacao po WHERE po.equipe = e.id AND po.sprint = %d);", periodId, periodId, sprintId);
+        String sql = "SELECT e.* FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
+                "JOIN periodo p ON ep.periodo_id = p.id WHERE p.id = ? " +
+                "AND NOT EXISTS (SELECT 1 FROM pontuacao po WHERE po.equipe = e.id AND po.sprint = ?)";
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodId, sprintId)) {
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
                 String name = resultSet.getString("nome");
