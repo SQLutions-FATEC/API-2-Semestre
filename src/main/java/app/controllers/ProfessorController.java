@@ -42,6 +42,7 @@ public class ProfessorController implements Initializable {
     @FXML
     public Label labelAvisoDesc;
 
+
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
 
     @Override
@@ -161,6 +162,16 @@ public class ProfessorController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    public void definirDataSprint(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/setSprintData.fxml")));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+
+        stage.setScene(scene);
+        stage.setTitle("Definir Data Sprint");
+        stage.show();
+    }
+
 
     @FXML
     public void gerarCsvButton(ActionEvent event) {
