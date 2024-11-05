@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.DAOs.PeriodDAO;
+import app.DAOs.SetScoreDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
@@ -33,8 +34,10 @@ public class SetScoreController implements Initializable {
     String[] period = Utils.getCurrentSemesterAndYear();
     Integer selectedPeriodId;
     Integer selectedSprintId;
+    Integer selectedTeamId;
     Map<String, PeriodModel> periodMap = new HashMap<>();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
+    private final Map<String, Integer> teamIdMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,6 +47,9 @@ public class SetScoreController implements Initializable {
         });
         sprintChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
+        });
+        teamChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handleTeamListSelectionChange(newValue);
         });
         fetchPeriods();
     }
@@ -76,6 +82,12 @@ public class SetScoreController implements Initializable {
         if (sprint != null) {
             selectedSprintId = sprintIdMap.get(sprint);
             fetchTeams();
+        }
+    }
+
+    private void handleTeamListSelectionChange(String team) {
+        if (team != null) {
+            selectedTeamId = teamIdMap.get(team);
         }
     }
 
@@ -123,6 +135,7 @@ public class SetScoreController implements Initializable {
         for (TeamModel team : teamList) {
             String teamName = team.getName();
             teamsOptionsList.add(teamName);
+            teamIdMap.put(teamName, team.getId());
         }
 
         teamChoiceBox.getItems().addAll(teamsOptionsList);
@@ -136,7 +149,7 @@ public class SetScoreController implements Initializable {
         int score = maxScore.getText().trim().isEmpty() ? 0 : Integer.parseInt(maxScore.getText().trim());
         String selectedTeam = teamChoiceBox.getValue();
 
-        if (selectedTeam.isEmpty()) {
+        if (selectedTeam == null || selectedTeam.isEmpty()) {
             Utils.setAlert("ERROR", "Adição de pontuação", "Nenhuma equipe foi selecionada");
             return;
         }
@@ -145,17 +158,16 @@ public class SetScoreController implements Initializable {
             return;
         }
 
-//        CriteriaDAO criteriaDAO = new CriteriaDAO();
-//        int criteriaId = criteriaDAO.createCriteria(name, description);
-//
-//        if (criteriaId != 0) {
-//            Utils.setAlert("CONFIRMATION", "Adição de critério", "O critério foi adicionado com sucesso");
-//            fetchCriterias(selectedPeriodId);
-//            criteriaName.clear();
-//            criteriaDescription.clear();
-//        } else {
-//            Utils.setAlert("ERROR", "Adição de critério", "Falha na adição do critério");
-//        }
+        SetScoreDAO setScoreDAO = new SetScoreDAO();
+        int scoreId = setScoreDAO.createScore(score, selectedSprintId, selectedTeamId);
+
+        if (scoreId != 0) {
+            Utils.setAlert("CONFIRMATION", "Adição de pontuação", "A pontuação foi adicionada com sucesso");
+            maxScore.clear();
+            fetchTeams();
+        } else {
+            Utils.setAlert("ERROR", "Adição de pontuação", "Falha na adição de pontuação");
+        }
     }
 
     @FXML

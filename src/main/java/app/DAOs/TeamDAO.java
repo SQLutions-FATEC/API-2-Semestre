@@ -11,10 +11,10 @@ import java.sql.SQLException;
 
 public class TeamDAO {
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
-    int generatedKey = 0;
 
     public int createTeam(String teamName, String teamGithub) {
         String sql = String.format("INSERT INTO equipe (nome, github) VALUES ('%s', '%s')", teamName, teamGithub);
+        int generatedKey = 0;
 
         try {
             generatedKey = DatabaseConnection.executeUpdate(sql);
@@ -63,7 +63,10 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeamsWithoutScoreByPeriod(int periodId, int sprintId) {
-        String sql = String.format("SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id JOIN pontuacao p ON p.equipe = e.id WHERE ep.periodo_id = %d AND p.sprint = %d AND p.valor is NULL ORDER BY e.nome", periodId, sprintId);
+        String sql = String.format("" +
+                "SELECT e.* FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
+                "JOIN periodo p ON ep.periodo_id = p.id WHERE p.id = %d " +
+                "AND NOT EXISTS (SELECT %d FROM pontuacao po WHERE po.equipe = e.id AND po.sprint = %d);", periodId, periodId, sprintId);
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
