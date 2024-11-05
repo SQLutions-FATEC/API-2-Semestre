@@ -115,7 +115,7 @@ public class SetScoreController implements Initializable {
             sprintChoiceBox.setValue(currentSprint);
         } else {
             if (!sprintOptionsList.isEmpty()) {
-                sprintChoiceBox.setValue(sprintOptionsList.getFirst());
+                sprintChoiceBox.setValue(sprintOptionsList.get(0));
             }
         }
     }
@@ -140,7 +140,7 @@ public class SetScoreController implements Initializable {
 
         teamChoiceBox.getItems().addAll(teamsOptionsList);
         if (!teamsOptionsList.isEmpty()) {
-            teamChoiceBox.setValue(teamsOptionsList.getFirst());
+            teamChoiceBox.setValue(teamsOptionsList.get(0));
         }
     }
 
