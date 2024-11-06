@@ -1,11 +1,10 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
-import app.models.Aluno;
+import app.models.AvaliacaoModel;
 import app.models.NotaModel;
 import app.models.SprintModel;
 import app.helpers.Utils;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -43,7 +42,7 @@ public class StudentController implements Initializable {
     ResultSet resultSet = null;
 
     @FXML
-    public TableView<Aluno> tableView;
+    public TableView<AvaliacaoModel> tableView;
 
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
@@ -56,38 +55,54 @@ public class StudentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fetchCriterias();
-        fetchSprint();
+        try {
+            fetchCriterias();
+            fetchSprint();
+            fetchAlunos();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void passData(int teamId, int periodId) {
-        selectedPeriodId = periodId;
-        selectedTeamId = teamId;
-        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> handleSprintListSelectionChange(newValue));
-        fetchSprint();
-    }
+//    public void passData(int teamId, int periodId) {
+//        selectedPeriodId = periodId;
+//        selectedTeamId = teamId;
+//        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> handleSprintListSelectionChange(newValue));
+//        fetchSprint();
+//    }
 
-    private final ObservableList<Aluno> studentList = FXCollections.observableArrayList();
+    private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
+
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
+
     ArrayList<String> sprintOptionsList = new ArrayList<>();
-    private static final ObservableList<Integer> criteriaOptions = FXCollections.observableArrayList(0, 1, 2, 3);
 
     private void fetchAlunos() throws SQLException {
-        connection = DatabaseConnection.getConnection(true);
-        String sql = String.format("SELECT us.nome AS nome FROM usuario us " +
-                " WHERE us.equipe = 1");
-        statement = connection.prepareStatement(sql);
-        resultSet = statement.executeQuery();
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sql = String.format("SELECT us.nome AS nome FROM usuario us " +
+                    " WHERE us.equipe = 1");
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
 
+            while (resultSet.next()) {
+                String alunoNome = resultSet.getString("nome");
+
+                AvaliacaoModel student = new AvaliacaoModel(alunoNome, 0);
+
+                studentList.add(student);
+            }
+            tableView.setItems(studentList);
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        }
     }
 
-
-    private void handleSprintListSelectionChange(String sprint) {
-        currentSprint = sprint;
-        selectedSprintId = sprintIdMap.get(sprint);
-        studentList.clear();
-        fetchCriterias();
-    }
+//    private void handleSprintListSelectionChange(String sprint) {
+//        currentSprint = sprint;
+//        selectedSprintId = sprintIdMap.get(sprint);
+//        studentList.clear();
+//    }
 
     private void fetchCriterias() {
         try {
@@ -98,36 +113,36 @@ public class StudentController implements Initializable {
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
-            ObservableList<TableColumn<Aluno, Integer>> columns = FXCollections.observableArrayList();
+            ObservableList<TableColumn<AvaliacaoModel, Integer>> columns = FXCollections.observableArrayList();
 
-            TableColumn<Aluno, String> nomeColumn = new TableColumn<>("Aluno");
+            TableColumn<AvaliacaoModel, String> nomeColumn = new TableColumn<>("Aluno");
             nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+
             int colunaAlunoWidth = 100;
             nomeColumn.setPrefWidth(colunaAlunoWidth);
             tableView.getColumns().add(nomeColumn);
+
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
-                TableColumn<Aluno, Integer> column = new TableColumn<>(criterioNome);
-                column.setCellValueFactory(cellData ->
-                        new SimpleIntegerProperty(cellData.getValue().getNotas(criterioNome)).asObject()
-                );
-
-                column.setCellFactory(ComboBoxTableCell.forTableColumn(criteriaOptions));
+                TableColumn<AvaliacaoModel, Integer> column = new TableColumn<>(criterioNome);
+                column.setCellValueFactory(new PropertyValueFactory<>("notas"));
+                column.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1, 2, 3));
 
                 column.setOnEditCommit(event -> {
-                    Aluno aluno = event.getRowValue();
-                    aluno.setNotas(criterioNome, event.getNewValue());
+                    AvaliacaoModel aluno = event.getRowValue();
+                    aluno.setNotas(event.getNewValue());
                 });
 
                 columns.add(column);
             }
-            tableView.getColumns().addAll(columns);
-            tableView.setItems(studentList);
 
+            tableView.getColumns().addAll(columns);
         } catch (SQLException e) {
             System.out.println("Erro no SQL: " + e.getMessage());
+
         } finally {
             try {
+
                 if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
@@ -161,7 +176,6 @@ public class StudentController implements Initializable {
                 sprintOptionsList.add(sprintDescription);
                 sprintIdMap.put(sprintDescription, id);
                 LabelDataSprint.setText(sprintDescription);
-
             }
             choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
             String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
@@ -224,8 +238,7 @@ public class StudentController implements Initializable {
 //        }
 //    }
 
-
-
+    @FXML
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -235,5 +248,4 @@ public class StudentController implements Initializable {
         stage.setTitle("Login");
         stage.show();
     }
-
 }
