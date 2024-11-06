@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
-import app.models.UsuarioModel;
+import app.models.UserModel;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,15 +31,15 @@ public class CSVController extends DatabaseConnection {
     protected Scene scene;
 
     @FXML
-    public TableView<UsuarioModel> tableView;
+    public TableView<UserModel> tableView;
     @FXML
-    public TableColumn<UsuarioModel, Integer> colRa;
+    public TableColumn<UserModel, Integer> colRa;
     @FXML
-    public TableColumn<UsuarioModel, String> colNome;
+    public TableColumn<UserModel, String> colNome;
     @FXML
-    public TableColumn<UsuarioModel, String> colEmail;
+    public TableColumn<UserModel, String> colEmail;
     @FXML
-    public TableColumn<UsuarioModel, String> colSenha;
+    public TableColumn<UserModel, String> colSenha;
 
     @FXML
     public Label labelNomeEquipe;
@@ -72,7 +72,7 @@ public class CSVController extends DatabaseConnection {
         try {
             leitor = new BufferedReader(new FileReader(file));
 
-            ObservableList<UsuarioModel> alunoList = FXCollections.observableArrayList();
+            ObservableList<UserModel> alunoList = FXCollections.observableArrayList();
             EquipeModel equipe;
             boolean isPrimeiraLinha = true;
 
@@ -96,7 +96,7 @@ public class CSVController extends DatabaseConnection {
                     continue;
                 }
 
-                UsuarioModel aluno = new UsuarioModel(
+                UserModel aluno = new UserModel(
                         Integer.parseInt(linha[0]),
                         linha[1],
                         linha[2],
@@ -156,7 +156,7 @@ public class CSVController extends DatabaseConnection {
 
             int typeStudent = 2;
 
-            for (UsuarioModel aluno : tableView.getItems()) {
+            for (UserModel aluno : tableView.getItems()) {
                 statementAluno.setInt(1, aluno.getRa());
                 statementAluno.setString(2, aluno.getNome());
                 statementAluno.setString(3, aluno.getSenha());

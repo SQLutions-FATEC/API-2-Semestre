@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
-import app.helpers.AverageGradeDAO;
+import app.DAOs.AverageGradeDAO;
 import app.helpers.Utils;
 import app.models.EquipeModel;
 import app.models.AverageGradeModel;

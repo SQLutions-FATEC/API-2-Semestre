@@ -1,5 +1,6 @@
-package app.helpers;
+package app.DAOs;
 
+import app.helpers.DatabaseConnection;
 import app.models.AverageGradeModel;
 
 import java.sql.ResultSet;

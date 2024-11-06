@@ -233,7 +233,7 @@ public class ProfessorController implements Initializable {
         scene = new Scene(root);
 
         stage.setScene(scene);
-        stage.setTitle("Login");
+        stage.setTitle("Critérios");
         stage.show();
     }
 
