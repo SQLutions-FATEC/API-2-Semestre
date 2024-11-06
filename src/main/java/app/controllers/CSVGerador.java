@@ -38,7 +38,7 @@ public class CSVGerador {
             writer.write("Equipe: " + nomeEquipe);
             writer.newLine();
 
-            writer.write("Sprint: " + periodoID);
+            writer.write("Sprint: " + sprintID);
             writer.newLine();
 
             // Escrever o cabeçalho do CSV
