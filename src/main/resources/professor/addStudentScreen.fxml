@@ -7,27 +7,27 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CSVController">
-      <Button fx:id="buttonEnviarCSV" layoutX="666.0" layoutY="14.0" mnemonicParsing="false" onAction="#enviarCSV" prefHeight="40.0" prefWidth="120.0" text="Inserir csv">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AddStudentController">
+      <Button fx:id="buttonSendCSV" layoutX="666.0" layoutY="14.0" mnemonicParsing="false" onAction="#sendCSV" prefHeight="40.0" prefWidth="120.0" text="Inserir csv">
          <font>
             <Font size="17.0" />
          </font></Button>
-      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#voltarTelaProfessor" prefHeight="40.0" prefWidth="120.0" text="Voltar">
+      <Button layoutX="14.0" layoutY="547.0" mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="40.0" prefWidth="120.0" text="Voltar">
          <font>
             <Font size="17.0" />
          </font></Button>
       <TableView fx:id="tableView" layoutX="50.0" layoutY="107.0" prefHeight="300.0" prefWidth="700.0">
          <columns>
             <TableColumn fx:id="colRa" prefWidth="120.0" text="RA" />
-            <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="120.0" text="Nome" />
+            <TableColumn fx:id="colName" minWidth="0.0" prefWidth="120.0" text="Nome" />
             <TableColumn fx:id="colEmail" minWidth="0.0" prefWidth="120.0" text="E-mail" />
-            <TableColumn fx:id="colSenha" minWidth="0.0" prefWidth="120.0" text="Senha" />
+            <TableColumn fx:id="colPassword" minWidth="0.0" prefWidth="120.0" text="Senha" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="buttonConfirmarCSV" layoutX="666.0" layoutY="548.0" mnemonicParsing="false" onAction="#confirmarCSV" prefHeight="40.0" prefWidth="120.0" text="Confirmar">
+      <Button layoutX="666.0" layoutY="548.0" mnemonicParsing="false" onAction="#acceptCSV" prefHeight="40.0" prefWidth="120.0" text="Confirmar">
          <font>
             <Font size="17.0" />
          </font></Button>
@@ -36,12 +36,12 @@
             <Font name="System Bold" size="40.0" />
          </font>
       </Label>
-      <Label fx:id="labelNomeEquipe" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="407.0" prefHeight="53.0" prefWidth="700.0" text="Equipe: Exemplo">
+      <Label fx:id="labelTeamName" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="407.0" prefHeight="53.0" prefWidth="700.0" text="Equipe: Exemplo">
          <font>
             <Font size="36.0" />
          </font>
       </Label>
-      <Label fx:id="labelGithubEquipe" alignment="TOP_CENTER" layoutX="50.0" layoutY="460.0" prefHeight="73.0" prefWidth="700.0" text="Link do Github: https://github.com/Exemplo">
+      <Label fx:id="labelTeamGithub" alignment="TOP_CENTER" layoutX="50.0" layoutY="460.0" prefHeight="73.0" prefWidth="700.0" text="Link do Github: https://github.com/Exemplo">
          <font>
             <Font size="20.0" />
          </font>

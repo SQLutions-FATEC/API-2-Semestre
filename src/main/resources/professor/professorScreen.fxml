@@ -23,7 +23,7 @@
    </Separator>
    <VBox alignment="CENTER" layoutY="1.0" prefHeight="601.0" prefWidth="203.0" spacing="30.0">
       <children>
-         <Button mnemonicParsing="false" onAction="#trocarCSVScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
+         <Button mnemonicParsing="false" onAction="#goToAddStudentScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
             <font>
                <Font size="16.0" />
             </font>
@@ -33,27 +33,27 @@
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#editarAluno" prefHeight="44.0" prefWidth="198.0" text="Editar Aluno">
+         <Button mnemonicParsing="false" onAction="#goToEditStudentScreen" prefHeight="44.0" prefWidth="198.0" text="Editar Aluno">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#definirPontuacao" prefHeight="44.0" prefWidth="198.0" text="Definir Limite Pontuaçao">
+         <Button mnemonicParsing="false" onAction="#goToSetScoreScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Limite Pontuaçao">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#definirCriteriosCSVScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Critérios">
+         <Button mnemonicParsing="false" onAction="#goToCriteriaScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Critérios">
             <font>
                <Font size="16.0" />
             </font>
          </Button>
-          <Button fx:id="ButtonGerarRelatorioProfessor" mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
-              <font>
-                  <Font size="16.0" />
-              </font>
-          </Button>
-          <Button mnemonicParsing="false" onAction="#voltarPrincipalScreen" prefHeight="44.0" prefWidth="198.0" text="Deslogar">
+         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
+            <font>
+               <Font size="16.0" />
+            </font>
+         </Button>
+         <Button mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="44.0" prefWidth="198.0" text="Deslogar">
             <font>
                <Font size="16.0" />
             </font>
@@ -68,22 +68,22 @@
          <Font size="16.0" />
       </font>
    </Label>
-   <ChoiceBox fx:id="ChoiceBoxPeriodo" layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
-   <Label fx:id="labelAvisoEquipe" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhum Equipe Encontrada">
+   <ChoiceBox fx:id="periodChoiceBox" layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
+   <Label fx:id="title" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhuma Equipe Encontrada">
       <font>
          <Font size="30.0" />
       </font>
    </Label>
-   <Label fx:id="labelAvisoDesc" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
+   <Label fx:id="description" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
       <font>
          <Font size="20.0" />
       </font>
    </Label>
-   <TableView fx:id="tableEquipe" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
+   <TableView fx:id="teamTable" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
       <columns>
-         <TableColumn fx:id="colNome" prefWidth="125.0" text="Nome" />
+         <TableColumn fx:id="colName" prefWidth="125.0" text="Nome" />
          <TableColumn fx:id="colGithub" prefWidth="250.0" text="Link do GitHub" />
-         <TableColumn fx:id="colVisualizar" prefWidth="125.0" text="Visualizar" />
+         <TableColumn fx:id="colVisualize" prefWidth="125.0" text="Visualizar" />
       </columns>
    </TableView>
 </AnchorPane>
