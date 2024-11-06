@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.helpers.DatabaseConnection;
 import app.models.EquipeModel;
+import app.models.DataModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -41,15 +42,50 @@ public class ProfessorController implements Initializable {
     public Label labelAvisoEquipe;
     @FXML
     public Label labelAvisoDesc;
+    @FXML
+    public Label labelAvisoData;
+    @FXML
+    public Label labelAvisoDescSprint;
+    @FXML
+    public TableView<DataModel> tableData;
+    @FXML
+    public TableColumn<DataModel, String> colSprint;
 
 
     private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
+    private final ObservableList<DataModel> dataList = FXCollections.observableArrayList();
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
+        try{
+            connection = DatabaseConnection.getConnection(true);
+
+            String sqlCountData = "SELECT COUNT(*) periodo";
+            statement = connection.prepareStatement(sqlCountData);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next() && resultSet.getInt(1) > 0){
+                carregarDataSprint();
+                labelAvisoData.setText("Lista Sprint");
+                labelAvisoDescSprint.setText(" ");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+
+        }
+
 
         try {
             connection = DatabaseConnection.getConnection(true);
@@ -153,6 +189,7 @@ public class ProfessorController implements Initializable {
         stage.setTitle("Editar aluno");
         stage.show();
     }
+
     public void definirPontuacao(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/professor/SetScore.fxml"));
         Scene scene = new Scene(root);
@@ -161,6 +198,7 @@ public class ProfessorController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+
     public void definirDataSprint(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/setSprintData.fxml")));
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -171,4 +209,37 @@ public class ProfessorController implements Initializable {
         stage.show();
     }
 
-}
+    public void carregarDataSprint() {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+
+            String sql = "SELECT ano FROM periodo";
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                String ano = resultSet.getString("Ano");
+                String semestre = resultSet.getString("Semestre: ");
+                String descricao = resultSet.getString("Semestre: ");
+                String data_inicio = resultSet.getString("Semestre: ");
+                String data_fim = resultSet.getString("Semestre: ");
+
+                DataModel data = new DataModel(ano, semestre, descricao, data_inicio, data_fim);
+                dataList.add(data);
+            }
+
+            colSprint.setCellValueFactory(new PropertyValueFactory<>("Ano"));
+
+
+            tableData.setItems(dataList);
+        }
+        catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    }

@@ -64,9 +64,9 @@
       </HBox>
       <HBox alignment="CENTER" layoutY="360.0" prefHeight="190.0" prefWidth="800.0">
          <children>
-            <TableView maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
+            <TableView fx:id="tableData" maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
               <columns>
-                <TableColumn prefWidth="100.0" text="Sprint" />
+                <TableColumn fx:id="colSprint" prefWidth="100.0" text="Sprint" />
                 <TableColumn prefWidth="150.0" text="Data de Inicio" />
                   <TableColumn prefWidth="150.0" text="Data de Fim" />
               </columns>
