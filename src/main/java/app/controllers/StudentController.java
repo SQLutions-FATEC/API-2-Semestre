@@ -104,6 +104,7 @@ public class StudentController implements Initializable {
 //        studentList.clear();
 //    }
 
+
     private void fetchCriterias() {
         try {
             connection = DatabaseConnection.getConnection(true);
