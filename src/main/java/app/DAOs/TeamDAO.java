@@ -11,10 +11,10 @@ import java.sql.SQLException;
 
 public class TeamDAO {
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
-    int generatedKey = 0;
 
     public int createTeam(String teamName, String teamGithub) {
         String sql = String.format("INSERT INTO equipe (nome, github) VALUES ('%s', '%s')", teamName, teamGithub);
+        int generatedKey = 0;
 
         try {
             generatedKey = DatabaseConnection.executeUpdate(sql);
@@ -48,6 +48,26 @@ public class TeamDAO {
         String sql = String.format("SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id WHERE ep.periodo_id = %d ORDER BY e.nome", periodId);
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
+            while (resultSet.next()) {
+                Integer id = resultSet.getInt("id");
+                String name = resultSet.getString("nome");
+                String github = resultSet.getString("github");
+
+                TeamModel team = new TeamModel(id, name, github);
+                teamList.add(team);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectTeamsByPeriod: " + e.getMessage());
+        }
+        return teamList;
+    }
+
+    public ObservableList<TeamModel> selectTeamsWithoutScoreByPeriod(int periodId, int sprintId) {
+        String sql = "SELECT e.* FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
+                "JOIN periodo p ON ep.periodo_id = p.id WHERE p.id = ? " +
+                "AND NOT EXISTS (SELECT 1 FROM pontuacao po WHERE po.equipe = e.id AND po.sprint = ?)";
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodId, sprintId)) {
             while (resultSet.next()) {
                 Integer id = resultSet.getInt("id");
                 String name = resultSet.getString("nome");

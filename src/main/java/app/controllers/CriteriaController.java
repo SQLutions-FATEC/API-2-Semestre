@@ -10,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,8 +19,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 public class CriteriaController implements Initializable  {
-    protected Scene scene;
-
     @FXML
     public ChoiceBox<String> periodChoiceBox;
     @FXML

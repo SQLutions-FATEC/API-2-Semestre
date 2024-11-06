@@ -71,7 +71,7 @@ public class AverageController {
         if (currentSprint != null) {
             sprintChoiceBox.setValue(currentSprint);
         } else {
-            sprintChoiceBox.setValue(sprintOptionsList.getFirst());
+            sprintChoiceBox.setValue(sprintOptionsList.get(0));
         }
     }
 

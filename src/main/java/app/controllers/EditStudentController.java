@@ -77,12 +77,14 @@ public class EditStudentController implements Initializable {
         TeamDAO teamDAO = new TeamDAO();
         teamList = teamDAO.selectTeams();
         ObservableList<String> teamNames = FXCollections.observableArrayList();
+
         for (TeamModel team : teamList) {
             teamNames.add(team.getName());
             teamNamesMap.put(team.getId(), team.getName());
         }
+
         teamChoiceBox.getItems().addAll(teamNames);
-        teamChoiceBox.setValue(teamNames.getFirst());
+        teamChoiceBox.setValue(teamNames.get(0));
     }
 
     private void configureAutocomplete() {
@@ -130,7 +132,7 @@ public class EditStudentController implements Initializable {
     }
 
     private void updateTeamNameInTable() {
-        UserModel selectedStudent = studentTableData.getFirst();
+        UserModel selectedStudent = studentTableData.get(0);
 
         if (selectedStudent != null) {
             selectedStudent.setEquipeId(selectedTeamId);
@@ -140,7 +142,7 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void deleteStudent() {
-        int ra = studentTableData.getFirst().getRa();
+        int ra = studentTableData.get(0).getRa();
         UserDAO userDAO = new UserDAO();
         int rowsAffected = userDAO.deleteStudent(ra);
 
@@ -153,7 +155,7 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void changeStudentTeam() {
-        int ra = studentTableData.getFirst().getRa();
+        int ra = studentTableData.get(0).getRa();
         UserDAO userDAO = new UserDAO();
         userDAO.updateStudentTeam(ra, selectedTeamId);
         updateTeamNameInTable();
