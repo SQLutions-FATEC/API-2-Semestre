@@ -11,11 +11,11 @@ public class CriteriaModel {
     private final SimpleObjectProperty<LocalDateTime> deletedAt;
     private final BooleanProperty isDeleted;
 
-    public CriteriaModel(int id, String nome, String descricao) {
+    public CriteriaModel(int id, String name, String description, LocalDateTime deletedAt) {
         this.id = id;
-        this.nome = new SimpleStringProperty(nome);
-        this.descricao = new SimpleStringProperty(descricao);
-        this.deletedAt = new SimpleObjectProperty<>(null);
+        this.nome = new SimpleStringProperty(name);
+        this.descricao = new SimpleStringProperty(description);
+        this.deletedAt = new SimpleObjectProperty<>(deletedAt);
         this.isDeleted = new SimpleBooleanProperty(false);
     }
 
@@ -23,23 +23,18 @@ public class CriteriaModel {
         return id;
     }
 
-    public String getNome() {
+    public String getName() {
         return nome.get();
     }
-    public StringProperty nomeProperty() {
-        return nome;
-    }
 
-    public String getDescricao() {
+    public String getDescription() {
         return descricao.get();
-    }
-    public StringProperty descricaoProperty() {
-        return descricao;
     }
 
     public LocalDateTime getDeletedAt() {
         return deletedAt.get();
     }
+
     public BooleanProperty isDeletedProperty() {
         return isDeleted;
     }

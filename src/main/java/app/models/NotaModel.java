@@ -24,6 +24,10 @@ public class NotaModel {
 
     }
 
+    public NotaModel() {
+
+    }
+
     public int getId() {
         return id;
     }

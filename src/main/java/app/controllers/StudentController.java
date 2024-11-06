@@ -170,8 +170,8 @@ public class StudentController implements Initializable {
                 new SprintModel(id, description, dataInicio, dataFim);
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
-                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
+                String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
+                String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
                 String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
                 sprintOptionsList.add(sprintDescription);
@@ -215,35 +215,29 @@ public class StudentController implements Initializable {
                 statementNota.setInt(5, Nota.getPeriodo());
 
 */
-            /*for (AvaliacaoModel aluno : tableView.getItems()) {
-                for (TableColumn<AvaliacaoModel, Integer> column : tableView.getColumns().filtered(col -> !col.getText().equals("Aluno"))) {
-                    Integer notaValor = column.getCellData(aluno);
+            for (AvaliacaoModel aluno : tableView.getItems()) {
+                for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns().filtered(col -> !col.getText().equals("Aluno"))) {
+                    Integer notaValor = (Integer) column.getCellData(aluno);
 
-                    // Verifica se a nota não é nula
                     if (notaValor != null) {
-                        // Aqui você cria um novo objeto NotaModel para cada célula individual
                         NotaModel nota = new NotaModel();
+                        statementNota.setInt(1, nota.getValor());
+                        statementNota.setInt(2, nota.getAvaliador());
+                        statementNota.setInt(3, nota.getAvaliado());
+                        statementNota.setInt(4, nota.getCriterio());
+                        statementNota.setInt(5, nota.getPeriodo());
+                    }
 
-                        // Exemplo de como preencher os campos do objeto NotaModel
-                        nota.setValor(notaValor);
-                        nota.setAvaliador(*//* ID do avaliador, se disponível *//*);
-                        nota.setAvaliado(*//* ID do avaliado, baseado no aluno atual *//*);
-                        nota.setCriterio(*//* ID do critério, baseado na coluna atual *//*);
-                        nota.setPeriodo(selectedPeriodId);
-                        nota.setSprint(selectedSprintId);
+                    try {
+                        statementNota.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
 
-                        // Adiciona a nota à lista
-                        notas.add(nota);
-                    }*/
 
-                try {
-                    statementNota.executeUpdate();
-                } catch (SQLException e) {
-                    System.out.println("Erro: " + e.getMessage());
+                    System.out.println("Notas registradas no banco de dados com sucesso!");
                 }
-
-
-            System.out.println("Notas registradas no banco de dados com sucesso!");
+            }
         } catch (SQLException e) {
             System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
         } finally {
@@ -259,15 +253,9 @@ public class StudentController implements Initializable {
             }
         }
     }
-
     @FXML
-    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
+    public void goToLoginScreen (ActionEvent event){
+        Utils.setScreen(event, "loginScreen");
     }
 }
+

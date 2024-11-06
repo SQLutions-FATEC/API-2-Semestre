@@ -7,9 +7,9 @@ DROP TABLE IF EXISTS `tipo_usuario`;
 DROP TABLE IF EXISTS `criterio_periodo`;
 DROP TABLE IF EXISTS `equipe_periodo`;
 DROP TABLE IF EXISTS `criterio`;
-DROP TABLE IF EXISTS `periodo`;
 DROP TABLE IF EXISTS `pontuacao`;
 DROP TABLE IF EXISTS `sprint`;
+DROP TABLE IF EXISTS `periodo`;
 DROP TABLE IF EXISTS `equipe`;
 
 CREATE TABLE `nota` (
@@ -62,6 +62,7 @@ CREATE TABLE `sprint` (
 	`descricao` VARCHAR(255) NOT NULL,
 	`data_inicio` DATE NOT NULL,
 	`data_fim` DATE NOT NULL,
+	`periodo` INTEGER NOT NULL,
 	PRIMARY KEY(`id`)
 );
 
@@ -131,6 +132,10 @@ ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE `pontuacao`
 ADD FOREIGN KEY(`sprint`) REFERENCES `sprint`(`id`)
+ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+ALTER TABLE `sprint`
+ADD FOREIGN KEY(`periodo`) REFERENCES `periodo`(`id`)
 ON UPDATE NO ACTION ON DELETE NO ACTION;
 
 ALTER TABLE `criterio_periodo`
