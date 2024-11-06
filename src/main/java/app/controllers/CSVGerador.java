@@ -1,6 +1,9 @@
 package app.controllers;
 
+import app.DAOs.TeamDAO;
 import app.helpers.DatabaseConnection;
+import app.helpers.Utils;
+import app.models.TeamModel;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -14,6 +17,17 @@ public class CSVGerador {
             // Obter a conexão com o banco de dados
             Connection conn = DatabaseConnection.getConnection(true);
             QueryDB CDB = new QueryDB(conn);
+            TeamDAO teamDAO = new TeamDAO();
+
+            String nomeEquipe = teamDAO.selectTeams().stream()
+                    .filter(team -> team.getId() == equipeID)
+                    .map(TeamModel::getName)
+                    .findFirst()
+                    .orElse("Equipe Desconhecida");
+
+            // Escrever a equipe
+            writer.write("Equipe: " + nomeEquipe);
+            writer.newLine();
 
             // Escrever o cabeçalho do CSV
             writer.write("Usuario");
@@ -25,6 +39,7 @@ public class CSVGerador {
             writer.newLine();
 
             System.out.println("Arquivo CSV gerado com sucesso em: " + caminhoArquivo);
+            Utils.setAlert("CONFIRMATION", "CSV", "Arquivo CSV gerado com sucesso em" + caminhoArquivo);
         } catch (IOException e) {
             System.err.println("Erro ao gerar o arquivo CSV: " + e.getMessage());
         }
