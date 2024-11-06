@@ -9,9 +9,9 @@ public class EquipeModel {
     private SimpleStringProperty nome;
     private SimpleStringProperty github;
 
-    public EquipeModel(int id, String nome, String github){
+    public EquipeModel(int id, String name, String github){
         this.id = new SimpleIntegerProperty(id);
-        this.nome = new SimpleStringProperty(nome);
+        this.nome = new SimpleStringProperty(name);
         this.github = new SimpleStringProperty(github);
     }
 

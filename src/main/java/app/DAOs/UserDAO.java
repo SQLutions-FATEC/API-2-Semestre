@@ -10,7 +10,26 @@ import java.sql.SQLException;
 
 public class UserDAO {
     ObservableList<UserModel> studentList = FXCollections.observableArrayList();
-    int rowsAffected = 0;
+    int generatedKey = 0;
+
+    public void createStudents(ObservableList <app. models. UserModel> students, int teamId) {
+        String sql;
+
+        int typeStudent = 2;
+
+        for (UserModel student : students) {
+            sql = String.format(
+                    "INSERT INTO usuario (ra, nome, senha, email, tipo, equipe) VALUES ('%d', '%s', '%s', '%s', '%d', '%d')",
+                    student.getRa(), student.getNome(), student.getSenha(), student.getEmail(), typeStudent, teamId);
+            try {
+                DatabaseConnection.executeUpdate(sql);
+            } catch (SQLException e) {
+                System.out.println("Erro no SQL de studentList: " + e.getMessage());
+            } finally {
+                DatabaseConnection.closeResources();
+            }
+        }
+    }
     
     public ObservableList<UserModel> selectStudents() {
         String sql = "SELECT u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL AND deleted_at IS NULL ORDER BY u.nome";
@@ -36,25 +55,25 @@ public class UserDAO {
         String sql = String.format(
                 "UPDATE usuario SET deleted_at = NOW() WHERE ra = '%d'", ra);
         try {
-            rowsAffected = DatabaseConnection.executeUpdate(sql);
+            generatedKey = DatabaseConnection.executeUpdate(sql);
         } catch (SQLException e) {
             System.out.println("Erro no SQL de studentList: " + e.getMessage());
         } finally {
             DatabaseConnection.closeResources();
         }
-        return rowsAffected;
+        return generatedKey;
     }
 
     public int updateStudentTeam(int ra, int teamId) {
         String sql = String.format(
                 "UPDATE usuario SET equipe = '%d' WHERE ra = '%d'", teamId, ra);
         try {
-            rowsAffected = DatabaseConnection.executeUpdate(sql);
+            generatedKey = DatabaseConnection.executeUpdate(sql);
         } catch (SQLException e) {
             System.out.println("Erro no SQL de studentList: " + e.getMessage());
         } finally {
             DatabaseConnection.closeResources();
         }
-        return rowsAffected;
+        return generatedKey;
     }
 }

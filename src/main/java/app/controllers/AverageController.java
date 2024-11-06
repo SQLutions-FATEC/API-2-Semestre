@@ -1,8 +1,10 @@
 package app.controllers;
 
-import app.helpers.DatabaseConnection;
+import app.DAOs.CriteriaDAO;
+import app.DAOs.SprintDAO;
 import app.DAOs.AverageGradeDAO;
 import app.helpers.Utils;
+import app.models.CriteriaModel;
 import app.models.EquipeModel;
 import app.models.AverageGradeModel;
 import app.models.SprintModel;
@@ -15,22 +17,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class AverageController {
     @FXML
-    public ChoiceBox<String> ChoiceBoxSprint;
+    public ChoiceBox<String> sprintChoiceBox;
     @FXML
     public TableView<AverageGradeModel> tableAverageGrades = new TableView<>();
 
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
     String currentSprint;
     Integer selectedSprintId;
     Integer selectedPeriodId;
@@ -43,7 +38,7 @@ public class AverageController {
     public void passData(int teamId, int periodId) {
         selectedPeriodId = periodId;
         selectedTeamId = teamId;
-        ChoiceBoxSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        sprintChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
         });
         fetchSprint();
@@ -58,98 +53,58 @@ public class AverageController {
     }
 
     private void fetchSprint() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
+        SprintDAO sprintDAO = new SprintDAO();
+        ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
 
-            String sqlCount = String.format("SELECT * FROM sprint s WHERE s.periodo = '%d' ORDER BY s.data_inicio", selectedPeriodId);
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
+        for (SprintModel sprint : sprintList) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
+            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String description = resultSet.getString("descricao");
-                Date dataInicio = resultSet.getDate("data_inicio");
-                Date dataFim = resultSet.getDate("data_fim");
+            String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+            sprintOptionsList.add(sprintDescription);
+            sprintIdMap.put(sprintDescription, sprint.getId());
+        }
 
-                new SprintModel(id, description, dataInicio, dataFim);
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedStartDate = dateFormat.format(SprintModel.getDataInicio());
-                String formattedEndDate = dateFormat.format(SprintModel.getDataFim());
-
-                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
-                sprintOptionsList.add(sprintDescription);
-                sprintIdMap.put(sprintDescription, id);
-            }
-            ChoiceBoxSprint.getItems().addAll(sprintOptionsList);
-            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
-            if (currentSprint != null) {
-                ChoiceBoxSprint.setValue(currentSprint);
-            } else {
-                ChoiceBoxSprint.setValue(sprintOptionsList.get(0));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        sprintChoiceBox.getItems().addAll(sprintOptionsList);
+        String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+        if (currentSprint != null) {
+            sprintChoiceBox.setValue(currentSprint);
+        } else {
+            sprintChoiceBox.setValue(sprintOptionsList.getFirst());
         }
     }
 
     private void fetchCriterias() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
+        CriteriaDAO criteriaDAO = new CriteriaDAO();
+        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectActiveCriteriasByPeriod(selectedPeriodId);
 
-            tableAverageGrades.getColumns().clear();
+        tableAverageGrades.getColumns().clear();
+        ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();
 
-            String sqlCount = String.format(
-                    "SELECT c.nome AS nome FROM criterio_periodo cp " +
-                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = '%d'", selectedPeriodId);
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
+        TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        int nameColumnWidth = 100;
+        nomeColumn.setPrefWidth(nameColumnWidth);
+        tableAverageGrades.getColumns().add(nomeColumn);
 
-            ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();
+        for (CriteriaModel criteria : criteriaList) {
+            String criteriaName = criteria.getName();
+            TableColumn<AverageGradeModel, Double> column = new TableColumn<>(criteriaName);
+            columns.add(column);
+        }
+        tableAverageGrades.getColumns().addAll(columns);
 
-            TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
-            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            int nomeColumnWidth = 100;
-            nomeColumn.setPrefWidth(nomeColumnWidth);
-            tableAverageGrades.getColumns().add(nomeColumn);
+        double tableWidth = 580;
+        double widthLeft = tableWidth - nameColumnWidth;
+        double widthPerColumn = widthLeft / columns.size();
 
-            while (resultSet.next()) {
-                String criterioNome = resultSet.getString("nome");
-
-                TableColumn<AverageGradeModel, Double> column = new TableColumn<>(criterioNome);
-                columns.add(column);
-            }
-            tableAverageGrades.getColumns().addAll(columns);
-
-            double larguraTabela = 580;
-            double larguraRestante = larguraTabela - nomeColumnWidth;
-            double larguraPorColuna = larguraRestante / columns.size();
-
-            for (TableColumn<AverageGradeModel, Double> column : columns) {
-                String criterioNome = column.getText();
-                column.setCellValueFactory(cellData ->
-                        new SimpleDoubleProperty(cellData.getValue().getAverage(criterioNome)).asObject()
-                );
-                column.setPrefWidth(larguraPorColuna);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        for (TableColumn<AverageGradeModel, Double> column : columns) {
+            String name = column.getText();
+            column.setCellValueFactory(cellData ->
+                    new SimpleDoubleProperty(cellData.getValue().getAverage(name)).asObject()
+            );
+            column.setPrefWidth(widthPerColumn);
         }
     }
 

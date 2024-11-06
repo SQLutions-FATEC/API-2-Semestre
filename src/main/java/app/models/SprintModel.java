@@ -6,29 +6,23 @@ import java.util.Date;
 
 public class SprintModel {
     private SimpleIntegerProperty id;
-    private SimpleStringProperty descricao;
-    private static ObjectProperty<Date> dataInicio;
-    private static ObjectProperty<Date> dataFim;
+    private SimpleStringProperty description;
+    private static ObjectProperty<Date> startDate;
+    private static ObjectProperty<Date> endDate;
 
     public SprintModel(int id, String descricao, Date dataInicio, Date dataFim) {
         this.id = new SimpleIntegerProperty(id);
-        this.descricao = new SimpleStringProperty(descricao);
-        this.dataInicio = new SimpleObjectProperty<>(dataInicio);
-        this.dataFim = new SimpleObjectProperty<>(dataFim);
+        this.description = new SimpleStringProperty(descricao);
+        this.startDate = new SimpleObjectProperty<>(dataInicio);
+        this.endDate = new SimpleObjectProperty<>(dataFim);
     }
 
     public int getId() { return id.get(); }
     public void setId(int id) { this.id.set(id); }
 
-    public String getDescricao() { return descricao.get(); }
-    public void setDescricao(String descricao) { this.descricao.set(descricao); }
+    public String getDescription() { return description.get(); }
 
-    public static Date getDataInicio() { return dataInicio.get(); }
-    public void setDataInicio(Date dataInicio) { this.dataInicio.set(dataInicio); }
+    public static Date getStartDate() { return startDate.get(); }
 
-    public static Date getDataFim() { return dataFim.get(); }
-    public void setDataFim(Date dataFim) { this.dataFim.set(dataFim); }
-
-    public ObjectProperty<Date> dataInicioProperty() { return dataInicio; }
-    public ObjectProperty<Date> dataFimProperty() { return dataFim; }
+    public static Date getEndDate() { return endDate.get(); }
 }

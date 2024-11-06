@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.helpers.Utils;
 import app.models.Aluno;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -132,14 +133,9 @@ public class StudentController {
         }
     }
 
-    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/loginScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
+    @FXML
+    public void goToLoginScreen(ActionEvent event) {
+        Utils.setScreen(event, "loginScreen");
     }
 
     private void adicionarDados() {

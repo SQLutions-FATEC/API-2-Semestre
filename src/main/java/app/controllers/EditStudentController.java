@@ -64,7 +64,6 @@ public class EditStudentController implements Initializable {
 
         fetchStudents();
         fetchTeams();
-//        fetchTeamNames();
         configureAutocomplete();
         setTeamId();
     }
@@ -76,7 +75,7 @@ public class EditStudentController implements Initializable {
 
     private void fetchTeams() {
         TeamDAO teamDAO = new TeamDAO();
-        teamList = teamDAO.fetchTeams();
+        teamList = teamDAO.selectTeams();
         ObservableList<String> teamNames = FXCollections.observableArrayList();
         for (TeamModel team : teamList) {
             teamNames.add(team.getName());
@@ -85,11 +84,6 @@ public class EditStudentController implements Initializable {
         teamChoiceBox.getItems().addAll(teamNames);
         teamChoiceBox.setValue(teamNames.getFirst());
     }
-
-//    private void fetchTeamNames() {
-//        TeamDAO teamDAO = new TeamDAO();
-//        teamNamesMap = teamDAO.fetchTeamNames();
-//    }
 
     private void configureAutocomplete() {
         studentSearch.textProperty().addListener((obs, oldValue, newValue) -> {
@@ -180,6 +174,6 @@ public class EditStudentController implements Initializable {
 
     @FXML
     public void goToProfessorScreen(ActionEvent event) throws IOException {
-        Utils.setScreen(event, "/professor/professorScreen.fxml", "Tela do professor");
+        Utils.setScreen(event, "professorScreen");
     }
 }

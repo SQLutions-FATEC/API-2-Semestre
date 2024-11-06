@@ -23,7 +23,7 @@ public class DatabaseConnection {
         return connection;
     }
 
-    // Método para SELECT
+    // Mét0do para SELECT
     public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
         try {
             Connection conn = getConnection(true);
@@ -36,13 +36,22 @@ public class DatabaseConnection {
         }
     }
 
-    // Método para INSERT, UPDATE e DELETE
+    // Mét0do para INSERT, UPDATE e DELETE
     public static int executeUpdate(String sql, Object... params) throws SQLException {
+        int generatedKey = 0;
+
         try {
             Connection conn = getConnection(true);
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             setParameters(statement, params);
-            return statement.executeUpdate();
+            int rowsAffected = statement.executeUpdate();
+            if (rowsAffected > 0) {
+                ResultSet generatedKeys = statement.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    generatedKey = generatedKeys.getInt(1);
+                }
+            }
+            return generatedKey;
         } catch (SQLException e) {
             System.out.println("Erro ao executar atualização: " + e.getMessage());
             throw e;
