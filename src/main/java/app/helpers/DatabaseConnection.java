@@ -12,18 +12,23 @@ public class DatabaseConnection {
     private static final String PASSWORD = dotenv.get("DB_PASSWORD");
 
     public static Connection getConnection(boolean useDefaultSchema) throws SQLException {
-        String URL = "jdbc:mysql://127.0.0.1:3306/";
+        String baseUrl = "jdbc:mysql://127.0.0.1:3306/";
+        String url = baseUrl;
 
         if (useDefaultSchema) {
-            URL = URL + DEFAULT_SCHEMA + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+            url += DEFAULT_SCHEMA;
         }
+
+        url += "?useUnicode=true&characterEncoding=UTF-8&serverTimezone=America/Sao_Paulo&useLegacyDatetimeCode=false";
+
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return DriverManager.getConnection(url, USER, PASSWORD);
         } catch (SQLException e) {
-            System.out.println("Erro ao conectar ao banco de dados: " + e.getMessage());
+            System.err.println("Erro ao conectar ao banco de dados: " + e.getMessage());
             throw e;
         }
     }
+
 
     public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
         Connection connection = getConnection(true);

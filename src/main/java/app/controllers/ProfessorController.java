@@ -264,16 +264,4 @@ public class ProfessorController implements Initializable {
         stage.setTitle("Definir Data Sprint");
         stage.show();
     }
-
-
-    @FXML
-    public void gerarCsvButton(ActionEvent event) {
-        String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "\\relatorio.csv";
-
-        try {
-            CSVGerador.gerarCsv(caminhoArquivo);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }

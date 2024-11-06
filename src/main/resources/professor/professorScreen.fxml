@@ -48,7 +48,7 @@
                <Font size="16.0" />
             </font>
          </Button>
-          <Button fx:id="ButtonGerarRelatorioProfessor" mnemonicParsing="false" onAction="#gerarCsvButton" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
+          <Button fx:id="ButtonGerarRelatorioProfessor" mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
               <font>
                   <Font size="16.0" />
               </font>
