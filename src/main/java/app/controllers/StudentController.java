@@ -198,46 +198,67 @@ public class StudentController implements Initializable {
         }
     }
 
-//    public void ConfirmarNotas() {
-//        Connection connection = null;
-//        PreparedStatement statementNota = null;
-//
-//        try {
-//            connection = DatabaseConnection.getConnection(true);
-//            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
-//            statementNota = connection.prepareStatement(sqlNota);
-//
-//            for (NotaModel Nota : tableView.getItems()) {
-//                statementNota.setInt(1, Nota.getValor());
-//                statementNota.setInt(2, Nota.getAvaliador());
-//                statementNota.setInt(3, Nota.getAvaliado());
-//                statementNota.setInt(4, Nota.getCriterio());
-//                statementNota.setInt(5, Nota.getPeriodo());
-//                statementNota.setInt(6, Nota.getSprint());
-//
-//                try {
-//                    statementNota.executeUpdate();
-//                } catch (SQLException e) {
-//                    System.out.println("Erro: "+ e.getMessage());
-//                }
-//            }
-//
-//            System.out.println("Notas registradas no banco de dados com sucesso!");
-//        } catch (SQLException e) {
-//            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
-//        } finally {
-//            try {
-//                if (statementNota != null) {
-//                    statementNota.close();
-//                }
-//                if (connection != null) {
-//                    connection.close();
-//                }
-//            } catch (SQLException e) {
-//                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-//            }
-//        }
-//    }
+    public void ConfirmarNotas() {
+        Connection connection = null;
+        PreparedStatement statementNota = null;
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, 1, ?, ?, ?, ?)";
+            statementNota = connection.prepareStatement(sqlNota);
+
+            /*for (NotaModel Nota : tableView.getItems()) {
+                statementNota.setInt(1, Nota.getValor());
+                statementNota.setInt(2, Nota.getAvaliador());
+                statementNota.setInt(3, Nota.getAvaliado());
+                statementNota.setInt(4, Nota.getCriterio());
+                statementNota.setInt(5, Nota.getPeriodo());
+
+*/
+            /*for (AvaliacaoModel aluno : tableView.getItems()) {
+                for (TableColumn<AvaliacaoModel, Integer> column : tableView.getColumns().filtered(col -> !col.getText().equals("Aluno"))) {
+                    Integer notaValor = column.getCellData(aluno);
+
+                    // Verifica se a nota não é nula
+                    if (notaValor != null) {
+                        // Aqui você cria um novo objeto NotaModel para cada célula individual
+                        NotaModel nota = new NotaModel();
+
+                        // Exemplo de como preencher os campos do objeto NotaModel
+                        nota.setValor(notaValor);
+                        nota.setAvaliador(*//* ID do avaliador, se disponível *//*);
+                        nota.setAvaliado(*//* ID do avaliado, baseado no aluno atual *//*);
+                        nota.setCriterio(*//* ID do critério, baseado na coluna atual *//*);
+                        nota.setPeriodo(selectedPeriodId);
+                        nota.setSprint(selectedSprintId);
+
+                        // Adiciona a nota à lista
+                        notas.add(nota);
+                    }*/
+
+                try {
+                    statementNota.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Erro: " + e.getMessage());
+                }
+
+
+            System.out.println("Notas registradas no banco de dados com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (statementNota != null) {
+                    statementNota.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
 
     @FXML
     public void voltarPrincipalScreen(ActionEvent event) throws IOException {
