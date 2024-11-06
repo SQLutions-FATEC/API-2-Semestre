@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.helpers.DatabaseConnection;
-import app.models.AlunoModel;
+import app.models.UsuarioModel;
 import app.models.EquipeModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,15 +31,15 @@ public class CSVController extends DatabaseConnection {
     protected Scene scene;
 
     @FXML
-    public TableView<AlunoModel> tableView;
+    public TableView<UsuarioModel> tableView;
     @FXML
-    public TableColumn<AlunoModel, Integer> colRa;
+    public TableColumn<UsuarioModel, Integer> colRa;
     @FXML
-    public TableColumn<AlunoModel, String> colNome;
+    public TableColumn<UsuarioModel, String> colNome;
     @FXML
-    public TableColumn<AlunoModel, String> colEmail;
+    public TableColumn<UsuarioModel, String> colEmail;
     @FXML
-    public TableColumn<AlunoModel, String> colSenha;
+    public TableColumn<UsuarioModel, String> colSenha;
 
     @FXML
     public Label labelNomeEquipe;
@@ -72,7 +72,7 @@ public class CSVController extends DatabaseConnection {
         try {
             leitor = new BufferedReader(new FileReader(file));
 
-            ObservableList<AlunoModel> alunoList = FXCollections.observableArrayList();
+            ObservableList<UsuarioModel> alunoList = FXCollections.observableArrayList();
             EquipeModel equipe;
             boolean isPrimeiraLinha = true;
 
@@ -84,7 +84,7 @@ public class CSVController extends DatabaseConnection {
                         System.out.println("Linha da equipe inválida: " + line);
                         return;
                     }
-                    equipe = new EquipeModel(linha[0], linha[1]);
+                    equipe = new EquipeModel(0, linha[0], linha[1]);
                     isPrimeiraLinha = false;
                     labelNomeEquipe.setText(equipe.getNome());
                     labelGithubEquipe.setText(equipe.getGithub());
@@ -96,7 +96,7 @@ public class CSVController extends DatabaseConnection {
                     continue;
                 }
 
-                AlunoModel aluno = new AlunoModel(
+                UsuarioModel aluno = new UsuarioModel(
                         Integer.parseInt(linha[0]),
                         linha[1],
                         linha[2],
@@ -156,7 +156,7 @@ public class CSVController extends DatabaseConnection {
 
             int typeStudent = 2;
 
-            for (AlunoModel aluno : tableView.getItems()) {
+            for (UsuarioModel aluno : tableView.getItems()) {
                 statementAluno.setInt(1, aluno.getRa());
                 statementAluno.setString(2, aluno.getNome());
                 statementAluno.setString(3, aluno.getSenha());
