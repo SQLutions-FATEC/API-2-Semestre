@@ -1,8 +1,10 @@
 package app.controllers;
 
+import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.DatabaseConnection;
 import app.helpers.Utils;
+import app.models.SprintModel;
 import app.models.TeamModel;
 
 import java.io.BufferedWriter;
@@ -18,6 +20,7 @@ public class CSVGerador {
             Connection conn = DatabaseConnection.getConnection(true);
             QueryDB CDB = new QueryDB(conn);
             TeamDAO teamDAO = new TeamDAO();
+            SprintDAO sprintDAO = new SprintDAO();
 
             String nomeEquipe = teamDAO.selectTeams().stream()
                     .filter(team -> team.getId() == equipeID)
@@ -25,8 +28,17 @@ public class CSVGerador {
                     .findFirst()
                     .orElse("Equipe Desconhecida");
 
+            String descricaoSprint = sprintDAO.selectSprints(periodoID).stream()
+                    .filter(sprint -> sprint.getId() == sprintID)
+                    .map(SprintModel::getDescription)
+                    .findFirst()
+                    .orElse("Sprint Desconhecida");
+
             // Escrever a equipe
             writer.write("Equipe: " + nomeEquipe);
+            writer.newLine();
+
+            writer.write("Sprint: " + periodoID);
             writer.newLine();
 
             // Escrever o cabeçalho do CSV
