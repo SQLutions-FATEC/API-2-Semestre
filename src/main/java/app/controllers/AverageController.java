@@ -11,12 +11,14 @@ import app.models.SprintModel;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -113,5 +115,16 @@ public class AverageController {
         Map<String, AverageGradeModel> studentsMap = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
         tableAverageGrades.setItems(data);
+    }
+
+    @FXML
+    public void gerarCsvButton(ActionEvent event) {
+        String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "\\relatorio.csv";
+
+        try {
+            CSVGerador.gerarCsv(caminhoArquivo, selectedTeamId, selectedPeriodId, selectedSprintId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
