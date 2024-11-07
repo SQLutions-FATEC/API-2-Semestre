@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.SprintDAO;
 import app.helpers.DatabaseConnection;
 import app.models.AvaliacaoModel;
 import app.models.NotaModel;
@@ -35,7 +36,7 @@ public class StudentController implements Initializable {
     String currentSprint;
     Integer periodID;
     Integer selectedSprintId;
-    Integer selectedPeriodId;
+    Integer selectedPeriodId = 1;
     Integer selectedTeamId;
     Connection connection = null;
     PreparedStatement statement = null;
@@ -46,12 +47,6 @@ public class StudentController implements Initializable {
 
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
-
-    @FXML
-    private Label LabelNumeroSprint;
-
-    @FXML
-    private Label LabelDataSprint;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -143,7 +138,6 @@ public class StudentController implements Initializable {
 
         } finally {
             try {
-
                 if (resultSet != null) resultSet.close();
                 if (statement != null) statement.close();
                 if (connection != null) connection.close();
@@ -154,29 +148,21 @@ public class StudentController implements Initializable {
     }
 
     private void fetchSprint() {
+
         try {
-            connection = DatabaseConnection.getConnection(true);
+        SprintDAO sprintDAO = new SprintDAO();
+        ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
 
-            String sqlCount = "SELECT * FROM sprint";
-            statement = connection.prepareStatement(sqlCount);
-            resultSet = statement.executeQuery();
 
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String description = resultSet.getString("descricao");
-                Date dataInicio = resultSet.getDate("data_inicio");
-                Date dataFim = resultSet.getDate("data_fim");
-
-                new SprintModel(id, description, dataInicio, dataFim);
+            for (SprintModel sprint : sprintList) {
 
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
                 String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
-                String sprintDescription = description + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+                String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
                 sprintOptionsList.add(sprintDescription);
-                sprintIdMap.put(sprintDescription, id);
-                LabelDataSprint.setText(sprintDescription);
+                sprintIdMap.put(sprintDescription, sprint.getId());
             }
             choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
             String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
@@ -185,8 +171,6 @@ public class StudentController implements Initializable {
             } else {
                 choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
             }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
         } finally {
             try {
                 if (resultSet != null) resultSet.close();
@@ -198,46 +182,106 @@ public class StudentController implements Initializable {
         }
     }
 
+    public Integer obterIdDoCriterio(String nomeCriterio) {
+        Integer idCriterio = null;
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sql = "SELECT id FROM criterio WHERE nome = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, nomeCriterio);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                idCriterio = resultSet.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar o ID do critério: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return idCriterio;
+    }
+
+    public Integer obterIdDaSprint() {
+        String sprintSelecionada = choiceBoxMudarSprint.getValue();
+        Integer idSprint = sprintIdMap.get(sprintSelecionada);
+
+        return idSprint;
+
+    }
+
+    public Integer obterIdDoAvaliado(String nomeAluno) {
+        Integer idAluno = null;
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sql = "SELECT id FROM usuario WHERE nome = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, nomeAluno);
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                idAluno = resultSet.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar o ID do aluno: " + e.getMessage());
+        } finally {
+            try {
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+        return idAluno;
+    }
+
+
     public void ConfirmarNotas() {
         Connection connection = null;
         PreparedStatement statementNota = null;
 
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, 1, ?, ?, ?, ?)";
+            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
             statementNota = connection.prepareStatement(sqlNota);
 
-            /*for (NotaModel Nota : tableView.getItems()) {
-                statementNota.setInt(1, Nota.getValor());
-                statementNota.setInt(2, Nota.getAvaliador());
-                statementNota.setInt(3, Nota.getAvaliado());
-                statementNota.setInt(4, Nota.getCriterio());
-                statementNota.setInt(5, Nota.getPeriodo());
-
-*/
             for (AvaliacaoModel aluno : tableView.getItems()) {
-                for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns().filtered(col -> !col.getText().equals("Aluno"))) {
-                    Integer notaValor = (Integer) column.getCellData(aluno);
+                for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+                    if (!column.getText().equals("Aluno")) {
+                        Integer notaValor = (Integer) column.getCellData(aluno);
 
-                    if (notaValor != null) {
-                        NotaModel nota = new NotaModel();
-                        statementNota.setInt(1, nota.getValor());
-                        statementNota.setInt(2, nota.getAvaliador());
-                        statementNota.setInt(3, nota.getAvaliado());
-                        statementNota.setInt(4, nota.getCriterio());
-                        statementNota.setInt(5, nota.getPeriodo());
+                        if (notaValor != null) {
+                            String nomeCriterio = column.getText();
+                            Integer idCriterio = obterIdDoCriterio(nomeCriterio);
+
+                            String nomeAluno = aluno.getNome();
+                            Integer idAvaliado = obterIdDoAvaliado(nomeAluno);
+
+                            Integer idSprint = obterIdDaSprint();
+
+                            statementNota.setInt(1, notaValor);
+                            statementNota.setInt(2, 2);
+                            statementNota.setInt(3, idAvaliado);
+                            statementNota.setInt(4, idCriterio);
+                            statementNota.setInt(5, selectedPeriodId);
+                            statementNota.setInt(6, idSprint);
+
+                            statementNota.executeUpdate();
+                        }
                     }
-
-                    try {
-                        statementNota.executeUpdate();
-                    } catch (SQLException e) {
-                        System.out.println("Erro: " + e.getMessage());
-                    }
-
-
-                    System.out.println("Notas registradas no banco de dados com sucesso!");
                 }
             }
+            System.out.println("Notas registradas no banco de dados com sucesso!");
+
         } catch (SQLException e) {
             System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
         } finally {
@@ -253,6 +297,7 @@ public class StudentController implements Initializable {
             }
         }
     }
+
     @FXML
     public void goToLoginScreen (ActionEvent event){
         Utils.setScreen(event, "loginScreen");

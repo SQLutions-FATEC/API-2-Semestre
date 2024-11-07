@@ -4,7 +4,6 @@ import javafx.beans.property.*;
 
 public class NotaModel {
 
-    private int id;
     private SimpleIntegerProperty valor;
     private SimpleIntegerProperty avaliador;
     private SimpleIntegerProperty avaliado;
@@ -12,9 +11,8 @@ public class NotaModel {
     private SimpleIntegerProperty periodo;
     private SimpleIntegerProperty sprint;
 
-    public NotaModel(int id, Integer valor, Integer avaliador, Integer avaliado, Integer criterio, Integer periodo, Integer sprint) {
+    public NotaModel( Integer valor, Integer avaliador, Integer avaliado, Integer criterio, Integer periodo, Integer sprint) {
 
-        this.id = id;
         this.valor = new SimpleIntegerProperty(valor);
         this.avaliador = new SimpleIntegerProperty(avaliador);
         this.avaliado = new SimpleIntegerProperty(avaliado);
@@ -24,13 +22,9 @@ public class NotaModel {
 
     }
 
-    public NotaModel() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
+//    public int getId() {
+//        return id;
+//    }
 
     public Integer getValor() {
         return valor.get();
