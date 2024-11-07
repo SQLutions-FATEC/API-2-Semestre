@@ -14,12 +14,13 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/loginScreen.fxml"));
             Parent root = loader.load();
             primaryStage.setScene(new Scene(root));
-            primaryStage.setTitle("Tela Principal");
+            primaryStage.setTitle("Login");
+            primaryStage.setResizable(false);
             primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
