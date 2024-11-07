@@ -7,14 +7,14 @@ import java.util.Date;
 public class SprintModel {
     private SimpleIntegerProperty id;
     private SimpleStringProperty description;
-    private ObjectProperty<Date> startDate;
-    private ObjectProperty<Date> endDate;
+    private static ObjectProperty<Date> startDate = new SimpleObjectProperty<>();
+    private static ObjectProperty<Date> endDate = new SimpleObjectProperty<>();
 
     public SprintModel(int id, String description, Date startDate, Date endDate) {
         this.id = new SimpleIntegerProperty(id);
         this.description = new SimpleStringProperty(description);
-        this.startDate = new SimpleObjectProperty<>(startDate);
-        this.endDate = new SimpleObjectProperty<>(endDate);
+        SprintModel.startDate.set(startDate);
+        SprintModel.endDate.set(endDate);
     }
 
     public int getId() {
@@ -37,16 +37,16 @@ public class SprintModel {
         return startDate.get();
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate.set(startDate);
+    public static void setStartDate(Date startDate) {
+        SprintModel.startDate.set(startDate);
     }
 
-    public static getEndDate() {
+    public static Date getEndDate() {
         return endDate.get();
     }
 
-    public void setEndDate(Date endDate) {
-        this.endDate.set(endDate);
+    public static void setEndDate(Date endDate) {
+        SprintModel.endDate.set(endDate);
     }
 
     public IntegerProperty idProperty() {
@@ -57,11 +57,11 @@ public class SprintModel {
         return description;
     }
 
-    public ObjectProperty<Date> startDateProperty() {
+    public static ObjectProperty<Date> startDateProperty() {
         return startDate;
     }
 
-    public ObjectProperty<Date> endDateProperty() {
+    public static ObjectProperty<Date> endDateProperty() {
         return endDate;
     }
 }

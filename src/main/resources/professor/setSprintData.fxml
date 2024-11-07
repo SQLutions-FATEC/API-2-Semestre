@@ -67,8 +67,8 @@
             <TableView fx:id="tableData" maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
               <columns>
                 <TableColumn fx:id="colSprint" prefWidth="100.0" text="Sprint" />
-                <TableColumn fx:id="colDataInicio" prefWidth="150.0" text="Data de Inicio" />
-                  <TableColumn fx:id="colDataFim" prefWidth="150.0" text="Data de Fim" />
+                <TableColumn fx:id="colStartDate" prefWidth="150.0" text="Data de Inicio" />
+                  <TableColumn fx:id="colEndDate" prefWidth="150.0" text="Data de Fim" />
               </columns>
             </TableView>
          </children>
