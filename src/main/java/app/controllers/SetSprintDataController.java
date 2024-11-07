@@ -17,9 +17,9 @@ public class SetSprintDataController {
     @FXML
     private TableColumn<SprintModel, String> colSprint;
     @FXML
-    private TableColumn<SprintModel, String> colDataInicio;
+    private TableColumn<SprintModel, String> colStartDate;
     @FXML
-    private TableColumn<SprintModel, String> colDataFim;
+    private TableColumn<SprintModel, String> colEndDate;
 
     private SprintDAO sprintDAO;
 
@@ -30,10 +30,9 @@ public class SetSprintDataController {
     }
 
     private void configureTableColumns() {
-
         colSprint.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colDataInicio.setCellValueFactory(new PropertyValueFactory<>("dataInicio"));
-        colDataFim.setCellValueFactory(new PropertyValueFactory<>("dataFim"));
+        colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+        colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
     }
 
     private void loadSprints() {

@@ -55,9 +55,5 @@ public class DataModel {
         return data_fim.get();
     }
 
-    public void setData_fim(String data_fim){
-        this.data_fim = new SimpleStringProperty(data_fim);
-    }
-
 
 }
