@@ -131,14 +131,8 @@ public class ProfessorController implements Initializable {
     public void goToSetScoreScreen(ActionEvent event) {
         Utils.setScreen(event, "setScore");
     }
-    public void definirDataSprint(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/setSprintData.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
 
-        stage.setScene(scene);
-        stage.setTitle("Definir Data Sprint");
-        stage.show();
+    public void definirDataSprint(ActionEvent event) {
+        Utils.setScreen(event, "setSprintData");
     }
-
 }
