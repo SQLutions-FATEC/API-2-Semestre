@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditStudentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetSprintDataController">
    <children>
       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0">
          <children>
@@ -50,7 +50,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" spacing="120.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
+            <Button mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
             <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Confirmar" />
          </children>
       </HBox>
