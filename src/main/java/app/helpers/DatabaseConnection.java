@@ -23,7 +23,6 @@ public class DatabaseConnection {
         return connection;
     }
 
-    // Mét0do para SELECT
     public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
         try {
             Connection conn = getConnection(true);
@@ -36,7 +35,6 @@ public class DatabaseConnection {
         }
     }
 
-    // Mét0do para INSERT, UPDATE e DELETE
     public static int executeUpdate(String sql, Object... params) throws SQLException {
         int rowsAffected = 0;
         int generatedKey = 0;
