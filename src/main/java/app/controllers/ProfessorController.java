@@ -44,9 +44,6 @@ public class ProfessorController implements ScreenController {
 
     @Override
     public void initData(Object data) {
-        if (data instanceof String) {
-            String userEmail = (String) data;
-        }
         periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });
@@ -117,7 +114,7 @@ public class ProfessorController implements ScreenController {
 
     @FXML
     public void goToLoginScreen(ActionEvent event) {
-        Utils.setScreen(event, "loginScreen");
+        Utils.setScreen(event, "loginScreen", null);
     }
 
     @FXML

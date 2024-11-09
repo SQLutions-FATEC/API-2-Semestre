@@ -1,14 +1,12 @@
 package app.controllers;
 
 import app.helpers.Utils;
+import app.interfaces.ScreenController;
 import app.models.Aluno;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -16,14 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Objects;
-
-public class StudentController {
-    protected Stage stage;
-    protected Parent root;
+public class StudentController implements ScreenController {
     protected Scene scene;
 
     @FXML
@@ -52,8 +44,12 @@ public class StudentController {
 
     private ObservableList<Aluno> alunos;
 
-    @FXML
-    public void initialize() {
+    @Override
+    public void initData(Object data) {
+//        if (data instanceof Map) {
+//            int teamId = (int) data.get("teamId");
+//            String userEmail = (String) data.get("userEmail");
+//        }
         colunaAluno.setCellValueFactory(new PropertyValueFactory<>("nome"));
         colunaProatividade.setCellValueFactory(new PropertyValueFactory<>("proatividade"));
         colunaAutonomia.setCellValueFactory(new PropertyValueFactory<>("autonomia"));

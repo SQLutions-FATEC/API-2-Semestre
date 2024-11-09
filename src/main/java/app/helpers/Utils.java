@@ -74,8 +74,8 @@ public class Utils {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Utils.class.getResource(screenFXML)));
             Parent root = loader.load();
 
-            ScreenController controller = loader.getController();
-            if (controller != null && data != null) {
+            if (data != null) {
+                ScreenController controller = loader.getController();
                 controller.initData(data);
             }
 

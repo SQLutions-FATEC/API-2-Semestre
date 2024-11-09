@@ -4,19 +4,13 @@ import app.DAOs.LoginDAO;
 import app.DAOs.UserDAO;
 import app.helpers.Utils;
 import app.models.UserModel;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.ResourceBundle;
 
 public class LoginController {
     @FXML
@@ -43,7 +37,7 @@ public class LoginController {
                 Map<String, Object> data = new HashMap<>();
                 data.put("teamId", teamId);
                 data.put("userEmail", email);
-//            Utils.setScreen(event, "studentScreen", data);
+                Utils.setScreen(event, "studentScreen", data);
             } else {
                 Utils.setScreen(event, "professorScreen", email);
             }
