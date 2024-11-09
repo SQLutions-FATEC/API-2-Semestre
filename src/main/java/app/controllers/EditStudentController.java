@@ -151,7 +151,7 @@ public class EditStudentController implements Initializable {
             studentTableData.clear();
             studentSearch.setText("");
             studentList.removeIf(student -> student.getRa() == ra);
-            Utils.setAlert("CONFIRMATION", "Adição de critério", "O critério foi adicionado com sucesso");
+            Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
         }
     }
 
