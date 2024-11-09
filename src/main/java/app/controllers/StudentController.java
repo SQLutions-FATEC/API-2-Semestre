@@ -6,6 +6,7 @@ import app.models.AvaliacaoModel;
 import app.models.NotaModel;
 import app.models.SprintModel;
 import app.helpers.Utils;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,11 +34,7 @@ public class StudentController implements Initializable {
     protected Stage stage;
     protected Parent root;
     protected Scene scene;
-    String currentSprint;
-    Integer periodID;
-    Integer selectedSprintId;
     Integer selectedPeriodId = 1;
-    Integer selectedTeamId;
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
@@ -58,13 +55,6 @@ public class StudentController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-
-//    public void passData(int teamId, int periodId) {
-//        selectedPeriodId = periodId;
-//        selectedTeamId = teamId;
-//        choiceBoxMudarSprint.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> handleSprintListSelectionChange(newValue));
-//        fetchSprint();
-//    }
 
     private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
 
@@ -93,13 +83,6 @@ public class StudentController implements Initializable {
         }
     }
 
-//    private void handleSprintListSelectionChange(String sprint) {
-//        currentSprint = sprint;
-//        selectedSprintId = sprintIdMap.get(sprint);
-//        studentList.clear();
-//    }
-
-
     private void fetchCriterias() {
         try {
             connection = DatabaseConnection.getConnection(true);
@@ -121,12 +104,17 @@ public class StudentController implements Initializable {
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
                 TableColumn<AvaliacaoModel, Integer> column = new TableColumn<>(criterioNome);
-                column.setCellValueFactory(new PropertyValueFactory<>("notas"));
+
+                column.setCellValueFactory(cellData -> {
+                    AvaliacaoModel aluno = cellData.getValue();
+                    return new SimpleObjectProperty<>(aluno.getNota(criterioNome));
+                });
+
                 column.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1, 2, 3));
 
                 column.setOnEditCommit(event -> {
                     AvaliacaoModel aluno = event.getRowValue();
-                    aluno.setNotas(event.getNewValue());
+                    aluno.setNotas(criterioNome, event.getNewValue());
                 });
 
                 columns.add(column);
@@ -244,58 +232,58 @@ public class StudentController implements Initializable {
         return idAluno;
     }
 
-
+    @FXML
     public void ConfirmarNotas() {
         Connection connection = null;
         PreparedStatement statementNota = null;
 
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
-            statementNota = connection.prepareStatement(sqlNota);
+        for (AvaliacaoModel aluno : tableView.getItems()) {
+            for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+                if (!column.getText().equals("Aluno")) {
 
-            for (AvaliacaoModel aluno : tableView.getItems()) {
-                for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
-                    if (!column.getText().equals("Aluno")) {
-                        Integer notaValor = (Integer) column.getCellData(aluno);
+                    Integer notaValor = (Integer) column.getCellData(aluno);
 
-                        if (notaValor != null) {
-                            String nomeCriterio = column.getText();
-                            Integer idCriterio = obterIdDoCriterio(nomeCriterio);
+                    if (notaValor != null) {
+                        String nomeCriterio = column.getText();
+                        Integer idCriterio = obterIdDoCriterio(nomeCriterio);
 
-                            String nomeAluno = aluno.getNome();
-                            Integer idAvaliado = obterIdDoAvaliado(nomeAluno);
+                        String nomeAluno = aluno.getNome();
+                        Integer idAvaliado = obterIdDoAvaliado(nomeAluno);
 
-                            Integer idSprint = obterIdDaSprint();
+                        Integer idSprint = obterIdDaSprint();
+
+                        try {
+                            connection = DatabaseConnection.getConnection(true);
+                            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
+                            statementNota = connection.prepareStatement(sqlNota);
 
                             statementNota.setInt(1, notaValor);
-                            statementNota.setInt(2, 2);
+                            statementNota.setInt(2, 19);
                             statementNota.setInt(3, idAvaliado);
                             statementNota.setInt(4, idCriterio);
                             statementNota.setInt(5, selectedPeriodId);
                             statementNota.setInt(6, idSprint);
 
                             statementNota.executeUpdate();
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+                        } finally {
+                            try {
+                                if (statementNota != null) {
+                                    statementNota.close();
+                                }
+                                if (connection != null) {
+                                    connection.close();
+                                }
+                            } catch (SQLException e) {
+                                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+                            }
                         }
                     }
                 }
             }
-            System.out.println("Notas registradas no banco de dados com sucesso!");
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (statementNota != null) {
-                    statementNota.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
         }
+        System.out.println("Notas registradas no banco de dados com sucesso!");
     }
 
     @FXML

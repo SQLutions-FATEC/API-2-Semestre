@@ -1,24 +1,30 @@
 package app.models;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AvaliacaoModel {
     private String nome;
-    private Integer notas = 0;
+    private Map<String, Integer> notas;
 
     public AvaliacaoModel(String nome, Integer notas) {
         this.nome = nome;
-        this.notas = notas;
+        this.notas = new HashMap<>();
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNotas(Integer notas) {
-        this.notas = notas;
+    public void setNotas(String criterio , Integer nota) {
+        notas.put(criterio, nota);
     }
 
-    public Integer getNotas() {
+    public Map<String, Integer> getNotas() {
         return notas;
     }
 
+    public Integer getNota(String criterio) {
+        return notas.getOrDefault(criterio, 0);
+    }
 }
