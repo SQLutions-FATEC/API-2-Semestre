@@ -180,4 +180,9 @@ public class EditStudentController implements Initializable {
     public void goToProfessorScreen(ActionEvent event) throws IOException {
         Utils.setScreen(event, "professorScreen");
     }
+
+    @FXML
+    public void goToLoginScreen (ActionEvent event){
+        Utils.setScreen(event, "loginScreen");
+    }
 }

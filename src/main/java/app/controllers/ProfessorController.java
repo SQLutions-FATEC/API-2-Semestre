@@ -23,6 +23,10 @@ import java.net.URL;
 import java.util.*;
 
 public class ProfessorController implements Initializable {
+    protected Stage stage;
+    protected Parent root;
+    protected Scene scene;
+
     @FXML
     public TableView<TeamModel> teamTable;
     @FXML

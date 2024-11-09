@@ -50,7 +50,7 @@
       </VBox>
       <HBox alignment="CENTER" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" spacing="120.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#voltarProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
+            <Button mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
             <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Confirmar" />
          </children>
       </HBox>
