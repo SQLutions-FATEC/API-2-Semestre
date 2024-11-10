@@ -208,7 +208,7 @@ Gerar relatórios dos valores calculados
 ### ❓✅ Dúvidas tiradas com o cliente:
 
 - Tela de criação de sprint, que vai conter o seguinte fluxo:
-    - O professor cria a primeira sprint, define sua data inicial e final. Ao confirmar a criação, o programa apresenta que está criando a sprint seguinte. O professor define a sprint inicial, que será posterior à data final da sprint anterior, e define a data final da sprint. Assim, o programa se repete por quantas sprints se fizerem necessárias;
+    - O professor cria a primeira sprint, define a data inicial e final. Ao confirmar a criação, o programa apresenta que está criando a sprint seguinte. O professor define a sprint inicial, que será posterior à data final da sprint anterior, e define a data final da sprint. Assim, o programa se repete por quantas sprints se fizerem necessárias;
 - A tela de definição de critérios, que funcionará assim:
     - O professor cria critérios com o nome e uma breve descrição. Os critérios ficarão à mostra numa tabela, onde o professor seleciona quais critérios serão avaliados no período selecionado naquela tela;
 - O modelo do arquivo .csv, que será apresentado no seguinte formato:
@@ -229,7 +229,8 @@ Gerar relatórios dos valores calculados
 ### 👤User story 8: *Professor define as datas de cada sprint para definir controles sobre o período de acesso dos alunos na plataforma* - 🔴Prioridade média
 
 - **DoR**:
-    - A aplicação irá mostrar ao usuário que ele irá criar a sprint número 1. O usuário deve definir a data de início e fim do projeto, e então confirmar aquela sprint, que será inserida no banco de dados. Após a criação da primeira sprint, a aplicação indica a criação da sprint 2. O usuário insere a data de início, que deve ser posterior à data final da sprint anterior. O usuário confirma as alterações, e o programa repete essa lógica por até 8 sprints.
+    - **Resumo:**
+        - A aplicação irá mostrar ao usuário que ele irá criar a sprint número 1. O usuário deve definir a data de início e fim do projeto, e então confirmar aquela sprint, que será inserida no banco de dados. Após a criação da primeira sprint, a aplicação indica a criação da sprint 2. O usuário insere a data de início, que deve ser posterior à data final da sprint anterior. O usuário confirma as alterações, e o programa repete essa lógica por até 8 sprints.
     - **Controles importantes:**
         - O usuário não pode definir data de início e fim iguais para uma sprint;
         - O usuário não pode criar uma sprint com data final anterior à data final da última sprint cadastrada;
@@ -266,7 +267,8 @@ Gerar relatórios dos valores calculados
 ### 👤User story 10: *Usuário faz login com sua credencial para acessar funcionalidades que correspondam à função do usuário* - 🟡 Prioridade média
 
 - **DoR**:
-    - Para que o usuário diga à aplicação quem ele é, devemos ter uma tela de login. O aluno deve digitar o seu e-mail previamente cadastrado por um professor, e o professor terá o seu login injetado manualmente no banco de dados.
+    - **Resumo:**
+        - Para que o usuário diga à aplicação quem ele é, devemos ter uma tela de login. O aluno deve digitar o seu e-mail previamente cadastrado por um professor, e o professor terá o seu login injetado manualmente no banco de dados.
     - **Controles importantes:**
         - A aplicação deve acusar ‘E-mail e/ou senha inválidos’ caso o banco não retorne nenhum registro;
         - Se possível, a aplicação deve acusar quando o usuário digitado está fora do padrão de um e-mail.
