@@ -149,4 +149,18 @@ public class StudentController {
         alunos.add(new Aluno("Lucas Eduardo", 0, 0, 0, 0));
         alunos.add(new Aluno("Tiago Torres", 0, 0, 0, 0));
     }
+    @FXML
+    private void abrirHistoricoAvaliacoes(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/views/HistoricoAvaliacoes.fxml"));
+            Parent historicoRoot = loader.load();
+            Stage historicoStage = new Stage();
+            historicoStage.setScene(new Scene(historicoRoot));
+            historicoStage.setTitle("Histórico de Avaliações");
+            historicoStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
+
