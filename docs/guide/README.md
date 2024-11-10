@@ -1,7 +1,7 @@
 # Como executar o projeto localmente
 
 ## Pré-requisitos
-- Banco relacional (sugestão MySQL)
+- Banco relacional (MySQL)
 - Java versão 22
 - JavaFX SDK versão 22.0.2
 - Arquivo .jar do projeto SQLutions
@@ -28,21 +28,21 @@
 - Faça o download do Java 22.0.1 no [link](https://www.oracle.com/java/technologies/javase/jdk22-archive-downloads.html)
     - ATENÇÃO: No topo da página irá aparecer a versão 22.0.2. Vá mais para baixo e procure a versão 22.0.1 e selecione o download compatível com seu sistema operacional, dando preferência sempre para o `Installer`, ou seja, nem o `Compressed Archive` e nem o `msi Installer`
   
-<img src="../../assets/images/javaVersion.png" alt="Versão do java" width="400" height="250">
-<img src="../../assets/images/fileType.png" alt="Tipo do arquivo" width="400" height="250">
+<img src="../../assets/images/javaVersion.png" alt="Versão do java" width="550" height="250">
+<img src="../../assets/images/fileType.png" alt="Tipo do arquivo" width="850" height="250">
 
 - Instale o executável baixado
 
 ### JavaFX SDK
 - Faça o download do SDK 22.0.2 do seu respectivo sistema operacional no [link](https://jdk.java.net/javafx22/)
   
-<img src="../../assets/images/javafxSDK.png" alt="Javafx sdk" width="400" height="250">
+<img src="../../assets/images/javafxSDK.png" alt="Javafx sdk" width="350" height="250">
 
 - Descomprima o arquivo na pasta desejada
     - ATENÇÃO: Lembre-se de qual pasta salvou este arquivo, pois será utilizado mais pra frente. Por agora, vamos nos referir à esta pasta como `PASTA_SDK`
 
 ### .jar
-- Faça o download do arquivo [Avaliador de Soft Skill]()
+- Faça o download do arquivo [Avaliador de Soft Skill](https://drive.google.com/file/d/1Zh-dQstVjuzCZAYFwv7ya4SyzmyYCG5L/view?usp=sharing)
 
 ## Execução
 
