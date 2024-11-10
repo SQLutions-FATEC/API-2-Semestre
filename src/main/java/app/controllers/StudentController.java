@@ -283,5 +283,18 @@ public class StudentController implements ScreenController {
     public void goToLoginScreen (ActionEvent event){
         Utils.setScreen(event, "loginScreen");
     }
+    @FXML
+    private void abrirHistoricoAvaliacoes(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/views/HistoricoAvaliacoes.fxml"));
+            Parent historicoRoot = loader.load();
+            Stage historicoStage = new Stage();
+            historicoStage.setScene(new Scene(historicoRoot));
+            historicoStage.setTitle("Histórico de Avaliações");
+            historicoStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
