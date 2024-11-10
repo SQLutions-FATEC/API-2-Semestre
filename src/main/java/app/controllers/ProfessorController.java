@@ -1,164 +1,138 @@
 package app.controllers;
 
-import app.helpers.ConexaoBanco;
-import app.models.EquipeModel;
+import app.DAOs.PeriodDAO;
+import app.DAOs.TeamDAO;
+import app.helpers.Utils;
+import app.models.PeriodModel;
+import app.models.TeamModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ProfessorController implements Initializable {
-    protected Stage stage;
-    protected Parent root;
-    protected Scene scene;
+    @FXML
+    public TableView<TeamModel> teamTable;
+    @FXML
+    public TableColumn<TeamModel, String> colName;
+    @FXML
+    public TableColumn<TeamModel, String> colGithub;
+    @FXML
+    public TableColumn<TeamModel, Void> colVisualize;
+    @FXML
+    public Label title;
+    @FXML
+    public Label description;
+    @FXML
+    public ChoiceBox<String> periodChoiceBox;
 
-    @FXML
-    public TableView<EquipeModel> tableEquipe;
-    @FXML
-    public TableColumn<EquipeModel, String> colNome;
-    @FXML
-    public TableColumn<EquipeModel, String> colGithub;
-    @FXML
-    public Label labelAvisoEquipe;
-    @FXML
-    public Label labelAvisoDesc;
-
-
-    private final ObservableList<EquipeModel> equipeList = FXCollections.observableArrayList();
+    String[] period = Utils.getCurrentSemesterAndYear();
+    Integer selectedPeriodId;
+    ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
+    Map<String, PeriodModel> periodMap = new HashMap<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
+        periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            handlePeriodListSelectionChange(newValue);
+        });
+        fetchPeriods();
+    }
 
-        try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
-            }
+    private void fetchPeriods() {
+        ArrayList<String> periodOptionsList = new ArrayList<>();
 
-            String sqlCount = "SELECT COUNT(*) FROM equipe";
-            statement = connection.prepareStatement(sqlCount);
-            rs = statement.executeQuery();
+        PeriodDAO periodDAO = new PeriodDAO();
+        ObservableList<PeriodModel> periodList = periodDAO.selectPeriods();
 
-            if (rs.next() && rs.getInt(1) > 0) {
-                carregarDadosEquipe();
-                labelAvisoEquipe.setText("Lista de Equipes");
-                labelAvisoDesc.setText("Segue a lista das equipes cadastradas:");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (rs != null) rs.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+        for (PeriodModel period : periodList) {
+            String periodName = String.format("%dº semestre - %d", period.getSemester(), period.getYear());
+            periodOptionsList.add(periodName);
+            periodMap.put(periodName, period);
         }
+
+        periodChoiceBox.getItems().addAll(periodOptionsList);
+        periodChoiceBox.setValue(period[1] + " - " + period[0]);
     }
 
-    public void carregarDadosEquipe() {
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
+    public void fetchTeams() {
+        TeamDAO teamDAO = new TeamDAO();
+        teamList = teamDAO.selectTeamsByPeriod(selectedPeriodId);
 
-        try {
-            connection = ConexaoBanco.getConnection();
-            if (connection == null) {
-                System.out.println("Falha ao estabelecer a conexão com o banco de dados.");
-                return;
+        title.setText("Lista de Equipes");
+        description.setText("Segue a lista das equipes cadastradas:");
+
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colGithub.setCellValueFactory(new PropertyValueFactory<>("github"));
+
+        colVisualize.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    Button btn = new Button("Visualizar");
+                    btn.setOnAction((ActionEvent event) -> {
+                        TeamModel equipe = getTableView().getItems().get(getIndex());
+                        openPopup(equipe.getId(), selectedPeriodId);
+                    });
+                    setGraphic(btn);
+                    setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+                    setStyle("-fx-alignment: CENTER;");
+                }
             }
+        });
+        teamTable.setItems(teamList);
+    }
 
-            String sql = "SELECT nome, link_github FROM equipe";
-            statement = connection.prepareStatement(sql);
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String nome = resultSet.getString("nome");
-                String github = resultSet.getString("link_github");
-
-                EquipeModel equipe = new EquipeModel(nome, github);
-                equipeList.add(equipe);
+    private void openPopup(int teamId, int periodId) {
+        Utils.setPopup("averageScreen", 400, 600, controller -> {
+            if (controller instanceof AverageController) {
+                ((AverageController) controller).passData(teamId, periodId);
             }
-
-            colNome.setCellValueFactory(new PropertyValueFactory<>("nome"));
-            colGithub.setCellValueFactory(new PropertyValueFactory<>("link_github"));
-
-            tableEquipe.setItems(equipeList);
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao carregar os dados da equipe: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
+        });
     }
 
-    public void voltarPrincipalScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/student/mainScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
+    private void handlePeriodListSelectionChange(String period) {
+        PeriodModel selectedPeriod = periodMap.getOrDefault(period, null);
+        selectedPeriodId = (selectedPeriod != null) ? selectedPeriod.getId() : 0;
+        teamList.clear();
+        fetchTeams();
     }
 
-    public void trocarCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/csvScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Insira um arquivo CSV");
-        stage.show();
+    @FXML
+    public void goToLoginScreen(ActionEvent event) {
+        Utils.setScreen(event, "loginScreen");
     }
 
-    public void definirCriteriosCSVScreen(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/criteriaScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-
-        stage.setScene(scene);
-        stage.setTitle("Login");
-        stage.show();
+    @FXML
+    public void goToAddStudentScreen(ActionEvent event) {
+        Utils.setScreen(event, "addStudentScreen");
     }
 
-    public void editarAluno(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/editStudentScreen.fxml")));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+    @FXML
+    public void goToCriteriaScreen(ActionEvent event) {
+        Utils.setScreen(event, "criteriaScreen");
+    }
 
-        stage.setScene(scene);
-        stage.setTitle("Editar aluno");
-        stage.show();
+    @FXML
+    public void goToEditStudentScreen(ActionEvent event) {
+        Utils.setScreen(event, "editStudentScreen");
+    }
+
+    @FXML
+    public void goToSetScoreScreen(ActionEvent event) {
+        Utils.setScreen(event, "setScore");
+    }
+
+    public void definirDataSprint(ActionEvent event) {
+        Utils.setScreen(event, "setSprintData");
     }
 }

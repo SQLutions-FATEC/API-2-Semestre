@@ -1,16 +1,23 @@
 package app.models;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class EquipeModel {
 
+    private SimpleIntegerProperty id;
     private SimpleStringProperty nome;
-    private SimpleStringProperty link_github;
+    private SimpleStringProperty github;
 
-    public EquipeModel(String nome, String link_github){
-        this.nome = new SimpleStringProperty(nome);
-        this.link_github = new SimpleStringProperty(link_github);
+    public EquipeModel(int id, String name, String github){
+        this.id = new SimpleIntegerProperty(id);
+        this.nome = new SimpleStringProperty(name);
+        this.github = new SimpleStringProperty(github);
     }
+
+    public int getId() {   return id.get(); }
+
+    public void setId(int id) {  this.id = new SimpleIntegerProperty(id); }
 
     public String getNome() {
         return nome.get();
@@ -20,12 +27,11 @@ public class EquipeModel {
         this.nome = new SimpleStringProperty(nome);
     }
 
-    public String getLink_github() {
-        return link_github.get();
+    public String getGithub() {
+        return github.get();
     }
 
-    public void setLink_github(String link_github) {
-        this.link_github = new SimpleStringProperty(link_github);
+    public void setGithub(String github) {
+        this.github = new SimpleStringProperty(github);
     }
-
 }
