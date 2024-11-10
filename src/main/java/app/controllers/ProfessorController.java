@@ -9,24 +9,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class ProfessorController implements Initializable {
-    protected Stage stage;
-    protected Parent root;
-    protected Scene scene;
-
     @FXML
     public TableView<TeamModel> teamTable;
     @FXML
@@ -141,13 +131,8 @@ public class ProfessorController implements Initializable {
     public void goToSetScoreScreen(ActionEvent event) {
         Utils.setScreen(event, "setScore");
     }
-    public void definirDataSprint(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/professor/setSprintData.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        stage.setScene(new Scene(root));
-        stage.setTitle("Definir Data Sprint");
-        stage.show();
+    public void definirDataSprint(ActionEvent event) {
+        Utils.setScreen(event, "setSprintData");
     }
-
 }
