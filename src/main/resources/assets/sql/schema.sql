@@ -168,4 +168,3 @@ ADD CONSTRAINT unique_criterio_periodo UNIQUE (`criterio_id`, `periodo_id`);
 
 ALTER TABLE `equipe_periodo`
 ADD CONSTRAINT unique_equipe_periodo UNIQUE (`equipe_id`, `periodo_id`);
-

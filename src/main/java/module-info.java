@@ -13,4 +13,6 @@ module app.controllers {
     opens app.helpers to javafx.fxml;
     exports app.DAOs;
     opens app.DAOs to javafx.fxml;
+    exports app.Launcher;
+    opens app.Launcher to javafx.fxml;
 }

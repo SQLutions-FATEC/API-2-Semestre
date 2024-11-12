@@ -48,11 +48,6 @@
                <Font size="16.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" prefHeight="44.0" prefWidth="198.0" text="Gerar relatório">
-            <font>
-               <Font size="16.0" />
-            </font>
-         </Button>
          <Button mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="44.0" prefWidth="198.0" text="Deslogar">
             <font>
                <Font size="16.0" />
