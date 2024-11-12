@@ -3,7 +3,6 @@ package app.controllers;
 import app.DAOs.SprintDAO;
 import app.helpers.DatabaseConnection;
 import app.models.AvaliacaoModel;
-import app.models.NotaModel;
 import app.models.SprintModel;
 import app.helpers.Utils;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,13 +10,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -25,8 +22,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import java.net.URL;
 import java.sql.*;
-import java.io.IOException;
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -45,12 +40,16 @@ public class StudentController implements Initializable {
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
 
+    @FXML
+    public Button sendButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             fetchCriterias();
             fetchSprint();
             fetchAlunos();
+            LimitePontos();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -284,6 +283,60 @@ public class StudentController implements Initializable {
             }
         }
         System.out.println("Notas registradas no banco de dados com sucesso!");
+    }
+
+    @FXML
+    public void LimitePontos() {
+        Connection connection = null;
+        PreparedStatement statementLimite = null;
+        ResultSet rsLimite;
+        int totalReal = 0;
+        int totalLimite = 0;
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = 2 AND equipe = 1;";
+            statementLimite = connection.prepareStatement(sqlLimitePontos);
+
+            rsLimite = statementLimite.executeQuery();
+
+            while (rsLimite.next()) {
+                totalLimite = rsLimite.getInt("valor");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (statementLimite != null) {
+                    statementLimite.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        System.out.println("Total de pontuacoes: " + totalLimite);
+
+        for (AvaliacaoModel aluno : tableView.getItems()) {
+            for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+                if (!column.getText().equals("Aluno")) {
+                    Integer valorCell = (Integer) column.getCellData(aluno);
+                    if (valorCell != null) {
+                        totalReal += valorCell;
+                    }
+                }
+            }
+        }
+
+        if (totalReal > 4) {
+            sendButton.setDisable(true);
+            sendButton.setStyle("-fx-background-color: #FF0000;");
+        } else {
+            sendButton.setDisable(false);
+        }
     }
 
     @FXML
