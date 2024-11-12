@@ -3,20 +3,19 @@ package app.controllers;
 import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
+import app.interfaces.ScreenController;
 import app.models.PeriodModel;
 import app.models.TeamModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
 import java.util.*;
 
-public class ProfessorController implements Initializable {
+public class ProfessorController implements ScreenController {
     @FXML
     public TableView<TeamModel> teamTable;
     @FXML
@@ -38,7 +37,7 @@ public class ProfessorController implements Initializable {
     Map<String, PeriodModel> periodMap = new HashMap<>();
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initData(Object data) {
         periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });

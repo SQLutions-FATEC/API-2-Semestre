@@ -44,5 +44,5 @@
          <TableColumn fx:id="colTeam" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" text="Equipe" />
      </columns>
    </TableView>
-   <TextField fx:id="studentSearch" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+   <TextField fx:id="studentSearch" promptText="Digite para pesquisar" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
 </AnchorPane>
