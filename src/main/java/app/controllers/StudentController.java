@@ -336,6 +336,7 @@ public class StudentController implements Initializable {
             sendButton.setStyle("-fx-background-color: #FF0000;");
         } else {
             sendButton.setDisable(false);
+            sendButton.setStyle("-fx-background-color: #00FF00;");
         }
     }
 
