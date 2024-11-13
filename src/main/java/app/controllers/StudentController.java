@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
@@ -43,6 +40,9 @@ public class StudentController implements Initializable {
     @FXML
     public Button sendButton;
 
+    @FXML
+    public Label pointsInfo;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -64,8 +64,7 @@ public class StudentController implements Initializable {
     private void fetchAlunos() throws SQLException {
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sql = String.format("SELECT us.nome AS nome FROM usuario us " +
-                    " WHERE us.equipe = 1");
+            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = 1";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
@@ -86,8 +85,7 @@ public class StudentController implements Initializable {
         try {
             connection = DatabaseConnection.getConnection(true);
             tableView.getColumns().clear();
-            String sql = String.format("SELECT * FROM criterio_periodo cp " +
-                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
+            String sql = "SELECT * FROM criterio_periodo cp JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
@@ -114,6 +112,7 @@ public class StudentController implements Initializable {
                 column.setOnEditCommit(event -> {
                     AvaliacaoModel aluno = event.getRowValue();
                     aluno.setNotas(criterioNome, event.getNewValue());
+                    LimitePontos();
                 });
 
                 columns.add(column);
@@ -198,10 +197,7 @@ public class StudentController implements Initializable {
 
     public Integer obterIdDaSprint() {
         String sprintSelecionada = choiceBoxMudarSprint.getValue();
-        Integer idSprint = sprintIdMap.get(sprintSelecionada);
-
-        return idSprint;
-
+        return sprintIdMap.get(sprintSelecionada);
     }
 
     public Integer obterIdDoAvaliado(String nomeAluno) {
@@ -290,12 +286,13 @@ public class StudentController implements Initializable {
         Connection connection = null;
         PreparedStatement statementLimite = null;
         ResultSet rsLimite;
-        int totalReal = 0;
+        int totalUsado = 0;
         int totalLimite = 0;
+        Integer idSprint = obterIdDaSprint();
 
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = 2 AND equipe = 1;";
+            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = 1;";
             statementLimite = connection.prepareStatement(sqlLimitePontos);
 
             rsLimite = statementLimite.executeQuery();
@@ -325,19 +322,21 @@ public class StudentController implements Initializable {
                 if (!column.getText().equals("Aluno")) {
                     Integer valorCell = (Integer) column.getCellData(aluno);
                     if (valorCell != null) {
-                        totalReal += valorCell;
+                        totalUsado += valorCell;
                     }
                 }
             }
         }
 
-        if (totalReal > 4) {
+        if (totalUsado > totalLimite) {
             sendButton.setDisable(true);
             sendButton.setStyle("-fx-background-color: #FF0000;");
         } else {
             sendButton.setDisable(false);
             sendButton.setStyle("-fx-background-color: #00FF00;");
         }
+
+        pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", totalUsado, totalLimite));
     }
 
     @FXML
