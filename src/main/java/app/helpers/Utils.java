@@ -1,4 +1,5 @@
 package app.helpers;
+import app.interfaces.ScreenController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -54,7 +55,7 @@ public class Utils {
         return null;
     }
 
-    public static void setScreen(ActionEvent event, String screenFile) {
+    public static void setScreen(ActionEvent event, String screenFile, Object data) {
         Map<String, String[]> files = new HashMap<>();
 
         files.put("loginScreen", new String[]{"/loginScreen.fxml", "Tela de login"});
@@ -70,7 +71,14 @@ public class Utils {
         String screenName = files.get(screenFile)[1];
 
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(Utils.class.getResource(screenFXML)));
+            FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Utils.class.getResource(screenFXML)));
+            Parent root = loader.load();
+
+            if (data != null) {
+                ScreenController controller = loader.getController();
+                controller.initData(data);
+            }
+
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
@@ -79,6 +87,10 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void setScreen(ActionEvent event, String screenFile) {
+        setScreen(event, screenFile, null);
     }
 
     public static void setPopup(String screenFile, int height, int width, Consumer<Object> controllerAction) {
