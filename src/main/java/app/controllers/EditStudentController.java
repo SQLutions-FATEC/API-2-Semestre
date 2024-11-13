@@ -51,7 +51,6 @@ public class EditStudentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        studentSearch.setPromptText("Digite para pesquisar");
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
         colRA.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRa()).asObject().asString());
         colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));

@@ -42,8 +42,6 @@ public class CriteriaController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        criteriaName.setPromptText("Adicione um critério");
-        criteriaDescription.setPromptText("Descreva o critério");
         periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });

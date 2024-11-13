@@ -20,14 +20,14 @@
       </font>
    </Label>
 
-   <Label contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" text="Usuário" textOverrun="CENTER_ELLIPSIS" translateX="-60.0" translateY="20.0" />
-   <TextField fx:id="emailField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="300.0" promptText="digite aqui">
+   <Label contentDisplay="TOP" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" text="E-mail" textOverrun="CENTER_ELLIPSIS" translateX="-60.0" translateY="20.0" />
+   <TextField fx:id="emailField" alignment="TOP_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="300.0" promptText="Digite aqui">
       <padding>
          <Insets left="8.0" top="6.0" />
       </padding></TextField>
 
    <Label prefHeight="30.0" prefWidth="180.0" text="Senha" translateX="-60.0" />
-   <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="digite aqui" translateY="-20.0" />
+   <PasswordField fx:id="passwordField" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" promptText="Digite aqui" translateY="-20.0" />
 
    <Button contentDisplay="CENTER" onAction="#handleLogin" prefHeight="40.0" prefWidth="100.0" text="Entrar" translateY="20.0">
       <font>
@@ -36,6 +36,6 @@
       <effect>
          <Blend />
       </effect></Button>
-   <Button fx:id="fillDatabaseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fillDatabase" prefHeight="30.0" prefWidth="200.0" text="Preencher banco" translateY="40.0" />
+   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fillDatabase" prefHeight="30.0" prefWidth="200.0" text="Preencher banco" translateY="40.0" />
 
 </VBox>

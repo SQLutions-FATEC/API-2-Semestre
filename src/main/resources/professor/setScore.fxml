@@ -16,7 +16,7 @@
       <Label layoutX="275.0" layoutY="315.0" text="Equipe" />
       <ChoiceBox fx:id="teamChoiceBox" layoutX="275.0" layoutY="335.0" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="275.0" layoutY="415.0" text="Valor Máximo" />
-      <TextField fx:id="maxScore" layoutX="275.0" layoutY="435.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <TextField fx:id="maxScore" promptText="Adicione um valor" layoutX="275.0" layoutY="435.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="255.0" layoutY="40.0" text="Definiçao da Pontuaçao Maxima">
          <font>
             <Font size="18.0" />

@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.DAOs.SprintDAO;
 import app.helpers.DatabaseConnection;
+import app.interfaces.ScreenController;
 import app.models.AvaliacaoModel;
 import app.models.SprintModel;
 import app.helpers.Utils;
@@ -10,21 +11,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import java.net.URL;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class StudentController implements Initializable {
-    protected Stage stage;
-    protected Parent root;
+public class StudentController implements ScreenController {
     protected Scene scene;
     Integer selectedPeriodId = 1;
     Connection connection = null;
@@ -44,7 +42,11 @@ public class StudentController implements Initializable {
     public Label pointsInfo;
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initData(Object data) {
+//        if (data instanceof Map) {
+//            int teamId = (int) data.get("teamId");
+//            String userEmail = (String) data.get("userEmail");
+//        }
         try {
             fetchCriterias();
             fetchSprint();
