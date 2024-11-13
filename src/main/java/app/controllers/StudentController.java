@@ -295,6 +295,8 @@ public class StudentController implements Initializable {
             String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = 1;";
             statementLimite = connection.prepareStatement(sqlLimitePontos);
 
+            statementLimite.setInt(1,idSprint);
+
             rsLimite = statementLimite.executeQuery();
 
             while (rsLimite.next()) {

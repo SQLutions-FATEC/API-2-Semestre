@@ -28,7 +28,7 @@
          <Font size="18.0" />
        </font>
      </Label>
-     <ComboBox fx:id="choiceBoxMudarSprint" prefHeight="26.0" prefWidth="330.0" promptText="Selecione"> </ComboBox>
+     <ComboBox fx:id="choiceBoxMudarSprint" onHiding="#LimitePontos" prefHeight="26.0" prefWidth="330.0" promptText="Selecione"> </ComboBox>
    </VBox>
   </HBox>
   <HBox alignment="CENTER" prefHeight="340.0" prefWidth="200.0">
