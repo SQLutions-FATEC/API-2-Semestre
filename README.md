@@ -31,7 +31,7 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
   <br>
   <br>
   <div align="center">
-    <img src="" alt="Fluxo do aluno" width="400" height="300">
+    <img src="https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/assets/gifs/export.gif" alt="Fluxo do aluno" width="400" height="300">
   </div>
 </details>
 
@@ -46,7 +46,7 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
   <br>
   <br>
   <div align="center">
-    <img src="" alt="Fluxo do aluno" width="400" height="300">
+    <img src="https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/assets/gifs/aluno.gif" alt="Fluxo do aluno" width="400" height="300">
   </div>
 </details>
 
@@ -71,8 +71,9 @@ Os requisitos (tanto do cliente como da instituição de ensino) abrangidos por 
 
 ## 📈 Métricas do time
 
-Nesta sprint foram feitas telas com JavaFX e a conexão com banco de dados. O aluno agora consegue avaliar os outros membros da equipe e estas informações serem armazenadas no banco. No perfil do professor, por sua vez, é possível escolher o período da Sprint e baixar um arquivo .csv das notas, editar aluno, definir critérios do semestre, definir pontuação máxima da sprint e visualizar as médias da equipe.
-O acompanhamento das atividades é de responsabilidade do Scrum Master (Augusto) e será representado na forma de um gráfico de Burndown. O eixo X representa os dias trabalhados na sprint e o eixo Y representa a quantidade de horas correspondentes para as tarefas da sprint 1. Conforme o gráfico avança no eixo X, pode-se observar que as entregas das atividades ocorrem e devem seguir o máximo possível à linha ideal
+Nesta sprint foram feitas telas com JavaFX e a conexão com banco de dados. O aluno agora consegue avaliar os outros membros da equipe e estas informações serem armazenadas no banco. No perfil do professor, por sua vez, é possível escolher o período da Sprint e baixar um arquivo .csv das notas, editar aluno, definir critérios do semestre, definir pontuação máxima da sprint e visualizar as médias da equipe.<br>
+<br>
+O acompanhamento das atividades é de responsabilidade do Scrum Master (Tiago) e será representado na forma de um gráfico de Burndown. O eixo X representa os dias trabalhados na sprint e o eixo Y representa a quantidade de horas correspondentes para as tarefas da sprint 1. Conforme o gráfico avança no eixo X, pode-se observar que as entregas das atividades ocorrem e devem seguir o máximo possível à linha ideal
 
 
 
