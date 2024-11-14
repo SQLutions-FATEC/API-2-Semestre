@@ -142,6 +142,7 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void deleteStudent() {
+    Utils.setAlert("CONFIRMATION", "Deleção do aluno", "Tem certeza que deseja deletá-lo?");
         int ra = studentTableData.get(0).getRa();
         UserDAO userDAO = new UserDAO();
         int rowsAffected = userDAO.deleteStudent(ra);
