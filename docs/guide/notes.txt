@@ -1,0 +1,14 @@
+CREATE OR REPLACE FULL JOIN saas
+SELECT COUNT *
+FROM usuario
+WHERE "equipe" = 1;
+
+
+
+"SELECT u.nome AS usuario_nome, c.nome AS criterio, SUM(n.valor) AS media_nota FROM nota n " +
+                        "JOIN usuario u ON u.id = n.avaliado " +
+                        "JOIN periodo p ON p.id = n.periodo " +
+                        "JOIN sprint s ON s.id = n.sprint " +
+                        "JOIN criterio c ON n.criterio = c.id " +
+                        "WHERE p.id = ? AND s.id = ? AND u.equipe = ? " +
+                        "GROUP BY u.nome, c.nome";
