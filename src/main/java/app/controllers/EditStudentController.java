@@ -51,7 +51,6 @@ public class EditStudentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        studentSearch.setPromptText("Digite para pesquisar");
         colName.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNome()));
         colRA.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getRa()).asObject().asString());
         colEmail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
@@ -143,6 +142,7 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void deleteStudent() {
+        Utils.setAlert("CONFIRMATION", "Deleção do aluno", "Tem certeza que deseja deletá-lo?");
         int ra = studentTableData.get(0).getRa();
         UserDAO userDAO = new UserDAO();
         int rowsAffected = userDAO.deleteStudent(ra);
@@ -151,7 +151,7 @@ public class EditStudentController implements Initializable {
             studentTableData.clear();
             studentSearch.setText("");
             studentList.removeIf(student -> student.getRa() == ra);
-            Utils.setAlert("CONFIRMATION", "Adição de critério", "O critério foi adicionado com sucesso");
+            Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
         }
     }
 
@@ -179,5 +179,10 @@ public class EditStudentController implements Initializable {
     @FXML
     public void goToProfessorScreen(ActionEvent event) throws IOException {
         Utils.setScreen(event, "professorScreen");
+    }
+
+    @FXML
+    public void goToLoginScreen (ActionEvent event){
+        Utils.setScreen(event, "loginScreen");
     }
 }

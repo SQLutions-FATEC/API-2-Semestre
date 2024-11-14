@@ -3,26 +3,19 @@ package app.controllers;
 import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
+import app.interfaces.ScreenController;
 import app.models.PeriodModel;
 import app.models.TeamModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
-public class ProfessorController implements Initializable {
+public class ProfessorController implements ScreenController {
     @FXML
     public TableView<TeamModel> teamTable;
     @FXML
@@ -44,7 +37,7 @@ public class ProfessorController implements Initializable {
     Map<String, PeriodModel> periodMap = new HashMap<>();
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initData(Object data) {
         periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });
@@ -137,9 +130,8 @@ public class ProfessorController implements Initializable {
     public void goToSetScoreScreen(ActionEvent event) {
         Utils.setScreen(event, "setScore");
     }
-    public void definirDataSprint(ActionEvent event) throws IOException {
+
+    public void definirDataSprint(ActionEvent event) {
         Utils.setScreen(event, "setSprintData");
-
     }
-
 }

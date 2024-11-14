@@ -16,14 +16,13 @@ public class DatabaseConnection {
         if (connection == null || connection.isClosed()) {
             String URL = "jdbc:mysql://127.0.0.1:3306/";
             if (useDefaultSchema) {
-                URL = URL + DEFAULT_SCHEMA + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+                URL = URL + DEFAULT_SCHEMA;
             }
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", USER, PASSWORD);
         }
         return connection;
     }
 
-    // Mét0do para SELECT
     public static ResultSet executeQuery(String sql, Object... params) throws SQLException {
         try {
             Connection conn = getConnection(true);
@@ -36,7 +35,6 @@ public class DatabaseConnection {
         }
     }
 
-    // Mét0do para INSERT, UPDATE e DELETE
     public static int executeUpdate(String sql, Object... params) throws SQLException {
         int rowsAffected = 0;
         int generatedKey = 0;

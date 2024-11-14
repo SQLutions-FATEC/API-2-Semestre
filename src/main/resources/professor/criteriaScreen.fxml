@@ -37,8 +37,8 @@
          <Font size="10.0" />
       </font>
    </Button>
-   <TextField fx:id="criteriaName" layoutX="400.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
-   <TextArea fx:id="criteriaDescription" layoutX="400.0" layoutY="115.0" prefHeight="102.0" prefWidth="350.0" />
+   <TextField fx:id="criteriaName" promptText="Adicione um critério" layoutX="400.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" />
+   <TextArea fx:id="criteriaDescription" promptText="Descreva o critério" layoutX="400.0" layoutY="115.0" prefHeight="102.0" prefWidth="350.0" />
    <Label layoutX="50.0" layoutY="200.0" prefHeight="25.0" prefWidth="77.0" text="Criterios">
       <font>
          <Font size="16.0" />

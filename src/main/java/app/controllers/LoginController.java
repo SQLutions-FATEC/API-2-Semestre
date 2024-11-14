@@ -1,18 +1,18 @@
 package app.controllers;
 
 import app.DAOs.LoginDAO;
+import app.DAOs.UserDAO;
 import app.helpers.Utils;
+import app.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoginController {
-    private final List<String> professors = List.of("professor");
-    private final List<String> students = List.of("aluno");
-
     @FXML
     private TextField emailField;
     @FXML
@@ -28,21 +28,22 @@ public class LoginController {
             return;
         }
 
-        if (students.contains(email)) {
-            goToStudentScreen(event);
-        } else if (professors.contains(email)) {
-            goToProfessorScreen(event);
+        UserDAO userDAO = new UserDAO();
+        UserModel user = userDAO.selectUserByLogin(email, password);
+
+        if (user != null) {
+            int teamId = user.getEquipeId();
+            if (teamId > 0) {
+                Map<String, Object> data = new HashMap<>();
+                data.put("teamId", teamId);
+                data.put("userEmail", email);
+                Utils.setScreen(event, "studentScreen", data);
+            } else {
+                Utils.setScreen(event, "professorScreen", email);
+            }
         } else {
-            Utils.setAlert("ERROR", "Erro de login", "Email não autorizado");
+            Utils.setAlert("ERROR", "Erro de login", "Email ou senha não autorizado");
         }
-    }
-
-    private void goToStudentScreen(ActionEvent event) {
-        Utils.setScreen(event, "studentScreen");
-    }
-
-    private void goToProfessorScreen(ActionEvent event) {
-        Utils.setScreen(event, "professorScreen");
     }
 
     @FXML
