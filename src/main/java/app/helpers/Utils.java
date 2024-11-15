@@ -97,6 +97,7 @@ public class Utils {
         Map<String, String[]> files = new HashMap<>();
 
         files.put("averageScreen", new String[]{"/professor/averageScreen.fxml", "Médias"});
+        files.put("PeerEvaluationView", new String[]{"/student/PeerEvaluationView.fxml", "Histórico"});
 
         String screenFXML = files.get(screenFile)[0];
         String screenName = files.get(screenFile)[1];

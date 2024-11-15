@@ -21,19 +21,29 @@
       </font>
     </Label>
   </HBox>
+
+  <!-- Seção de Consultar Avaliações Anteriores com novo botão -->
   <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0" spacing="60.0">
-   <VBox alignment="CENTER" prefHeight="70.0" prefWidth="1196.0">
-     <Label alignment="TOP_CENTER" prefHeight="30.0" prefWidth="251.0" text="Consultar avaliações anteriores">
-       <font>
-         <Font size="18.0" />
-       </font>
-     </Label>
-     <ComboBox fx:id="choiceBoxMudarSprint" prefHeight="26.0" prefWidth="330.0" promptText="Selecione"> </ComboBox>
-   </VBox>
+    <VBox alignment="CENTER" prefHeight="70.0" prefWidth="1196.0">
+      <Label alignment="TOP_CENTER" prefHeight="30.0" prefWidth="251.0" text="Consultar avaliações anteriores">
+        <font>
+          <Font size="18.0" />
+        </font>
+      </Label>
+      <HBox spacing="10.0">
+        <ComboBox fx:id="choiceBoxMudarSprint" prefHeight="26.0" prefWidth="330.0" promptText="Selecione"> </ComboBox>
+        <!-- Novo botão de Visualizar Histórico -->
+        <Button fx:id="viewHistoryButton" onAction="#viewEvaluationHistory" text="Visualizar Histórico" />
+      </HBox>
+    </VBox>
   </HBox>
+
+  <!-- Tabela de Avaliações -->
   <HBox alignment="CENTER" prefHeight="340.0" prefWidth="200.0">
     <TableView fx:id="tableView" editable="true" prefHeight="220.0" prefWidth="600.0" />
   </HBox>
+
+  <!-- Botões de Deslogar e Enviar -->
   <HBox alignment="CENTER" layoutX="50.0" prefHeight="120.0" prefWidth="600.0" spacing="30.0">
     <Button layoutX="54.0" layoutY="517.0" mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="44.0" prefWidth="103.0" text="Deslogar" />
     <Button mnemonicParsing="false" onAction="#ConfirmarNotas" prefHeight="40.0" prefWidth="150.0" style="-fx-background-color: #00FF00;" text="Enviar">

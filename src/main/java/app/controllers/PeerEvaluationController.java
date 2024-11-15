@@ -10,28 +10,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class PeerEvaluationController {
-
     @FXML
     private TableView<EvaluationModel> evaluationTable;
-    @FXML
-    private TableColumn<EvaluationModel, String> evaluatorColumn;
-    @FXML
-    private TableColumn<EvaluationModel, Integer> evaluatedColumn;
-    @FXML
-    private TableColumn<EvaluationModel, String> criteriaColumn;
-    @FXML
-    private TableColumn<EvaluationModel, String> sprintDescriptionColumn;
 
     private ObservableList<EvaluationModel> evaluationData = FXCollections.observableArrayList();
+    public String userEmail = "";
 
-    public void initialize() {
-        // Configuração das colunas
-        evaluatorColumn.setCellValueFactory(new PropertyValueFactory<>("evaluatorName"));
-        evaluatedColumn.setCellValueFactory(new PropertyValueFactory<>("evaluatedStudentId"));
-        criteriaColumn.setCellValueFactory(new PropertyValueFactory<>("criteria"));
-        sprintDescriptionColumn.setCellValueFactory(new PropertyValueFactory<>("sprintDescription"));
-
-        // Carregar dados do banco de dados
+    public void passData(String email) {
+        userEmail = email;
         loadPeerEvaluations(1); // Exemplo: passando o sprintId = 1
     }
 

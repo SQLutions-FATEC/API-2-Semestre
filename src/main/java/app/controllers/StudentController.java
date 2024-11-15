@@ -27,6 +27,7 @@ public class StudentController implements ScreenController {
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
+    String userEmail = "";
 
     @FXML
     public TableView<AvaliacaoModel> tableView;
@@ -36,10 +37,10 @@ public class StudentController implements ScreenController {
 
     @Override
     public void initData(Object data) {
-//        if (data instanceof Map) {
+        if (data instanceof Map) {
 //            int teamId = (int) data.get("teamId");
-//            String userEmail = (String) data.get("userEmail");
-//        }
+            userEmail = (String) ((Map<?, ?>) data).get("userEmail");
+        }
         try {
             fetchCriterias();
             fetchSprint();
@@ -280,34 +281,17 @@ public class StudentController implements ScreenController {
     }
 
     @FXML
-    public void goToLoginScreen (ActionEvent event){
+    public void viewEvaluationHistory(ActionEvent event) {
+        Utils.setPopup("PeerEvaluationView", 400, 600, controller -> {
+            if (controller instanceof PeerEvaluationController) {
+                ((PeerEvaluationController) controller).passData(userEmail);
+            }
+        });
+    }
+
+    @FXML
+    public void goToLoginScreen(ActionEvent event) {
         Utils.setScreen(event, "loginScreen");
-    }
-    @FXML
-    private void abrirHistoricoAvaliacoes(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/views/HistoricoAvaliacoes.fxml"));
-            Parent historicoRoot = loader.load();
-            Stage historicoStage = new Stage();
-            historicoStage.setScene(new Scene(historicoRoot));
-            historicoStage.setTitle("Histórico de Avaliações");
-            historicoStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    private void abrirHistoricoAvaliacoes(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/app/views/HistoricoAvaliacoes.fxml"));
-            Parent historicoRoot = loader.load();
-            Stage historicoStage = new Stage();
-            historicoStage.setScene(new Scene(historicoRoot));
-            historicoStage.setTitle("Histórico de Avaliações");
-            historicoStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
 
