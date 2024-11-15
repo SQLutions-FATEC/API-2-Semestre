@@ -30,4 +30,7 @@ public class SprintDAO {
         }
         return sprintList;
     }
+
+//    TODO: fazer uma query que busca todas as sprints do periodo atual, para usar no lugar do selectSprints
+//    da linha 38 do PeerEvaluationController (selectedPeriodId). Dica: periodo eh baseado em semestre e ano, pode fazer no Utils essa verificacao
 }
