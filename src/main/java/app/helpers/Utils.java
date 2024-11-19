@@ -82,7 +82,10 @@ public class Utils {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(Utils.class.getResource(screenFXML)));
             Parent root = loader.load();
 
-            if (data != null) {
+            if (
+                    data != null ||
+                    Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
+            ) {
                 ScreenController controller = loader.getController();
                 controller.initData(data);
             }

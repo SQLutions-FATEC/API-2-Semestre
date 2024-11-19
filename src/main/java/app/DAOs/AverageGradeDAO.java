@@ -17,7 +17,7 @@ public class AverageGradeDAO {
                         "JOIN periodo p ON p.id = n.periodo " +
                         "JOIN sprint s ON s.id = n.sprint " +
                         "JOIN criterio c ON n.criterio = c.id " +
-                        "WHERE p.id = ? AND s.id = ? AND u.equipe = ? " +
+                        "WHERE p.id = ? AND s.id = ? AND u.equipe = ? AND u.deleted_at IS NULL " +
                         "GROUP BY u.nome, c.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodId, sprintId, teamId)) {

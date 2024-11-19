@@ -42,7 +42,7 @@ public class QueryDB {
     public String calcMediaGeralEquipe(int periodoID, int sprintID, int equipeID) throws SQLException {
         Connection conn = DatabaseConnection.getConnection(true);
 
-        String sql = "SELECT COUNT(*) FROM usuario WHERE equipe = ?";
+        String sql = "SELECT COUNT(*) FROM usuario WHERE equipe = ? AND deleted_at IS NULL";
 
         String[] aluno;
         int i = 0;
@@ -60,7 +60,7 @@ public class QueryDB {
             aluno = new String[count];
         }
 
-        sql = "SELECT nome FROM usuario where equipe = ?";
+        sql = "SELECT nome FROM usuario where equipe = ? AND deleted_at IS NULL";
 
         try (PreparedStatement pstmtEquipe = conn.prepareStatement(sql)) {
             pstmtEquipe.setInt(1, equipeID);
@@ -78,16 +78,16 @@ public class QueryDB {
         StringBuilder mediaGeral = new StringBuilder();
         for (i = 0; i < aluno.length; i++) {
             sql = """
-                    SELECT AVG(nota.valor) AS media_nota
-                    FROM nota
-                    JOIN usuario ON nota.avaliado = usuario.id
-                    JOIN criterio ON nota.criterio = criterio.id
-                    JOIN equipe ON usuario.equipe = equipe.id
+                    SELECT AVG(n.valor) AS media_nota
+                    FROM nota n
+                    JOIN usuario u ON n.avaliado = u.id
+                    JOIN criterio c ON n.criterio = c.id
+                    JOIN equipe e ON u.equipe = e.id
                     JOIN periodo ON periodo.id = ?
-                    JOIN sprint ON sprint.id = ? AND nota.sprint = sprint.id
-                    WHERE equipe.id = ? and usuario.nome = ?
-                    GROUP BY usuario.nome, criterio.nome
-                    ORDER BY usuario.nome, criterio.nome
+                    JOIN sprint ON sprint.id = ? AND n.sprint = sprint.id
+                    WHERE e.id = ? AND u.nome = ? AND u.deleted_at IS NULL
+                    GROUP BY u.nome, c.nome
+                    ORDER BY u.nome, c.nome
                   """;
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
