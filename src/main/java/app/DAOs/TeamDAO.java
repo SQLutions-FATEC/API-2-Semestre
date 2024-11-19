@@ -12,12 +12,14 @@ import java.sql.SQLException;
 public class TeamDAO {
     ObservableList<TeamModel> teamList = FXCollections.observableArrayList();
 
-    public int createTeam(String teamName, String teamGithub) {
-        String sql = "INSERT INTO equipe (nome, github) VALUES (?, ?)";
+    public int createTeam(String teamName, String teamGithub, int periodId) {
+        String sql1 = "INSERT INTO equipe (nome) VALUES (?)";
+        String sql2 = "INSERT INTO equipe_periodo (github, equipe_id, periodo_id) VALUES (?, ?, ?)";
         int generatedKey = 0;
 
         try {
-            generatedKey = DatabaseConnection.executeUpdate(sql, teamName, teamGithub);
+            generatedKey = DatabaseConnection.executeUpdate(sql1, teamName);
+            DatabaseConnection.executeUpdate(sql2, teamGithub, generatedKey, periodId);
         } catch (SQLException e) {
             System.out.println("Erro no SQL de createTeam: " + e.getMessage());
         } finally {
@@ -27,7 +29,7 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeams() {
-        String sql = "SELECT e.id, e.nome, e.github FROM equipe e ORDER BY e.nome";
+        String sql = "SELECT e.id, e.nome, ep.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id ORDER BY e.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -45,7 +47,7 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeamsByPeriod(int periodId) {
-        String sql = "SELECT e.id, e.nome, e.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id WHERE ep.periodo_id = ? ORDER BY e.nome";
+        String sql = "SELECT e.id, e.nome, ep.github FROM equipe e JOIN equipe_periodo ep ON ep.equipe_id = e.id WHERE ep.periodo_id = ? ORDER BY e.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodId)) {
             while (resultSet.next()) {

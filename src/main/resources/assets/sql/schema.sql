@@ -77,7 +77,6 @@ CREATE TABLE `pontuacao` (
 CREATE TABLE `equipe` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`nome` VARCHAR(255) NOT NULL,
-    `github` VARCHAR(255) NOT NULL UNIQUE,
     `deleted_at` DATETIME,
 	PRIMARY KEY(`id`)
 );
@@ -92,6 +91,7 @@ CREATE TABLE `criterio_periodo` (
 
 CREATE TABLE `equipe_periodo` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
+    `github` VARCHAR(255) NOT NULL UNIQUE,
 	`periodo_id` INTEGER NOT NULL,
 	`equipe_id` INTEGER NOT NULL,
     `deleted_at` DATETIME,
