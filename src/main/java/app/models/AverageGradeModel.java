@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class AverageGradeModel {
     private String name;
-    private Map<String, Double> averages;
+    private Map<String, Integer> averages;
 
     public AverageGradeModel(String nome) {
         this.name = nome;
@@ -16,11 +16,11 @@ public class AverageGradeModel {
         return name;
     }
 
-    public void setAverage(String criteria, Double average) {
+    public void setAverage(String criteria, Integer average) {
         averages.put(criteria, average);
     }
 
-    public Double getAverage(String criteria) {
-        return averages.getOrDefault(criteria, 0.0);
+    public Integer getAverage(String criteria) {
+        return averages.getOrDefault(criteria, 0);
     }
 }

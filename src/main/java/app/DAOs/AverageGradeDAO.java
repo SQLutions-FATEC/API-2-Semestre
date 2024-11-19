@@ -30,7 +30,7 @@ public class AverageGradeDAO {
                 Double averageGrade = resultSet.getDouble("media_nota");
                 int totalUsers = resultSet.getInt("total_users");
 
-                double adjustedAverage = Math.round(totalUsers > 0 ? averageGrade / totalUsers : 0);
+                int adjustedAverage = (int) Math.round(totalUsers > 0 ? averageGrade / totalUsers : 0);
                 AverageGradeModel student = studentsMap.getOrDefault(studentName, new AverageGradeModel(studentName));
                 student.setAverage(criteria, adjustedAverage);
                 studentsMap.put(studentName, student);
