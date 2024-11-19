@@ -47,7 +47,7 @@ public class LoginController {
     }
 
     @FXML
-    private void fillDatabase() {
+    private void createDatabase() {
         LoginDAO loginDAO = new LoginDAO();
         try {
             loginDAO.executeSQLFromFile("/assets/sql/schema.sql");
@@ -55,6 +55,11 @@ public class LoginController {
         } catch (Exception e) {
             Utils.setAlert("ERROR", "Preenchimento do banco", "Erro ao criar as tabelas: " + e.getMessage());
         }
+
+    }
+    @FXML
+    private void fillDatabase() {
+        LoginDAO loginDAO = new LoginDAO();
         try {
             loginDAO.executeSQLFromFile("/assets/sql/dump.sql");
             Utils.setAlert("CONFIRMATION", "Preenchimento do banco", "As tabelas foram populadas com sucesso!");

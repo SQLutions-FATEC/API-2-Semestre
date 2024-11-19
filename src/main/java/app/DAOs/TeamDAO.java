@@ -65,7 +65,7 @@ public class TeamDAO {
     }
 
     public ObservableList<TeamModel> selectTeamsWithoutScoreByPeriod(int periodId, int sprintId) {
-        String sql = "SELECT e.* FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
+        String sql = "SELECT e.id, e.nome, ep.github FROM equipe e JOIN equipe_periodo ep ON e.id = ep.equipe_id " +
                 "JOIN periodo p ON ep.periodo_id = p.id WHERE p.id = ? " +
                 "AND NOT EXISTS (SELECT 1 FROM pontuacao po WHERE po.equipe = e.id AND po.sprint = ?)";
 
@@ -79,7 +79,7 @@ public class TeamDAO {
                 teamList.add(team);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectTeamsByPeriod: " + e.getMessage());
+            System.out.println("Erro no SQL de selectTeamsWithoutScoreByPeriod: " + e.getMessage());
         }
         return teamList;
     }
