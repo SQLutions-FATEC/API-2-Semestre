@@ -1,4 +1,18 @@
 USE `avaliador`;
+SET FOREIGN_KEY_CHECKS = 0;
+
+TRUNCATE TABLE criterio;
+TRUNCATE TABLE periodo;
+TRUNCATE TABLE sprint;
+TRUNCATE TABLE equipe;
+TRUNCATE TABLE pontuacao;
+TRUNCATE TABLE tipo_usuario;
+TRUNCATE TABLE criterio_periodo;
+TRUNCATE TABLE equipe_periodo;
+TRUNCATE TABLE usuario;
+TRUNCATE TABLE nota;
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO criterio (nome, descricao) VALUES
 ('Proatividade', 'Característica de quem busca identificar ou resolver os problemas por antecipação - com antecedencia - presteza - diligência'),
@@ -19,7 +33,7 @@ INSERT INTO equipe (nome) VALUES ('SQLutions'), ('Atomic Delta'), ('Radônios'),
 INSERT INTO pontuacao (valor, sprint, equipe, data) VALUES
 -- Equipe 1
 (25, 1, 1, '2024-03-27'), (83, 2, 1, '2024-04-18'), (82, 3, 1, '2024-05-10'), (81, 4, 1, '2024-05-29'), (80, 5, 1, '2024-09-30'),
-(79, 6, 1, '2024-10-23'), (78, 7, 1, '2024-11-14'), (77, 8, 1, '2024-12-03'), (76, 9, 1, '2025-03-27'), (75, 10, 1, '2025-04-17'),
+(79, 6, 1, '2024-10-23'), (78, 7, 1, '2024-11-14'), (76, 9, 1, '2025-03-27'), (75, 10, 1, '2025-04-17'),
 (74, 11, 1, '2025-05-10'), (73, 12, 1, '2025-05-27'), (72, 13, 1, '2025-10-01'), (71, 14, 1, '2025-10-21'), (70, 15, 1, '2025-11-15'), (69, 16, 1, '2025-12-03'),
 -- Equipe 2
 (73, 2, 2, '2024-04-18'), (72, 3, 2, '2024-05-10'), (72, 4, 2, '2024-05-29'), (72, 5, 2, '2024-09-30'), (72, 6, 2, '2024-10-23'),
