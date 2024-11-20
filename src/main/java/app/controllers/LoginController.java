@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,20 +26,40 @@ public class LoginController {
     int teamId = 0;
 
     private boolean checkEvaluationPeriod() {
-//        ainda falta validar se esta dentro do periodo da sprint. Com o professor tambem
         SprintDAO sprintDAO = new SprintDAO();
-        SprintModel sprint = sprintDAO.selectCurrentSprint();
+        SprintModel sprint = sprintDAO.selectPastSprint();
+
+        Date sprintEndDate = sprint.getEndDate();
+
+        Date currentDate = new Date();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(sprintEndDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date setScoreDeadlineDate = calendar.getTime();
 
         SetScoreDAO setScoreDAO = new SetScoreDAO();
-        Date date = setScoreDAO.selectScoreDateBySprintId(teamId, sprint.getId());
+        Date scoreDate = setScoreDAO.selectScoreDateBySprintId(teamId, sprint.getId());
 
-        if (date == null) {
+        if (currentDate.before(sprintEndDate) || (scoreDate == null && currentDate.before(setScoreDeadlineDate))) {
             return false;
         }
 
-        Date startDate = sprint.getStartDate();
-        Date endDate = sprint.getEndDate();
-        return date.before(endDate) && date.after(startDate);
+        Calendar calendar2 = Calendar.getInstance();
+        calendar.setTime(setScoreDeadlineDate);
+        calendar.add(Calendar.DAY_OF_MONTH, 7);
+        Date evaluationPeriodDeadlineDate = calendar2.getTime();
+
+        if (scoreDate == null) {
+            return currentDate.before(evaluationPeriodDeadlineDate);
+        } else {
+            Calendar calendar3 = Calendar.getInstance();
+            calendar.setTime(scoreDate);
+            calendar.add(Calendar.DAY_OF_MONTH, 7);
+            evaluationPeriodDeadlineDate = calendar3.getTime();
+
+            return currentDate.after(scoreDate) && currentDate.before(evaluationPeriodDeadlineDate);
+        }
     }
 
     @FXML

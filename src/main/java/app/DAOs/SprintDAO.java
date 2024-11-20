@@ -53,4 +53,26 @@ public class SprintDAO {
         }
         return sprint;
     }
+
+    public SprintModel selectPastSprint() {
+        LocalDate currentDate = LocalDate.now();
+
+        String sql = "SELECT s.* FROM sprint s WHERE s.data_fim < ? ORDER BY s.data_fim DESC LIMIT 1";
+
+        SprintModel sprint = null;
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentDate)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String description = resultSet.getString("descricao");
+                Date startDate = resultSet.getDate("data_inicio");
+                Date endDate = resultSet.getDate("data_fim");
+
+                sprint = new SprintModel(id, description, startDate, endDate);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectSprints: " + e.getMessage());
+        }
+        return sprint;
+    }
 }
