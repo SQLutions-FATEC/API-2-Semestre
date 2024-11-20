@@ -6,6 +6,7 @@ import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
 import app.models.PeriodModel;
+import app.models.SprintModel;
 import app.models.TeamModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,7 +55,8 @@ public class SetScoreController implements Initializable {
 
     public void fetchSprint() {
         SprintDAO sprintDAO = new SprintDAO();
-        sprintId = sprintDAO.selectCurrentSprintId();
+        SprintModel sprint = sprintDAO.selectCurrentSprint();
+        sprintId = sprint.getId();
     }
 
     public void fetchTeams() {

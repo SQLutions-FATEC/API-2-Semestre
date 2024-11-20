@@ -32,19 +32,25 @@ public class SprintDAO {
         return sprintList;
     }
 
-    public int selectCurrentSprintId() {
+    public SprintModel selectCurrentSprint() {
         LocalDate currentDate = LocalDate.now();
 
-        String sql = "SELECT s.id FROM sprint s WHERE ? BETWEEN s.data_inicio AND s.data_fim";
-        int id = 0;
+        String sql = "SELECT s.* FROM sprint s WHERE ? BETWEEN s.data_inicio AND s.data_fim";
 
+        SprintModel sprint = null;
+                
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentDate)) {
             while (resultSet.next()) {
-                id = resultSet.getInt("id");
+                int id = resultSet.getInt("id");
+                String description = resultSet.getString("descricao");
+                Date startDate = resultSet.getDate("data_inicio");
+                Date endDate = resultSet.getDate("data_fim");
+
+                sprint = new SprintModel(id, description, startDate, endDate);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL de selectSprints: " + e.getMessage());
         }
-        return id;
+        return sprint;
     }
 }

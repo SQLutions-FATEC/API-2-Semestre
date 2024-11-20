@@ -1,14 +1,18 @@
 package app.controllers;
 
 import app.DAOs.LoginDAO;
+import app.DAOs.SetScoreDAO;
+import app.DAOs.SprintDAO;
 import app.DAOs.UserDAO;
 import app.helpers.Utils;
+import app.models.SprintModel;
 import app.models.UserModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +21,25 @@ public class LoginController {
     private TextField emailField;
     @FXML
     private PasswordField passwordField;
+
+    int teamId = 0;
+
+    private boolean checkEvaluationPeriod() {
+//        ainda falta validar se esta dentro do periodo da sprint. Com o professor tambem
+        SprintDAO sprintDAO = new SprintDAO();
+        SprintModel sprint = sprintDAO.selectCurrentSprint();
+
+        SetScoreDAO setScoreDAO = new SetScoreDAO();
+        Date date = setScoreDAO.selectScoreDateBySprintId(teamId, sprint.getId());
+
+        if (date == null) {
+            return false;
+        }
+
+        Date startDate = sprint.getStartDate();
+        Date endDate = sprint.getEndDate();
+        return date.before(endDate) && date.after(startDate);
+    }
 
     @FXML
     public void handleLogin(ActionEvent event) {
@@ -32,10 +55,14 @@ public class LoginController {
         UserModel user = userDAO.selectUserByLogin(email, password);
 
         if (user != null) {
-            int teamId = user.getEquipeId();
+            teamId = user.getEquipeId();
             if (teamId > 0) {
+                boolean isEvaluationPeriod = checkEvaluationPeriod();
+                if (!isEvaluationPeriod) {
+                    Utils.setScreen(event, "outOfEvaluationPeriodScreen");
+                    return;
+                }
                 Map<String, Object> data = new HashMap<>();
-                data.put("teamId", teamId);
                 data.put("userEmail", email);
                 Utils.setScreen(event, "studentScreen", data);
             } else {

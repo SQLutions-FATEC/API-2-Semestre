@@ -68,6 +68,7 @@ public class Utils {
 
         files.put("loginScreen", new String[]{"/loginScreen.fxml", "Tela de login"});
         files.put("studentScreen", new String[]{"/student/studentScreen.fxml", "Tela do aluno"});
+        files.put("outOfEvaluationPeriodScreen", new String[]{"/student/outOfEvaluationPeriodScreen.fxml", "Fora do período"});
         files.put("professorScreen", new String[]{"/professor/professorScreen.fxml", "Tela do professor"});
         files.put("criteriaScreen", new String[]{"/professor/criteriaScreen.fxml", "Definir critérios"});
         files.put("addStudentScreen", new String[]{"/professor/addStudentScreen.fxml", "Adicionar aluno"});
