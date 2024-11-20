@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.DAOs.LoginDAO;
-import app.DAOs.SetScoreDAO;
-import app.DAOs.SprintDAO;
-import app.DAOs.UserDAO;
+import app.DAOs.*;
 import app.helpers.Utils;
 import app.models.SprintModel;
 import app.models.UserModel;
@@ -24,10 +21,13 @@ public class LoginController {
     private PasswordField passwordField;
 
     int teamId = 0;
+    int sprintId = 0;
+    String email;
 
     private boolean checkEvaluationPeriod() {
         SprintDAO sprintDAO = new SprintDAO();
         SprintModel sprint = sprintDAO.selectPastSprint();
+        sprintId = sprint.getId();
 
         Date sprintEndDate = sprint.getEndDate();
 
@@ -62,9 +62,16 @@ public class LoginController {
         }
     }
 
+    private boolean checkSprintEvaluation() {
+        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+        int evaluations = averageGradeDAO.selectUserGradeEvaluationBySprint(email, sprintId);
+
+        return evaluations > 0;
+    }
+
     @FXML
     public void handleLogin(ActionEvent event) {
-        String email = emailField.getText();
+        email = emailField.getText();
         String password = passwordField.getText();
 
         if (email.isEmpty() || password.isEmpty()) {
@@ -81,6 +88,11 @@ public class LoginController {
                 boolean isEvaluationPeriod = checkEvaluationPeriod();
                 if (!isEvaluationPeriod) {
                     Utils.setScreen(event, "outOfEvaluationPeriodScreen");
+                    return;
+                }
+                boolean hasAlreadyEvaluated = checkSprintEvaluation();
+                if (hasAlreadyEvaluated) {
+                    Utils.setScreen(event, "alreadyEvaluatedScreen");
                     return;
                 }
                 Map<String, Object> data = new HashMap<>();

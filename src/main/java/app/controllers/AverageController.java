@@ -112,7 +112,7 @@ public class AverageController {
 
     private void fetchGrades() {
         AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
-        Map<String, AverageGradeModel> studentsMap = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
+        Map<String, AverageGradeModel> studentsMap = averageGradeDAO.selectAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
         tableAverageGrades.setItems(data);
     }
