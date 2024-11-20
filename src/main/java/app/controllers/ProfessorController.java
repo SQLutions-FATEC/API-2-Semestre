@@ -1,10 +1,12 @@
 package app.controllers;
 
 import app.DAOs.PeriodDAO;
+import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
 import app.interfaces.ScreenController;
 import app.models.PeriodModel;
+import app.models.SprintModel;
 import app.models.TeamModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -128,7 +130,18 @@ public class ProfessorController implements ScreenController {
 
     @FXML
     public void goToSetScoreScreen(ActionEvent event) {
-        Utils.setScreen(event, "setScore");
+        SprintDAO sprintDAO = new SprintDAO();
+        SprintModel sprint = sprintDAO.selectPastSprint();
+
+        Date sprintEndDate = sprint.getEndDate();
+        Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);
+        Date currentDate = new Date();
+
+        if (currentDate.after(setScoreDeadlineDate)) {
+            Utils.setScreen(event, "outOfSetScorePeriodScreen");
+        } else {
+            Utils.setScreen(event, "setScore");
+        }
     }
 
     public void definirDataSprint(ActionEvent event) {

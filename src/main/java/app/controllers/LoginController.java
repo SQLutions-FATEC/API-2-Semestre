@@ -30,13 +30,8 @@ public class LoginController {
         sprintId = sprint.getId();
 
         Date sprintEndDate = sprint.getEndDate();
-
+        Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);
         Date currentDate = new Date();
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(sprintEndDate);
-        calendar.add(Calendar.DAY_OF_MONTH, 7);
-        Date setScoreDeadlineDate = calendar.getTime();
 
         SetScoreDAO setScoreDAO = new SetScoreDAO();
         Date scoreDate = setScoreDAO.selectScoreDateBySprintId(teamId, sprint.getId());
@@ -45,18 +40,12 @@ public class LoginController {
             return false;
         }
 
-        Calendar calendar2 = Calendar.getInstance();
-        calendar.setTime(setScoreDeadlineDate);
-        calendar.add(Calendar.DAY_OF_MONTH, 7);
-        Date evaluationPeriodDeadlineDate = calendar2.getTime();
+        Date evaluationPeriodDeadlineDate = Utils.setDate(setScoreDeadlineDate, 7);
 
         if (scoreDate == null) {
             return currentDate.before(evaluationPeriodDeadlineDate);
         } else {
-            Calendar calendar3 = Calendar.getInstance();
-            calendar.setTime(scoreDate);
-            calendar.add(Calendar.DAY_OF_MONTH, 7);
-            evaluationPeriodDeadlineDate = calendar3.getTime();
+            evaluationPeriodDeadlineDate = Utils.setDate(scoreDate, 7);
 
             return currentDate.after(scoreDate) && currentDate.before(evaluationPeriodDeadlineDate);
         }

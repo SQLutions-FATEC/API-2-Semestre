@@ -55,7 +55,7 @@ public class SetScoreController implements Initializable {
 
     public void fetchSprint() {
         SprintDAO sprintDAO = new SprintDAO();
-        SprintModel sprint = sprintDAO.selectCurrentSprint();
+        SprintModel sprint = sprintDAO.selectPastSprint();
         sprintId = sprint.getId();
     }
 

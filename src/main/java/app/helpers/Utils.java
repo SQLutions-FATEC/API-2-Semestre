@@ -1,5 +1,7 @@
 package app.helpers;
+import app.DAOs.SprintDAO;
 import app.interfaces.ScreenController;
+import app.models.SprintModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -76,6 +78,7 @@ public class Utils {
         files.put("editStudentScreen", new String[]{"/professor/editStudentScreen.fxml", "Editar aluno"});
         files.put("setScore", new String[]{"/professor/setScore.fxml", "Definir pontuação"});
         files.put("setSprintData", new String[]{"/professor/setSprintData.fxml", "Definir sprint"});
+        files.put("outOfSetScorePeriodScreen", new String[]{"/professor/outOfSetScorePeriodScreen.fxml", "Fora do período"});
 
         String screenFXML = files.get(screenFile)[0];
         String screenName = files.get(screenFile)[1];
@@ -149,5 +152,13 @@ public class Utils {
         alert.setHeaderText(null);
         alert.setContentText(text);
         alert.showAndWait();
+    }
+
+    public static Date setDate(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, days);
+
+        return calendar.getTime();
     }
 }
