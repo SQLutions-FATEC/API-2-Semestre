@@ -23,19 +23,27 @@ public class Utils {
         return input.matches("[a-zA-ZÀ-ÿ\\s]+");
     }
 
-    public static String[] getCurrentSemesterAndYear() {
+    public static int[] getCurrentSemesterAndYearNumbers() {
         LocalDate currentDate = LocalDate.now();
         int currentYear = currentDate.getYear();
         int currentMonth = currentDate.getMonthValue();
 
-        String semester;
+        int semester;
         if (currentMonth >= 1 && currentMonth <= 6) {
-            semester = "1º semestre";
+            semester = 1;
         } else {
-            semester = "2º semestre";
+            semester = 2;
         }
 
-        return new String[] {String.valueOf(currentYear), semester};
+        return new int[] {currentYear, semester};
+    }
+
+    public static String[] getCurrentSemesterAndYear() {
+        int[] period = getCurrentSemesterAndYearNumbers();
+
+        String semester = period[1] + "º semestre";
+        String year = String.valueOf(period[0]);
+        return new String[] {year, semester};
     }
     
     public static String getCurrentSprint(ArrayList<String> sprints) {

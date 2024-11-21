@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.PeriodDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.DatabaseConnection;
@@ -19,7 +20,7 @@ public class CSVGerador {
     public static void gerarCsv(String caminhoArquivo, int equipeID, int periodoID, int sprintID) throws SQLException {
         try {
             TeamDAO teamDAO = new TeamDAO();
-            String nomeEquipe = teamDAO.selectTeams().stream()
+            String nomeEquipe = teamDAO.selectTeamsByPeriod(periodoID).stream()
                     .filter(team -> team.getId() == equipeID)
                     .map(TeamModel::getName)
                     .findFirst()

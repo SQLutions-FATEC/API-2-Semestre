@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
 import app.helpers.Utils;
@@ -104,8 +105,11 @@ public class AddStudentController {
 
     @FXML
     public void acceptCSV() {
+        PeriodDAO periodDAO = new PeriodDAO();
+        int periodId = periodDAO.selectCurrentPeriodId();
+
         TeamDAO teamDAO = new TeamDAO();
-        int teamId = teamDAO.createTeam(labelTeamName.getText(), labelTeamGithub.getText());
+        int teamId = teamDAO.createTeam(labelTeamName.getText(), labelTeamGithub.getText(), periodId);
 
         UserDAO userDAO = new UserDAO();
         userDAO.createStudents(tableView.getItems(), teamId);

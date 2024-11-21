@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
 import app.models.TeamModel;
@@ -73,8 +74,11 @@ public class EditStudentController implements Initializable {
     }
 
     private void fetchTeams() {
+        PeriodDAO periodDAO = new PeriodDAO();
+        int periodId = periodDAO.selectCurrentPeriodId();
+
         TeamDAO teamDAO = new TeamDAO();
-        teamList = teamDAO.selectTeams();
+        teamList = teamDAO.selectTeamsByPeriod(periodId);
         ObservableList<String> teamNames = FXCollections.observableArrayList();
 
         for (TeamModel team : teamList) {
