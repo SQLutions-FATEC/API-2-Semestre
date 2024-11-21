@@ -4,51 +4,49 @@ import app.DAOs.SprintDAO;
 import app.helpers.DatabaseConnection;
 import app.interfaces.ScreenController;
 import app.models.AvaliacaoModel;
-import app.models.SprintModel;
 import app.helpers.Utils;
+import app.models.SprintModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentController implements ScreenController {
     @FXML
     public TableView<AvaliacaoModel> tableView;
     @FXML
-    private ComboBox<String> choiceBoxMudarSprint;
-    @FXML
     public Button sendButton;
     @FXML
     public Label pointsInfo;
 
     protected Scene scene;
-    Integer selectedPeriodId = 1;
+    int periodId = 1;
+    String userEmail;
+    int idSprint = 0;
+    int teamId = 0;
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
     private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
-    private final Map<String, Integer> sprintIdMap = new HashMap<>();
-    ArrayList<String> sprintOptionsList = new ArrayList<>();
 
     @Override
     public void initData(Object data) {
-//        if (data instanceof Map) {
-//            String userEmail = (String) data.get("userEmail");
-//        }
+        if (data instanceof Map) {
+            teamId = (int) ((Map<?, ?>) data).get("teamId");
+            userEmail = (String) ((Map<?, ?>) data).get("userEmail");
+        }
         try {
-            fetchCriterias();
             fetchSprint();
+            fetchCriterias();
             fetchAlunos();
             LimitePontos();
         } catch (SQLException e) {
@@ -56,11 +54,20 @@ public class StudentController implements ScreenController {
         }
     }
 
+    private void fetchSprint() {
+        SprintDAO sprintDAO = new SprintDAO();
+        SprintModel sprint = sprintDAO.selectPastSprint();
+        idSprint = sprint.getId();
+    }
+
     private void fetchAlunos() throws SQLException {
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = 1 AND us.deleted_at IS NULL";
+            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = ? AND us.deleted_at IS NULL";
             statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, teamId);
+
             resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
@@ -80,8 +87,11 @@ public class StudentController implements ScreenController {
         try {
             connection = DatabaseConnection.getConnection(true);
             tableView.getColumns().clear();
-            String sql = "SELECT * FROM criterio_periodo cp JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1";
+            String sql = "SELECT * FROM criterio_periodo cp JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = ?";
             statement = connection.prepareStatement(sql);
+
+            statement.setInt(1, periodId);
+
             resultSet = statement.executeQuery();
 
             ObservableList<TableColumn<AvaliacaoModel, Integer>> columns = FXCollections.observableArrayList();
@@ -128,28 +138,6 @@ public class StudentController implements ScreenController {
         }
     }
 
-    private void fetchSprint() {
-        SprintDAO sprintDAO = new SprintDAO();
-        ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
-
-        for (SprintModel sprint : sprintList) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
-            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
-
-            String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
-            sprintOptionsList.add(sprintDescription);
-            sprintIdMap.put(sprintDescription, sprint.getId());
-        }
-        choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
-        String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
-        if (currentSprint != null) {
-            choiceBoxMudarSprint.setValue(currentSprint);
-        } else {
-            choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
-        }
-    }
-
     public Integer obterIdDoCriterio(String nomeCriterio) {
         Integer idCriterio = null;
         try {
@@ -175,11 +163,6 @@ public class StudentController implements ScreenController {
             }
         }
         return idCriterio;
-    }
-
-    public Integer obterIdDaSprint() {
-        String sprintSelecionada = choiceBoxMudarSprint.getValue();
-        return sprintIdMap.get(sprintSelecionada);
     }
 
     public Integer obterIdDoAvaliado(String nomeAluno) {
@@ -227,7 +210,6 @@ public class StudentController implements ScreenController {
                         String nomeAluno = aluno.getNome();
                         Integer idAvaliado = obterIdDoAvaliado(nomeAluno);
 
-                        Integer idSprint = obterIdDaSprint();
 
                         try {
                             connection = DatabaseConnection.getConnection(true);
@@ -238,7 +220,7 @@ public class StudentController implements ScreenController {
                             statementNota.setInt(2, 19);
                             statementNota.setInt(3, idAvaliado);
                             statementNota.setInt(4, idCriterio);
-                            statementNota.setInt(5, selectedPeriodId);
+                            statementNota.setInt(5, periodId);
                             statementNota.setInt(6, idSprint);
 
                             statementNota.executeUpdate();
@@ -270,14 +252,14 @@ public class StudentController implements ScreenController {
         ResultSet rsLimite;
         int totalUsado = 0;
         int totalLimite = 0;
-        Integer idSprint = obterIdDaSprint();
 
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = 1;";
+            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = ?;";
             statementLimite = connection.prepareStatement(sqlLimitePontos);
 
-            statementLimite.setInt(1,idSprint);
+            statementLimite.setInt(1, idSprint);
+            statementLimite.setInt(2, teamId);
 
             rsLimite = statementLimite.executeQuery();
 
@@ -299,8 +281,6 @@ public class StudentController implements ScreenController {
             }
         }
 
-        System.out.println("Total de pontuacoes: " + totalLimite);
-
         for (AvaliacaoModel aluno : tableView.getItems()) {
             for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
                 if (!column.getText().equals("Aluno")) {
@@ -317,7 +297,6 @@ public class StudentController implements ScreenController {
             sendButton.setStyle("-fx-background-color: #FF0000;");
         } else {
             sendButton.setDisable(false);
-            sendButton.setStyle("-fx-background-color: #00FF00;");
         }
 
         pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", totalUsado, totalLimite));
@@ -327,5 +306,13 @@ public class StudentController implements ScreenController {
     public void goToLoginScreen (ActionEvent event){
         Utils.setScreen(event, "loginScreen");
     }
-}
 
+    @FXML
+    public void goToPastEvaluationsScreen (ActionEvent event){
+        Utils.setPopup("pastEvaluationsScreen", 400, 600, controller -> {
+            if (controller instanceof PastEvaluationsController) {
+                ((PastEvaluationsController) controller).passData();
+            }
+        });
+    }
+}

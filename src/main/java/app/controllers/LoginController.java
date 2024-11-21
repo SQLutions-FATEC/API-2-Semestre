@@ -86,6 +86,7 @@ public class LoginController {
                 }
                 Map<String, Object> data = new HashMap<>();
                 data.put("userEmail", email);
+                data.put("teamId", teamId);
                 Utils.setScreen(event, "studentScreen", data);
             } else {
                 Utils.setScreen(event, "professorScreen", email);

@@ -1,7 +1,6 @@
 package app.helpers;
-import app.DAOs.SprintDAO;
+
 import app.interfaces.ScreenController;
-import app.models.SprintModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -88,8 +87,8 @@ public class Utils {
             Parent root = loader.load();
 
             if (
-                    data != null ||
-                    Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
+                data != null ||
+                Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
             ) {
                 ScreenController controller = loader.getController();
                 controller.initData(data);
@@ -113,6 +112,7 @@ public class Utils {
         Map<String, String[]> files = new HashMap<>();
 
         files.put("averageScreen", new String[]{"/professor/averageScreen.fxml", "Médias"});
+        files.put("pastEvaluationsScreen", new String[]{"/student/pastEvaluationsScreen.fxml", "Avaliações passadas"});
 
         String screenFXML = files.get(screenFile)[0];
         String screenName = files.get(screenFile)[1];
