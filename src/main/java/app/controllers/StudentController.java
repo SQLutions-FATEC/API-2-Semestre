@@ -311,7 +311,7 @@ public class StudentController implements ScreenController {
     public void goToPastEvaluationsScreen (ActionEvent event){
         Utils.setPopup("pastEvaluationsScreen", 400, 600, controller -> {
             if (controller instanceof PastEvaluationsController) {
-                ((PastEvaluationsController) controller).passData();
+                ((PastEvaluationsController) controller).passData(teamId);
             }
         });
     }
