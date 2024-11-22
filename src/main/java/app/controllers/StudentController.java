@@ -1,9 +1,12 @@
 package app.controllers;
 
+import app.DAOs.CriteriaDAO;
+import app.DAOs.PeriodDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.UserDAO;
 import app.helpers.DatabaseConnection;
 import app.interfaces.ScreenController;
+import app.models.CriteriaModel;
 import app.models.EvaluationModel;
 import app.helpers.Utils;
 import app.models.SprintModel;
@@ -32,7 +35,7 @@ public class StudentController implements ScreenController {
     public Label pointsInfo;
 
     protected Scene scene;
-    int periodId = 1;
+    int periodId = 0;
     String userEmail;
     int idSprint = 0;
     int teamId = 0;
@@ -48,6 +51,7 @@ public class StudentController implements ScreenController {
             userEmail = (String) ((Map<?, ?>) data).get("userEmail");
         }
         try {
+            fetchPeriod();
             fetchSprint();
             fetchCriterias();
             fetchStudents();
@@ -55,6 +59,11 @@ public class StudentController implements ScreenController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void fetchPeriod() {
+        PeriodDAO periodDAO = new PeriodDAO();
+        periodId = periodDAO.selectCurrentPeriodId();
     }
 
     private void fetchSprint() {
@@ -77,58 +86,36 @@ public class StudentController implements ScreenController {
     }
 
     private void fetchCriterias() {
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            tableView.getColumns().clear();
-            String sql = "SELECT * FROM criterio_periodo cp JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = ?";
-            statement = connection.prepareStatement(sql);
+        CriteriaDAO criteriaDAO = new CriteriaDAO();
+        ObservableList<CriteriaModel> criterias = criteriaDAO.selectActiveCriteriasByPeriod(periodId);
 
-            statement.setInt(1, periodId);
+        ObservableList<TableColumn<EvaluationModel, Integer>> columns = FXCollections.observableArrayList();
 
-            resultSet = statement.executeQuery();
+        TableColumn<EvaluationModel, String> nomeColumn = new TableColumn<>("Aluno");
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        int studentColumnWidth = 100;
+        nomeColumn.setPrefWidth(studentColumnWidth);
+        tableView.getColumns().add(nomeColumn);
 
-            ObservableList<TableColumn<EvaluationModel, Integer>> columns = FXCollections.observableArrayList();
+        for (CriteriaModel criteria : criterias) {
+            String criteriaName = criteria.getName();
+            TableColumn<EvaluationModel, Integer> column = new TableColumn<>(criteriaName);
 
-            TableColumn<EvaluationModel, String> nomeColumn = new TableColumn<>("Aluno");
-            nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+            column.setCellValueFactory(cellData -> {
+                EvaluationModel student = cellData.getValue();
+                return new SimpleObjectProperty<>(student.getNota(criteriaName));
+            });
 
-            int colunaAlunoWidth = 100;
-            nomeColumn.setPrefWidth(colunaAlunoWidth);
-            tableView.getColumns().add(nomeColumn);
+            column.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1, 2, 3));
 
-            while (resultSet.next()) {
-                String criterioNome = resultSet.getString("nome");
-                TableColumn<EvaluationModel, Integer> column = new TableColumn<>(criterioNome);
-
-                column.setCellValueFactory(cellData -> {
-                    EvaluationModel aluno = cellData.getValue();
-                    return new SimpleObjectProperty<>(aluno.getNota(criterioNome));
-                });
-
-                column.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1, 2, 3));
-
-                column.setOnEditCommit(event -> {
-                    EvaluationModel aluno = event.getRowValue();
-                    aluno.setNotas(criterioNome, event.getNewValue());
-                    LimitePontos();
-                });
-
-                columns.add(column);
-            }
-
-            tableView.getColumns().addAll(columns);
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
-
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            column.setOnEditCommit(event -> {
+                EvaluationModel student = event.getRowValue();
+                student.setNotas(criteriaName, event.getNewValue());
+                LimitePontos();
+            });
+            columns.add(column);
         }
+        tableView.getColumns().addAll(columns);
     }
 
     public Integer obterIdDoCriterio(String nomeCriterio) {
