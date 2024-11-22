@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -122,16 +123,32 @@ public class Utils {
         }
     }
 
-    public static void setAlert(String type, String title, String text) {
-        Alert.AlertType alertType = switch (type.toUpperCase()) {
+    private static Alert.AlertType setAlertType(String type) {
+        return switch (type.toUpperCase()) {
             case "INFORMATION" -> Alert.AlertType.INFORMATION;
             case "ERROR" -> Alert.AlertType.ERROR;
             case "WARNING" -> Alert.AlertType.WARNING;
             case "CONFIRMATION" -> Alert.AlertType.CONFIRMATION;
             default -> Alert.AlertType.NONE;
         };
+    }
 
-        Alert alert = new Alert(alertType);
+    public static void setAlert(String type, String title, String text, Runnable onOkAction) {
+        Alert alert = new Alert(setAlertType(type));
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait()
+                .filter(response -> response == ButtonType.OK)
+                .ifPresent(_ -> {
+                    if (onOkAction != null) {
+                        onOkAction.run();
+                    }
+                });
+    }
+
+    public static void setAlert(String type, String title, String text) {
+        Alert alert = new Alert(setAlertType(type));
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(text);
