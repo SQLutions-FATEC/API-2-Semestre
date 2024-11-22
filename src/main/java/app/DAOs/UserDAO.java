@@ -66,6 +66,27 @@ public class UserDAO {
         return studentList;
     }
 
+    public ObservableList<UserModel> selectStudentsByTeamId(int userTeamId) {
+        ObservableList<UserModel> studentList = FXCollections.observableArrayList();
+        String sql = "SELECT u.* FROM usuario u WHERE u.ra IS NOT NULL AND u.equipe = ? AND deleted_at IS NULL ORDER BY u.nome";
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, userTeamId)) {
+            while (resultSet.next()) {
+                int ra = resultSet.getInt("ra");
+                String name = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("senha");
+                int teamId = resultSet.getInt("equipe");
+
+                UserModel user = new UserModel(ra, name, email, password, teamId);
+                studentList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectStudentsByTeamId: " + e.getMessage());
+        }
+        return studentList;
+    }
+
     public int deleteStudent(int ra) {
         int generatedKey = 0;
         String sql = "UPDATE usuario SET deleted_at = NOW() WHERE ra = ?";

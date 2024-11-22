@@ -1,11 +1,13 @@
 package app.controllers;
 
 import app.DAOs.SprintDAO;
+import app.DAOs.UserDAO;
 import app.helpers.DatabaseConnection;
 import app.interfaces.ScreenController;
-import app.models.AvaliacaoModel;
+import app.models.EvaluationModel;
 import app.helpers.Utils;
 import app.models.SprintModel;
+import app.models.UserModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,11 +20,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentController implements ScreenController {
     @FXML
-    public TableView<AvaliacaoModel> tableView;
+    public TableView<EvaluationModel> tableView;
     @FXML
     public Button sendButton;
     @FXML
@@ -36,7 +39,7 @@ public class StudentController implements ScreenController {
     Connection connection = null;
     PreparedStatement statement = null;
     ResultSet resultSet = null;
-    private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
+    private final ObservableList<EvaluationModel> studentList = FXCollections.observableArrayList();
 
     @Override
     public void initData(Object data) {
@@ -47,7 +50,7 @@ public class StudentController implements ScreenController {
         try {
             fetchSprint();
             fetchCriterias();
-            fetchAlunos();
+            fetchStudents();
             LimitePontos();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -60,27 +63,17 @@ public class StudentController implements ScreenController {
         idSprint = sprint.getId();
     }
 
-    private void fetchAlunos() throws SQLException {
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = ? AND us.deleted_at IS NULL";
-            statement = connection.prepareStatement(sql);
+    private void fetchStudents() throws SQLException {
+        UserDAO userDAO = new UserDAO();
+        ObservableList<UserModel> students = userDAO.selectStudentsByTeamId(teamId);
 
-            statement.setInt(1, teamId);
+        for (UserModel student : students) {
+            String studentName = student.getNome();
+            EvaluationModel currentStudent = new EvaluationModel(studentName, 0);
 
-            resultSet = statement.executeQuery();
-
-            while (resultSet.next()) {
-                String alunoNome = resultSet.getString("nome");
-
-                AvaliacaoModel student = new AvaliacaoModel(alunoNome, 0);
-
-                studentList.add(student);
-            }
-            tableView.setItems(studentList);
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL: " + e.getMessage());
+            studentList.add(currentStudent);
         }
+        tableView.setItems(studentList);
     }
 
     private void fetchCriterias() {
@@ -94,9 +87,9 @@ public class StudentController implements ScreenController {
 
             resultSet = statement.executeQuery();
 
-            ObservableList<TableColumn<AvaliacaoModel, Integer>> columns = FXCollections.observableArrayList();
+            ObservableList<TableColumn<EvaluationModel, Integer>> columns = FXCollections.observableArrayList();
 
-            TableColumn<AvaliacaoModel, String> nomeColumn = new TableColumn<>("Aluno");
+            TableColumn<EvaluationModel, String> nomeColumn = new TableColumn<>("Aluno");
             nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
 
             int colunaAlunoWidth = 100;
@@ -105,17 +98,17 @@ public class StudentController implements ScreenController {
 
             while (resultSet.next()) {
                 String criterioNome = resultSet.getString("nome");
-                TableColumn<AvaliacaoModel, Integer> column = new TableColumn<>(criterioNome);
+                TableColumn<EvaluationModel, Integer> column = new TableColumn<>(criterioNome);
 
                 column.setCellValueFactory(cellData -> {
-                    AvaliacaoModel aluno = cellData.getValue();
+                    EvaluationModel aluno = cellData.getValue();
                     return new SimpleObjectProperty<>(aluno.getNota(criterioNome));
                 });
 
                 column.setCellFactory(ComboBoxTableCell.forTableColumn(0, 1, 2, 3));
 
                 column.setOnEditCommit(event -> {
-                    AvaliacaoModel aluno = event.getRowValue();
+                    EvaluationModel aluno = event.getRowValue();
                     aluno.setNotas(criterioNome, event.getNewValue());
                     LimitePontos();
                 });
@@ -197,8 +190,8 @@ public class StudentController implements ScreenController {
         Connection connection = null;
         PreparedStatement statementNota = null;
 
-        for (AvaliacaoModel aluno : tableView.getItems()) {
-            for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+        for (EvaluationModel aluno : tableView.getItems()) {
+            for (TableColumn<EvaluationModel, ?> column : tableView.getColumns()) {
                 if (!column.getText().equals("Aluno")) {
 
                     Integer notaValor = (Integer) column.getCellData(aluno);
@@ -281,8 +274,8 @@ public class StudentController implements ScreenController {
             }
         }
 
-        for (AvaliacaoModel aluno : tableView.getItems()) {
-            for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+        for (EvaluationModel aluno : tableView.getItems()) {
+            for (TableColumn<EvaluationModel, ?> column : tableView.getColumns()) {
                 if (!column.getText().equals("Aluno")) {
                     Integer valorCell = (Integer) column.getCellData(aluno);
                     if (valorCell != null) {
