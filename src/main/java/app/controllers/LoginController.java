@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +51,7 @@ public class LoginController {
     }
 
     private boolean checkSprintEvaluation() {
-        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+        GradeDAO averageGradeDAO = new GradeDAO();
         int evaluations = averageGradeDAO.selectUserGradeEvaluationBySprint(email, sprintId);
 
         return evaluations > 0;

@@ -20,7 +20,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <Button fx:id="sendButton" layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#ConfirmarNotas" prefHeight="38.0" prefWidth="143.0" text="Enviar">
+      <Button fx:id="sendButton" layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#setGrades" prefHeight="38.0" prefWidth="143.0" text="Enviar">
          <font>
             <Font size="16.0" />
          </font>

@@ -1,16 +1,10 @@
 package app.controllers;
 
-import app.DAOs.CriteriaDAO;
-import app.DAOs.PeriodDAO;
-import app.DAOs.SprintDAO;
-import app.DAOs.UserDAO;
+import app.DAOs.*;
 import app.helpers.DatabaseConnection;
 import app.interfaces.ScreenController;
-import app.models.CriteriaModel;
-import app.models.EvaluationModel;
+import app.models.*;
 import app.helpers.Utils;
-import app.models.SprintModel;
-import app.models.UserModel;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,12 +31,14 @@ public class StudentController implements ScreenController {
     protected Scene scene;
     int periodId = 0;
     String userEmail;
-    int idSprint = 0;
+    int evaluatorId = 0;
+    int sprintId = 0;
     int teamId = 0;
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
+    ActionEvent actionEvent;
     private final ObservableList<EvaluationModel> studentList = FXCollections.observableArrayList();
+    Map<String, CriteriaModel> criteriaMap = new HashMap<>();
+    Map<String, UserModel> studentNameMap = new HashMap<>();
+
 
     @Override
     public void initData(Object data) {
@@ -69,7 +65,7 @@ public class StudentController implements ScreenController {
     private void fetchSprint() {
         SprintDAO sprintDAO = new SprintDAO();
         SprintModel sprint = sprintDAO.selectPastSprint();
-        idSprint = sprint.getId();
+        sprintId = sprint.getId();
     }
 
     private void fetchStudents() throws SQLException {
@@ -78,9 +74,13 @@ public class StudentController implements ScreenController {
 
         for (UserModel student : students) {
             String studentName = student.getNome();
+            String studentEmail = student.getEmail();
+            if (Objects.equals(studentEmail, userEmail)) evaluatorId = student.getId();
+
             EvaluationModel currentStudent = new EvaluationModel(studentName, 0);
 
             studentList.add(currentStudent);
+            studentNameMap.put(studentName, student);
         }
         tableView.setItems(studentList);
     }
@@ -114,115 +114,39 @@ public class StudentController implements ScreenController {
                 LimitePontos();
             });
             columns.add(column);
+            criteriaMap.put(criteriaName, criteria);
         }
         tableView.getColumns().addAll(columns);
     }
 
-    public Integer obterIdDoCriterio(String nomeCriterio) {
-        Integer idCriterio = null;
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sql = "SELECT id FROM criterio WHERE nome = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, nomeCriterio);
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                idCriterio = resultSet.getInt("id");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar o ID do critério: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-        return idCriterio;
-    }
-
-    public Integer obterIdDoAvaliado(String nomeAluno) {
-        Integer idAluno = null;
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sql = "SELECT id FROM usuario WHERE nome = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setString(1, nomeAluno);
-            resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                idAluno = resultSet.getInt("id");
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar o ID do aluno: " + e.getMessage());
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-        return idAluno;
-    }
-
     @FXML
-    public void ConfirmarNotas() {
-        Connection connection = null;
-        PreparedStatement statementNota = null;
+    public void setGrades() {
+        Utils.setAlert("WARNING", "Definição de notas", "Tem certeza que deseja enviar as notas? A ação não poderá ser desfeita",() -> {
+            for (EvaluationModel student : tableView.getItems()) {
+                for (TableColumn<EvaluationModel, ?> column : tableView.getColumns()) {
+                    if (!column.getText().equals("Aluno")) {
 
-        for (EvaluationModel aluno : tableView.getItems()) {
-            for (TableColumn<EvaluationModel, ?> column : tableView.getColumns()) {
-                if (!column.getText().equals("Aluno")) {
+                        Integer grade = (Integer) column.getCellData(student);
 
-                    Integer notaValor = (Integer) column.getCellData(aluno);
+                        if (grade != null) {
+                            String criteriaName = column.getText();
+                            CriteriaModel criteria = criteriaMap.getOrDefault(criteriaName, null);
+                            int criteriaId = (criteria != null) ? criteria.getId() : 0;
 
-                    if (notaValor != null) {
-                        String nomeCriterio = column.getText();
-                        Integer idCriterio = obterIdDoCriterio(nomeCriterio);
+                            String evaluatedStudentName = student.getNome();
+                            UserModel evaluatedStudent = studentNameMap.getOrDefault(evaluatedStudentName, null);
+                            int evaluatedId = (evaluatedStudent != null) ? evaluatedStudent.getId() : 0;
 
-                        String nomeAluno = aluno.getNome();
-                        Integer idAvaliado = obterIdDoAvaliado(nomeAluno);
-
-
-                        try {
-                            connection = DatabaseConnection.getConnection(true);
-                            String sqlNota = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
-                            statementNota = connection.prepareStatement(sqlNota);
-
-                            statementNota.setInt(1, notaValor);
-                            statementNota.setInt(2, 19);
-                            statementNota.setInt(3, idAvaliado);
-                            statementNota.setInt(4, idCriterio);
-                            statementNota.setInt(5, periodId);
-                            statementNota.setInt(6, idSprint);
-
-                            statementNota.executeUpdate();
-                        } catch (SQLException e) {
-                            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
-                        } finally {
-                            try {
-                                if (statementNota != null) {
-                                    statementNota.close();
-                                }
-                                if (connection != null) {
-                                    connection.close();
-                                }
-                            } catch (SQLException e) {
-                                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-                            }
+                            GradeDAO gradeDAO = new GradeDAO();
+                            gradeDAO.createGrade(grade, evaluatorId, evaluatedId, criteriaId, periodId, sprintId);
                         }
                     }
                 }
             }
-        }
-        System.out.println("Notas registradas no banco de dados com sucesso!");
+            Utils.setAlert("CONFIRMATION", "Definição de notas", "AS notas foram registradas com sucesso!", () -> {
+                goToLoginScreen(actionEvent);
+            });
+        });
     }
 
     @FXML
@@ -238,7 +162,7 @@ public class StudentController implements ScreenController {
             String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = ?;";
             statementLimite = connection.prepareStatement(sqlLimitePontos);
 
-            statementLimite.setInt(1, idSprint);
+            statementLimite.setInt(1, sprintId);
             statementLimite.setInt(2, teamId);
 
             rsLimite = statementLimite.executeQuery();
@@ -284,6 +208,7 @@ public class StudentController implements ScreenController {
 
     @FXML
     public void goToLoginScreen (ActionEvent event){
+        actionEvent = event;
         Utils.setScreen(event, "loginScreen");
     }
 

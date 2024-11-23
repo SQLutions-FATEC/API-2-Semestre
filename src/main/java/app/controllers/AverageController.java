@@ -2,7 +2,7 @@ package app.controllers;
 
 import app.DAOs.CriteriaDAO;
 import app.DAOs.SprintDAO;
-import app.DAOs.AverageGradeDAO;
+import app.DAOs.GradeDAO;
 import app.helpers.Utils;
 import app.models.CriteriaModel;
 import app.models.EquipeModel;
@@ -111,7 +111,7 @@ public class AverageController {
     }
 
     private void fetchGrades() {
-        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+        GradeDAO averageGradeDAO = new GradeDAO();
         Map<String, AverageGradeModel> studentsMap = averageGradeDAO.selectAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
         tableAverageGrades.setItems(data);
