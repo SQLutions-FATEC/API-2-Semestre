@@ -14,12 +14,11 @@ INSERT INTO sprint (descricao, data_inicio, data_fim, periodo) VALUES
 ('Sprint 1', '2025-03-04', '2025-03-24', 3), ('Sprint 2', '2025-03-25', '2025-04-14', 3),('Sprint 3', '2025-04-15', '2025-05-05', 3), ('Sprint 4', '2025-05-06', '2025-05-26', 3),
 ('Sprint 1', '2025-09-09', '2025-09-29', 4), ('Sprint 2', '2025-09-30', '2025-10-20', 4), ('Sprint 3', '2025-10-21', '2025-11-10', 4), ('Sprint 4', '2025-11-11', '2025-12-01', 4);
 
-INSERT INTO equipe (nome, github) VALUES ('SQLutions', 'https://github.com/SQLutions-FATEC'), ('Atomic Delta', 'https://github.com/Atomic-Delta'),
-('Radônios', 'https://github.com/Radonios'), ('Zircônia', 'https://github.com/Zirconia');
+INSERT INTO equipe (nome) VALUES ('SQLutions'), ('Atomic Delta'), ('Radônios'), ('Zircônia');
 
 INSERT INTO pontuacao (valor, sprint, equipe) VALUES
 -- Equipe 1
-(83, 2, 1), (82, 3, 1), (81, 4, 1), (80, 5, 1), (79, 6, 1), (78, 7, 1), (77, 8, 1),
+(25, 1, 1), (83, 2, 1), (82, 3, 1), (81, 4, 1), (80, 5, 1), (79, 6, 1), (78, 7, 1), (77, 8, 1),
 (76, 9, 1), (75, 10, 1), (74, 11, 1), (73, 12, 1), (72, 13, 1), (71, 14, 1), (70, 15, 1), (69, 16, 1),
 -- Equipe 2
 (73, 2, 2), (72, 3, 2), (72, 4, 2), (72, 5, 2), (72, 6, 2), (72, 7, 2), (72, 8, 2),
@@ -39,11 +38,11 @@ INSERT INTO criterio_periodo (criterio_id, periodo_id) VALUES
 (1, 3), (2, 3), (3, 3), (4, 3),
 (1, 4), (2, 4), (3, 4), (4, 4);
 
-INSERT INTO equipe_periodo (equipe_id, periodo_id) VALUES
-(1, 1), (1, 2), (1, 3), (1, 4),
-(2, 1), (2, 2), (2, 3),
-(3, 1), (3, 2), (3, 3), (3, 4),
-(4, 1), (4, 2), (4, 3), (4, 4);
+INSERT INTO equipe_periodo (github, equipe_id, periodo_id) VALUES
+('https://github.com/SQLutions-FATEC/Semestre-1', 1, 1), ('https://github.com/SQLutions-FATEC/Semestre-2', 1, 2), ('https://github.com/SQLutions-FATEC/Semestre-3', 1, 3), ('https://github.com/SQLutions-FATEC/Semestre-4', 1, 4),
+('https://github.com/Atomic-Delta/Semestre-1', 2, 1), ('https://github.com/Atomic-Delta/Semestre-2', 2, 2), ('https://github.com/Atomic-Delta/Semestre-3', 2, 3),
+('https://github.com/Radonios/Semestre-1', 3, 1), ('https://github.com/Radonios/Semestre-2', 3, 2), ('https://github.com/Radonios/Semestre-3', 3, 3), ('https://github.com/Radonios/Semestre-4', 3, 4),
+('https://github.com/Zirconia/Semestre-1', 4, 1), ('https://github.com/Zirconia/Semestre-2', 4, 2), ('https://github.com/Zirconia/Semestre-3', 4, 3), ('https://github.com/Zirconia/Semestre-4', 4, 4);
 
 INSERT INTO usuario (nome, ra, email, senha, tipo, equipe) VALUES
 -- Professor

@@ -15,6 +15,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
@@ -30,9 +31,12 @@ public class StudentController implements ScreenController {
 
     @FXML
     public TableView<AvaliacaoModel> tableView;
-
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
+    @FXML
+    public Button sendButton;
+    @FXML
+    public Label pointsInfo;
 
     @Override
     public void initData(Object data) {
@@ -44,6 +48,7 @@ public class StudentController implements ScreenController {
             fetchCriterias();
             fetchSprint();
             fetchAlunos();
+            LimitePontos();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,8 +63,7 @@ public class StudentController implements ScreenController {
     private void fetchAlunos() throws SQLException {
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sql = String.format("SELECT us.nome AS nome FROM usuario us " +
-                    " WHERE us.equipe = 1");
+            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = 1 AND us.deleted_at IS NULL";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
@@ -80,8 +84,7 @@ public class StudentController implements ScreenController {
         try {
             connection = DatabaseConnection.getConnection(true);
             tableView.getColumns().clear();
-            String sql = String.format("SELECT * FROM criterio_periodo cp " +
-                    "JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1");
+            String sql = "SELECT * FROM criterio_periodo cp JOIN criterio c ON cp.criterio_id = c.id WHERE cp.periodo_id = 1";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
@@ -108,6 +111,7 @@ public class StudentController implements ScreenController {
                 column.setOnEditCommit(event -> {
                     AvaliacaoModel aluno = event.getRowValue();
                     aluno.setNotas(criterioNome, event.getNewValue());
+                    LimitePontos();
                 });
 
                 columns.add(column);
@@ -129,37 +133,24 @@ public class StudentController implements ScreenController {
     }
 
     private void fetchSprint() {
-
-        try {
         SprintDAO sprintDAO = new SprintDAO();
         ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
 
+        for (SprintModel sprint : sprintList) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
+            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
-            for (SprintModel sprint : sprintList) {
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
-                String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
-
-                String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
-                sprintOptionsList.add(sprintDescription);
-                sprintIdMap.put(sprintDescription, sprint.getId());
-            }
-            choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
-            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
-            if (currentSprint != null) {
-                choiceBoxMudarSprint.setValue(currentSprint);
-            } else {
-                choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
-            }
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+            sprintOptionsList.add(sprintDescription);
+            sprintIdMap.put(sprintDescription, sprint.getId());
+        }
+        choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
+        String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+        if (currentSprint != null) {
+            choiceBoxMudarSprint.setValue(currentSprint);
+        } else {
+            choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
         }
     }
 
@@ -192,10 +183,7 @@ public class StudentController implements ScreenController {
 
     public Integer obterIdDaSprint() {
         String sprintSelecionada = choiceBoxMudarSprint.getValue();
-        Integer idSprint = sprintIdMap.get(sprintSelecionada);
-
-        return idSprint;
-
+        return sprintIdMap.get(sprintSelecionada);
     }
 
     public Integer obterIdDoAvaliado(String nomeAluno) {
@@ -277,6 +265,66 @@ public class StudentController implements ScreenController {
             }
         }
         System.out.println("Notas registradas no banco de dados com sucesso!");
+    }
+
+    @FXML
+    public void LimitePontos() {
+        Connection connection = null;
+        PreparedStatement statementLimite = null;
+        ResultSet rsLimite;
+        int totalUsado = 0;
+        int totalLimite = 0;
+        Integer idSprint = obterIdDaSprint();
+
+        try {
+            connection = DatabaseConnection.getConnection(true);
+            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = 1;";
+            statementLimite = connection.prepareStatement(sqlLimitePontos);
+
+            statementLimite.setInt(1,idSprint);
+
+            rsLimite = statementLimite.executeQuery();
+
+            while (rsLimite.next()) {
+                totalLimite = rsLimite.getInt("valor");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
+        } finally {
+            try {
+                if (statementLimite != null) {
+                    statementLimite.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+
+        System.out.println("Total de pontuacoes: " + totalLimite);
+
+        for (AvaliacaoModel aluno : tableView.getItems()) {
+            for (TableColumn<AvaliacaoModel, ?> column : tableView.getColumns()) {
+                if (!column.getText().equals("Aluno")) {
+                    Integer valorCell = (Integer) column.getCellData(aluno);
+                    if (valorCell != null) {
+                        totalUsado += valorCell;
+                    }
+                }
+            }
+        }
+
+        if (totalUsado > totalLimite) {
+            sendButton.setDisable(true);
+            sendButton.setStyle("-fx-background-color: #FF0000;");
+        } else {
+            sendButton.setDisable(false);
+            sendButton.setStyle("-fx-background-color: #00FF00;");
+        }
+
+        pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", totalUsado, totalLimite));
     }
 
     @FXML
