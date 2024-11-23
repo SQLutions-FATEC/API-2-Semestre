@@ -19,7 +19,7 @@ public class AverageGradeDAO {
                 "FROM usuario u " +
                 "LEFT JOIN nota n ON u.id = n.avaliado AND n.periodo = ? AND n.sprint = ? " +
                 "JOIN criterio c ON n.criterio = c.id " +
-                "WHERE u.equipe = ? " +
+                "WHERE u.equipe = ? AND u.deleted_at IS NULL" +
                 "GROUP BY u.nome, c.nome";
 
 
