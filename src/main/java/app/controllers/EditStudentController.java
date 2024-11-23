@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
 import app.models.TeamModel;
@@ -73,8 +74,11 @@ public class EditStudentController implements Initializable {
     }
 
     private void fetchTeams() {
+        PeriodDAO periodDAO = new PeriodDAO();
+        int periodId = periodDAO.selectCurrentPeriodId();
+
         TeamDAO teamDAO = new TeamDAO();
-        teamList = teamDAO.selectTeams();
+        teamList = teamDAO.selectTeamsByPeriod(periodId);
         ObservableList<String> teamNames = FXCollections.observableArrayList();
 
         for (TeamModel team : teamList) {
@@ -142,17 +146,18 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void deleteStudent() {
-        Utils.setAlert("CONFIRMATION", "Deleção do aluno", "Tem certeza que deseja deletá-lo?");
-        int ra = studentTableData.get(0).getRa();
-        UserDAO userDAO = new UserDAO();
-        int rowsAffected = userDAO.deleteStudent(ra);
+        Utils.setAlert("CONFIRMATION", "Deleção do aluno", "Tem certeza que deseja deletá-lo?",() ->{
+            int ra = studentTableData.get(0).getRa();
+            UserDAO userDAO = new UserDAO();
+            int rowsAffected = userDAO.deleteStudent(ra);
 
-        if (rowsAffected != 0) {
-            studentTableData.clear();
-            studentSearch.setText("");
-            studentList.removeIf(student -> student.getRa() == ra);
-            Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
-        }
+            if (rowsAffected != 0) {
+                studentTableData.clear();
+                studentSearch.setText("");
+                studentList.removeIf(student -> student.getRa() == ra);
+                Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
+            }
+        });
     }
 
     @FXML
@@ -179,10 +184,5 @@ public class EditStudentController implements Initializable {
     @FXML
     public void goToProfessorScreen(ActionEvent event) throws IOException {
         Utils.setScreen(event, "professorScreen");
-    }
-
-    @FXML
-    public void goToLoginScreen (ActionEvent event){
-        Utils.setScreen(event, "loginScreen");
     }
 }

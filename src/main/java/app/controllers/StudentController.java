@@ -31,13 +31,10 @@ public class StudentController implements ScreenController {
 
     @FXML
     public TableView<AvaliacaoModel> tableView;
-
     @FXML
     private ComboBox<String> choiceBoxMudarSprint;
-
     @FXML
     public Button sendButton;
-
     @FXML
     public Label pointsInfo;
 
@@ -66,7 +63,7 @@ public class StudentController implements ScreenController {
     private void fetchAlunos() throws SQLException {
         try {
             connection = DatabaseConnection.getConnection(true);
-            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = 1";
+            String sql = "SELECT us.nome AS nome FROM usuario us WHERE us.equipe = 1 AND us.deleted_at IS NULL";
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
 
@@ -136,37 +133,24 @@ public class StudentController implements ScreenController {
     }
 
     private void fetchSprint() {
-
-        try {
         SprintDAO sprintDAO = new SprintDAO();
         ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
 
+        for (SprintModel sprint : sprintList) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
+            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
 
-            for (SprintModel sprint : sprintList) {
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
-                String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
-
-                String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
-                sprintOptionsList.add(sprintDescription);
-                sprintIdMap.put(sprintDescription, sprint.getId());
-            }
-            choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
-            String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
-            if (currentSprint != null) {
-                choiceBoxMudarSprint.setValue(currentSprint);
-            } else {
-                choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
-            }
-        } finally {
-            try {
-                if (resultSet != null) resultSet.close();
-                if (statement != null) statement.close();
-                if (connection != null) connection.close();
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
+            String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
+            sprintOptionsList.add(sprintDescription);
+            sprintIdMap.put(sprintDescription, sprint.getId());
+        }
+        choiceBoxMudarSprint.getItems().addAll(sprintOptionsList);
+        String currentSprint = Utils.getCurrentSprint(sprintOptionsList);
+        if (currentSprint != null) {
+            choiceBoxMudarSprint.setValue(currentSprint);
+        } else {
+            choiceBoxMudarSprint.setValue(sprintOptionsList.getFirst());
         }
     }
 
