@@ -9,6 +9,7 @@ import app.models.EquipeModel;
 import app.models.AverageGradeModel;
 import app.models.SprintModel;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -82,17 +83,17 @@ public class AverageController {
         ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectActiveCriteriasByPeriod(selectedPeriodId);
 
         tableAverageGrades.getColumns().clear();
-        ObservableList<TableColumn<AverageGradeModel, Double>> columns = FXCollections.observableArrayList();
+        ObservableList<TableColumn<AverageGradeModel, Integer>> columns = FXCollections.observableArrayList();
 
         TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
-        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         int nameColumnWidth = 100;
         nomeColumn.setPrefWidth(nameColumnWidth);
         tableAverageGrades.getColumns().add(nomeColumn);
 
         for (CriteriaModel criteria : criteriaList) {
             String criteriaName = criteria.getName();
-            TableColumn<AverageGradeModel, Double> column = new TableColumn<>(criteriaName);
+            TableColumn<AverageGradeModel, Integer> column = new TableColumn<>(criteriaName);
             columns.add(column);
         }
         tableAverageGrades.getColumns().addAll(columns);
@@ -101,10 +102,10 @@ public class AverageController {
         double widthLeft = tableWidth - nameColumnWidth;
         double widthPerColumn = widthLeft / columns.size();
 
-        for (TableColumn<AverageGradeModel, Double> column : columns) {
+        for (TableColumn<AverageGradeModel, Integer> column : columns) {
             String name = column.getText();
             column.setCellValueFactory(cellData ->
-                    new SimpleDoubleProperty(cellData.getValue().getAverage(name)).asObject()
+                    new SimpleIntegerProperty(cellData.getValue().getAverage(name)).asObject()
             );
             column.setPrefWidth(widthPerColumn);
         }
