@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AverageGradeDAO {
+    private Map<String, AverageGradeModel> studentsMap = new HashMap<>();
 
     public Map<String, AverageGradeModel> selectAverages(int teamId, int periodId, int sprintId) {
-        Map<String, AverageGradeModel> studentsMap = new HashMap<>();
 
         String sql = "SELECT u.nome AS usuario_nome, c.nome AS criterio, " +
                 "COALESCE(SUM(n.valor), 0) AS media_nota, " +
