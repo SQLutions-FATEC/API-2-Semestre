@@ -1,7 +1,6 @@
 package app.controllers;
 
 import app.DAOs.*;
-import app.helpers.DatabaseConnection;
 import app.interfaces.ScreenController;
 import app.models.*;
 import app.helpers.Utils;
@@ -17,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentController implements ScreenController {
@@ -153,7 +151,11 @@ public class StudentController implements ScreenController {
     public void setScoreLimit() {
         ScoreDAO scoreDAO = new ScoreDAO();
         ScoreModel score = scoreDAO.selectScoreBySprintId(teamId, sprintId);
-        int scoreValue = score.getValue();
+        int scoreValue = 1000;
+
+        if (score != null) {
+            scoreValue = score.getValue();
+        }
 
         int total = 0;
 

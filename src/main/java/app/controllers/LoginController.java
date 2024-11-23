@@ -33,9 +33,13 @@ public class LoginController {
         Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);
         Date currentDate = new Date();
 
-        ScoreDAO setScoreDAO = new ScoreDAO();
-        ScoreModel score = setScoreDAO.selectScoreBySprintId(teamId, sprint.getId());
-        Date scoreDate = score.getDate();
+        ScoreDAO scoreDAO = new ScoreDAO();
+        ScoreModel score = scoreDAO.selectScoreBySprintId(teamId, sprint.getId());
+        Date scoreDate = null;
+
+        if (score != null) {
+            scoreDate = score.getDate();
+        }
 
         if (currentDate.before(sprintEndDate) || (scoreDate == null && currentDate.before(setScoreDeadlineDate))) {
             return false;
