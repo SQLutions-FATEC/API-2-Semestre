@@ -12,7 +12,7 @@ public class AverageGradeModel {
         this.averages = new HashMap<>();
     }
 
-    public String getNome() {
+    public String getName() {
         return name;
     }
 
