@@ -17,6 +17,8 @@ import java.util.*;
 import java.util.function.Consumer;
 
 public class Utils {
+    private static Stage primaryStage;
+
     public static boolean isOnlyLetters(String input) {
         if (input == null || input.isEmpty()) {
             return false;
@@ -97,9 +99,12 @@ public class Utils {
 
             Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.setTitle(screenName);
-            stage.show();
+            if (stage != null) {
+                primaryStage = stage;
+            }
+            primaryStage.setScene(scene);
+            primaryStage.setTitle(screenName);
+            primaryStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

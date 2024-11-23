@@ -45,13 +45,14 @@ public class StudentController implements ScreenController {
         if (data instanceof Map) {
             teamId = (int) ((Map<?, ?>) data).get("teamId");
             userEmail = (String) ((Map<?, ?>) data).get("userEmail");
+            actionEvent = (ActionEvent) ((Map<?, ?>) data).get("event");
         }
         try {
             fetchPeriod();
             fetchSprint();
             fetchCriterias();
             fetchStudents();
-            LimitePontos();
+            setScoreLimit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -111,7 +112,7 @@ public class StudentController implements ScreenController {
             column.setOnEditCommit(event -> {
                 EvaluationModel student = event.getRowValue();
                 student.setNotas(criteriaName, event.getNewValue());
-                LimitePontos();
+                setScoreLimit();
             });
             columns.add(column);
             criteriaMap.put(criteriaName, criteria);
@@ -143,77 +144,46 @@ public class StudentController implements ScreenController {
                     }
                 }
             }
-            Utils.setAlert("CONFIRMATION", "Definição de notas", "AS notas foram registradas com sucesso!", () -> {
-                goToLoginScreen(actionEvent);
-            });
+            Utils.setAlert("CONFIRMATION", "Definição de notas", "As notas foram registradas com sucesso!");
+            Utils.setScreen(actionEvent, "alreadyEvaluatedScreen");
         });
     }
 
     @FXML
-    public void LimitePontos() {
-        Connection connection = null;
-        PreparedStatement statementLimite = null;
-        ResultSet rsLimite;
-        int totalUsado = 0;
-        int totalLimite = 0;
+    public void setScoreLimit() {
+        ScoreDAO scoreDAO = new ScoreDAO();
+        ScoreModel score = scoreDAO.selectScoreBySprintId(teamId, sprintId);
+        int scoreValue = score.getValue();
 
-        try {
-            connection = DatabaseConnection.getConnection(true);
-            String sqlLimitePontos = "SELECT valor FROM pontuacao WHERE sprint = ? AND equipe = ?;";
-            statementLimite = connection.prepareStatement(sqlLimitePontos);
+        int total = 0;
 
-            statementLimite.setInt(1, sprintId);
-            statementLimite.setInt(2, teamId);
-
-            rsLimite = statementLimite.executeQuery();
-
-            while (rsLimite.next()) {
-                totalLimite = rsLimite.getInt("valor");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao preparar a declaração SQL: " + e.getMessage());
-        } finally {
-            try {
-                if (statementLimite != null) {
-                    statementLimite.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                System.out.println("Erro ao fechar recursos: " + e.getMessage());
-            }
-        }
-
-        for (EvaluationModel aluno : tableView.getItems()) {
+        for (EvaluationModel student : tableView.getItems()) {
             for (TableColumn<EvaluationModel, ?> column : tableView.getColumns()) {
                 if (!column.getText().equals("Aluno")) {
-                    Integer valorCell = (Integer) column.getCellData(aluno);
+                    Integer valorCell = (Integer) column.getCellData(student);
                     if (valorCell != null) {
-                        totalUsado += valorCell;
+                        total += valorCell;
                     }
                 }
             }
         }
 
-        if (totalUsado > totalLimite) {
+        if (total > scoreValue) {
             sendButton.setDisable(true);
-            sendButton.setStyle("-fx-background-color: #FF0000;");
         } else {
             sendButton.setDisable(false);
         }
 
-        pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", totalUsado, totalLimite));
+        pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", total, scoreValue));
     }
 
     @FXML
-    public void goToLoginScreen (ActionEvent event){
-        actionEvent = event;
+    public void goToLoginScreen (ActionEvent event) {
         Utils.setScreen(event, "loginScreen");
     }
 
     @FXML
-    public void goToPastEvaluationsScreen (ActionEvent event){
+    public void goToPastEvaluationsScreen () {
         Utils.setPopup("pastEvaluationsScreen", 400, 600, controller -> {
             if (controller instanceof PastEvaluationsController) {
                 ((PastEvaluationsController) controller).passData(teamId);
