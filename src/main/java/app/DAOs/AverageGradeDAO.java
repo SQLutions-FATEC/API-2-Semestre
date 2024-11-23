@@ -11,7 +11,7 @@ import java.util.Map;
 public class AverageGradeDAO {
     private Map<String, AverageGradeModel> studentsMap = new HashMap<>();
 
-    public Map<String, AverageGradeModel> fetchAverages(int teamId, int periodId, int sprintId) {
+    public Map<String, AverageGradeModel> selectAverages(int teamId, int periodId, int sprintId) {
 
         String sql = "SELECT u.nome AS usuario_nome, c.nome AS criterio, " +
                 "COALESCE(SUM(n.valor), 0) AS media_nota, " +
@@ -36,8 +36,22 @@ public class AverageGradeDAO {
                 studentsMap.put(studentName, student);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de fetchAverages: " + e.getMessage());
+            System.out.println("Erro no SQL de selectAverages: " + e.getMessage());
         }
         return studentsMap;
+    }
+
+    public int selectUserGradeEvaluationBySprint(String email, int sprintId) {
+        String sql = "SELECT COUNT(*) AS avaliacoes FROM nota n JOIN usuario u ON u.id = n.avaliador WHERE u.email = ? AND n.sprint = ?";
+        int evaluations = 0;
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, email, sprintId)) {
+            while (resultSet.next()) {
+                evaluations = resultSet.getInt("avaliacoes");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectUserGradeEvaluationBySprint: " + e.getMessage());
+        }
+        return evaluations;
     }
 }

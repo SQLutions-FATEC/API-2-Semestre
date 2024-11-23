@@ -23,12 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StudentController implements ScreenController {
-    protected Scene scene;
-    Integer selectedPeriodId = 1;
-    Connection connection = null;
-    PreparedStatement statement = null;
-    ResultSet resultSet = null;
-
     @FXML
     public TableView<AvaliacaoModel> tableView;
     @FXML
@@ -38,10 +32,18 @@ public class StudentController implements ScreenController {
     @FXML
     public Label pointsInfo;
 
+    protected Scene scene;
+    Integer selectedPeriodId = 1;
+    Connection connection = null;
+    PreparedStatement statement = null;
+    ResultSet resultSet = null;
+    private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
+    private final Map<String, Integer> sprintIdMap = new HashMap<>();
+    ArrayList<String> sprintOptionsList = new ArrayList<>();
+
     @Override
     public void initData(Object data) {
 //        if (data instanceof Map) {
-//            int teamId = (int) data.get("teamId");
 //            String userEmail = (String) data.get("userEmail");
 //        }
         try {
@@ -53,12 +55,6 @@ public class StudentController implements ScreenController {
             throw new RuntimeException(e);
         }
     }
-
-    private final ObservableList<AvaliacaoModel> studentList = FXCollections.observableArrayList();
-
-    private final Map<String, Integer> sprintIdMap = new HashMap<>();
-
-    ArrayList<String> sprintOptionsList = new ArrayList<>();
 
     private void fetchAlunos() throws SQLException {
         try {

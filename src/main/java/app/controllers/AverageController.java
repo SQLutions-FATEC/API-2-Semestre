@@ -86,7 +86,7 @@ public class AverageController {
         ObservableList<TableColumn<AverageGradeModel, Integer>> columns = FXCollections.observableArrayList();
 
         TableColumn<AverageGradeModel, String> nomeColumn = new TableColumn<>("Nome");
-        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        nomeColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         int nameColumnWidth = 100;
         nomeColumn.setPrefWidth(nameColumnWidth);
         tableAverageGrades.getColumns().add(nomeColumn);
@@ -113,7 +113,7 @@ public class AverageController {
 
     private void fetchGrades() {
         AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
-        Map<String, AverageGradeModel> studentsMap = averageGradeDAO.fetchAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
+        Map<String, AverageGradeModel> studentsMap = averageGradeDAO.selectAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
         tableAverageGrades.setItems(data);
     }

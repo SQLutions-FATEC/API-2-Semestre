@@ -36,6 +36,7 @@
       <effect>
          <Blend />
       </effect></Button>
+   <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createDatabase" prefHeight="30.0" prefWidth="200.0" text="Criar banco" translateY="40.0" />
    <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#fillDatabase" prefHeight="30.0" prefWidth="200.0" text="Preencher banco" translateY="40.0" />
 
 </VBox>
