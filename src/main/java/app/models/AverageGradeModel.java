@@ -7,8 +7,8 @@ public class AverageGradeModel {
     private String name;
     private Map<String, Integer> averages;
 
-    public AverageGradeModel(String nome) {
-        this.name = nome;
+    public AverageGradeModel(String name) {
+        this.name = name;
         this.averages = new HashMap<>();
     }
 
