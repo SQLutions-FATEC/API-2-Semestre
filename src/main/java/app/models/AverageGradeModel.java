@@ -23,4 +23,8 @@ public class AverageGradeModel {
     public Integer getAverage(String criteria) {
         return averages.getOrDefault(criteria, 0);
     }
+
+    public Map<String, Integer> getAverages() {
+        return averages;
+    };
 }

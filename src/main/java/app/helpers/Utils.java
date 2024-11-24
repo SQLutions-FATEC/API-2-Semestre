@@ -1,10 +1,11 @@
 package app.helpers;
 
 import app.DAOs.CriteriaDAO;
+import app.DAOs.GradeDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
-import app.controllers.QueryDB;
 import app.interfaces.ScreenController;
+import app.models.AverageGradeModel;
 import app.models.CriteriaModel;
 import app.models.SprintModel;
 import app.models.TeamModel;
@@ -24,7 +25,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -232,8 +232,6 @@ public class Utils {
                 caminhoArquivo = Utils.getDownloadsPath() + "\\" + nomeEquipe + "_relatorio.csv";
             }
 
-            Connection conn = DatabaseConnection.getConnection(true);
-            QueryDB CDB = new QueryDB(conn);
             SprintDAO sprintDAO = new SprintDAO();
 
             String descricaoSprint = sprintDAO.selectSprints(periodoID).stream()
@@ -251,22 +249,36 @@ public class Utils {
 
                 writer.write("Usuario");
 
-                StringBuilder criterioSQL = new StringBuilder();
+                StringBuilder criteriaSQL = new StringBuilder();
                 CriteriaDAO criteriaDAO = new CriteriaDAO();
                 ObservableList<CriteriaModel> criterias = criteriaDAO.selectCriteriasByPeriodId(periodoID);
 
                 for (CriteriaModel criteria: criterias) {
-                    criterioSQL.append(",");
-                    criterioSQL.append(criteria.getName());
+                    criteriaSQL.append(",");
+                    criteriaSQL.append(criteria.getName());
                 }
 
-                writer.write(criterioSQL.toString());
+                writer.write(criteriaSQL.toString());
                 writer.newLine();
 
-                writer.write(CDB.calcMediaGeralEquipe(periodoID, sprintID, equipeID));
+                StringBuilder averageSQL = new StringBuilder();
+                GradeDAO gradeDAO = new GradeDAO();
+                Map<String, AverageGradeModel> averages = gradeDAO.selectAverages(equipeID, periodoID, sprintID);
+
+//                Ana Silva,3,3,3\nCarlos Souza,3,3,3
+
+                for (AverageGradeModel average: averages.values()) {
+                    averageSQL.append(average.getName());
+                    for (Map.Entry<String, Integer> currentAverage: average.getAverages().entrySet()) {
+                        averageSQL.append(",");
+                        averageSQL.append(currentAverage.getValue());
+                    }
+                    averageSQL.append("\n");
+                }
+
+                writer.write(averageSQL.toString());
                 writer.newLine();
 
-                System.out.println("Arquivo CSV gerado com sucesso em: " + caminhoArquivo);
                 Utils.setAlert("CONFIRMATION", "CSV", "Arquivo CSV gerado com sucesso em: " + caminhoArquivo);
             }
         } catch (IOException e) {
