@@ -66,8 +66,10 @@ public class ProfessorController implements ScreenController {
         TeamDAO teamDAO = new TeamDAO();
         teamList = teamDAO.selectTeamsByPeriod(selectedPeriodId);
 
-        title.setText("Lista de Equipes");
-        description.setText("Segue a lista das equipes cadastradas:");
+        if (!teamList.isEmpty()) {
+            title.setText("Lista de Equipes");
+            description.setText("Equipes cadastradas:");
+        }
 
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colGithub.setCellValueFactory(new PropertyValueFactory<>("github"));
