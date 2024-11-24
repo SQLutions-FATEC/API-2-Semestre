@@ -11,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -182,5 +184,18 @@ public class Utils {
         calendar.add(Calendar.DAY_OF_MONTH, days);
 
         return calendar.getTime();
+    }
+
+    public static String getDownloadsPath() {
+        String os = System.getProperty("os.name").toLowerCase();
+        Path caminho;
+
+        if (os.contains("win") || os.contains("mac") || os.contains("nix") || os.contains("nux")) {
+            caminho = Paths.get(System.getProperty("user.home"), "Downloads");
+        } else {
+            caminho = Paths.get(System.getProperty("user.home"), "Documentos");
+        }
+
+        return caminho.toString();
     }
 }

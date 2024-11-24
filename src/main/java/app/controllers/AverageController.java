@@ -120,7 +120,7 @@ public class AverageController {
 
     @FXML
     public void gerarCsvButton(ActionEvent event) {
-        String caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "\\relatorio.csv";
+        String caminhoArquivo = Utils.getDownloadsPath() + "\\relatorio.csv";
 
         try {
             CSVGerador.gerarCsv(caminhoArquivo, selectedTeamId, selectedPeriodId, selectedSprintId);

@@ -33,7 +33,7 @@ public class CSVGerador {
                 file = new File(novoCaminho);
                 caminhoArquivo = file.getAbsolutePath();
             } else {
-                caminhoArquivo = CaminhoDownloads.obterCaminhoDownloads() + "\\" + nomeEquipe + "_relatorio.csv";
+                caminhoArquivo = Utils.getDownloadsPath() + "\\" + nomeEquipe + "_relatorio.csv";
             }
 
             Connection conn = DatabaseConnection.getConnection(true);
