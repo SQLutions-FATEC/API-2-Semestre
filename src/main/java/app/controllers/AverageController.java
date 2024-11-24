@@ -123,7 +123,7 @@ public class AverageController {
         String caminhoArquivo = Utils.getDownloadsPath() + "\\relatorio.csv";
 
         try {
-            CSVGerador.gerarCsv(caminhoArquivo, selectedTeamId, selectedPeriodId, selectedSprintId);
+            Utils.createCsv(caminhoArquivo, selectedTeamId, selectedPeriodId, selectedSprintId);
         } catch (SQLException e) {
             e.printStackTrace();
         }
