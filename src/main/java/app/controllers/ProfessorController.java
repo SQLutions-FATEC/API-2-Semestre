@@ -133,6 +133,11 @@ public class ProfessorController implements ScreenController {
         SprintDAO sprintDAO = new SprintDAO();
         SprintModel sprint = sprintDAO.selectPastSprint();
 
+        if (sprint == null) {
+            Utils.setAlert("WARNING", "Sprints", "Não há nenhuma sprint");
+            return;
+        }
+
         Date sprintEndDate = sprint.getEndDate();
         Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);
         Date currentDate = new Date();

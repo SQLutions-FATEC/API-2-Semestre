@@ -174,6 +174,7 @@ public class EditStudentController implements Initializable {
         userDAO.updateStudentTeam(ra, selectedTeamId);
         updateTeamNameInTable();
         studentSearch.setText("");
+        Utils.setAlert("CONFIRMATION", "Edição do aluno", "A equipe do aluno foi editada com sucesso");
     }
 
     @FXML
