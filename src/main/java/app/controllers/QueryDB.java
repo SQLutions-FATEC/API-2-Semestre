@@ -10,35 +10,6 @@ public class QueryDB {
     public QueryDB(Connection conn) {
         this.conn = conn;
     }
-
-    public String pegarCriterios(int periodoID) throws SQLException {
-        Connection conn = DatabaseConnection.getConnection(true);
-
-        String sql = """
-                SELECT distinct criterio.nome AS criterio
-                FROM nota
-                JOIN criterio ON nota.criterio = criterio.id
-                JOIN periodo ON periodo.id = ?
-                WHERE periodo.id = ?
-                GROUP BY criterio.nome
-            """;
-
-        StringBuilder criterioSQL = new StringBuilder();
-
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, String.valueOf(periodoID));
-            pstmt.setString(2, String.valueOf(periodoID));
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                criterioSQL.append(",");
-                criterioSQL.append(rs.getString("criterio"));
-            }
-        }
-
-        return criterioSQL.toString();
-    }
-
     public String calcMediaGeralEquipe(int periodoID, int sprintID, int equipeID) throws SQLException {
         Connection conn = DatabaseConnection.getConnection(true);
 

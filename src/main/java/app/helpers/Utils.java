@@ -1,11 +1,14 @@
 package app.helpers;
 
+import app.DAOs.CriteriaDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.controllers.QueryDB;
 import app.interfaces.ScreenController;
+import app.models.CriteriaModel;
 import app.models.SprintModel;
 import app.models.TeamModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -247,7 +250,17 @@ public class Utils {
                 writer.newLine();
 
                 writer.write("Usuario");
-                writer.write(CDB.pegarCriterios(periodoID));
+
+                StringBuilder criterioSQL = new StringBuilder();
+                CriteriaDAO criteriaDAO = new CriteriaDAO();
+                ObservableList<CriteriaModel> criterias = criteriaDAO.selectCriteriasByPeriodId(periodoID);
+
+                for (CriteriaModel criteria: criterias) {
+                    criterioSQL.append(",");
+                    criterioSQL.append(criteria.getName());
+                }
+
+                writer.write(criterioSQL.toString());
                 writer.newLine();
 
                 writer.write(CDB.calcMediaGeralEquipe(periodoID, sprintID, equipeID));
