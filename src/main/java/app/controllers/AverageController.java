@@ -8,11 +8,9 @@ import app.models.CriteriaModel;
 import app.models.EquipeModel;
 import app.models.AverageGradeModel;
 import app.models.SprintModel;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
@@ -31,16 +29,19 @@ public class AverageController {
 
     String currentSprint;
     Integer selectedSprintId;
+    String selectedSprintDescription;
     Integer selectedPeriodId;
     Integer selectedTeamId;
+    String selectedTeamName;
 
     private final ObservableList<EquipeModel> studentList = FXCollections.observableArrayList();
     private final Map<String, Integer> sprintIdMap = new HashMap<>();
     ArrayList<String> sprintOptionsList = new ArrayList<>();
 
-    public void passData(int teamId, int periodId) {
+    public void passData(String teamName, int teamId, int periodId) {
         selectedPeriodId = periodId;
         selectedTeamId = teamId;
+        selectedTeamName = teamName;
         sprintChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
         });
@@ -50,6 +51,7 @@ public class AverageController {
     private void handleSprintListSelectionChange(String sprint) {
         currentSprint = sprint;
         selectedSprintId = sprintIdMap.get(sprint);
+        selectedSprintDescription = sprint;
         studentList.clear();
         fetchCriterias();
         fetchGrades();
@@ -119,11 +121,11 @@ public class AverageController {
     }
 
     @FXML
-    public void gerarCsvButton(ActionEvent event) {
+    public void gerarCsvButton() {
         String caminhoArquivo = Utils.getDownloadsPath() + "\\relatorio.csv";
 
         try {
-            Utils.createCsv(caminhoArquivo, selectedTeamId, selectedPeriodId, selectedSprintId);
+            Utils.createCsv(caminhoArquivo, selectedTeamName, selectedTeamId, selectedPeriodId, selectedSprintDescription, selectedSprintId);
         } catch (SQLException e) {
             e.printStackTrace();
         }

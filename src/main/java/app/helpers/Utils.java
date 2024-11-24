@@ -2,13 +2,9 @@ package app.helpers;
 
 import app.DAOs.CriteriaDAO;
 import app.DAOs.GradeDAO;
-import app.DAOs.SprintDAO;
-import app.DAOs.TeamDAO;
 import app.interfaces.ScreenController;
 import app.models.AverageGradeModel;
 import app.models.CriteriaModel;
-import app.models.SprintModel;
-import app.models.TeamModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -213,38 +209,24 @@ public class Utils {
         return caminho.toString();
     }
 
-    public static void createCsv(String caminhoArquivo, int equipeID, int periodoID, int sprintID) throws SQLException {
+    public static void createCsv(String caminhoArquivo, String teamName, int equipeID, int periodoID, String sprintDescription, int sprintID) throws SQLException {
         try {
-            TeamDAO teamDAO = new TeamDAO();
-            String nomeEquipe = teamDAO.selectTeamsByPeriod(periodoID).stream()
-                    .filter(team -> team.getId() == equipeID)
-                    .map(TeamModel::getName)
-                    .findFirst()
-                    .orElse("Equipe Desconhecida");
-
             File file = new File(caminhoArquivo);
+            
             if (file.exists()) {
                 String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String novoCaminho = caminhoArquivo.replaceFirst("(\\.csv)$", "_" + nomeEquipe + "_" + timestamp + "$1");
+                String novoCaminho = caminhoArquivo.replaceFirst("(\\.csv)$", "_" + teamName + "_" + timestamp + "$1");
                 file = new File(novoCaminho);
                 caminhoArquivo = file.getAbsolutePath();
             } else {
-                caminhoArquivo = Utils.getDownloadsPath() + "\\" + nomeEquipe + "_relatorio.csv";
+                caminhoArquivo = Utils.getDownloadsPath() + "\\" + teamName + "_relatorio.csv";
             }
 
-            SprintDAO sprintDAO = new SprintDAO();
-
-            String descricaoSprint = sprintDAO.selectSprints(periodoID).stream()
-                    .filter(sprint -> sprint.getId() == sprintID)
-                    .map(SprintModel::getDescription)
-                    .findFirst()
-                    .orElse("Sprint Desconhecida");
-
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
-                writer.write("Equipe: " + nomeEquipe);
+                writer.write("Equipe: " + teamName);
                 writer.newLine();
 
-                writer.write("Sprint: " + descricaoSprint);
+                writer.write("Sprint: " + sprintDescription);
                 writer.newLine();
 
                 writer.write("Usuario");
@@ -264,8 +246,6 @@ public class Utils {
                 StringBuilder averageSQL = new StringBuilder();
                 GradeDAO gradeDAO = new GradeDAO();
                 Map<String, AverageGradeModel> averages = gradeDAO.selectAverages(equipeID, periodoID, sprintID);
-
-//                Ana Silva,3,3,3\nCarlos Souza,3,3,3
 
                 for (AverageGradeModel average: averages.values()) {
                     averageSQL.append(average.getName());

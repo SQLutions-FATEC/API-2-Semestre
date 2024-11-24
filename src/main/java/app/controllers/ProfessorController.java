@@ -84,7 +84,7 @@ public class ProfessorController implements ScreenController {
                     Button btn = new Button("Visualizar");
                     btn.setOnAction((ActionEvent event) -> {
                         TeamModel equipe = getTableView().getItems().get(getIndex());
-                        openPopup(equipe.getId(), selectedPeriodId);
+                        openPopup(equipe.getName(), equipe.getId(), selectedPeriodId);
                     });
                     setGraphic(btn);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -95,10 +95,10 @@ public class ProfessorController implements ScreenController {
         teamTable.setItems(teamList);
     }
 
-    private void openPopup(int teamId, int periodId) {
+    private void openPopup(String teamName, int teamId, int periodId) {
         Utils.setPopup("averageScreen", 400, 600, controller -> {
             if (controller instanceof AverageController) {
-                ((AverageController) controller).passData(teamId, periodId);
+                ((AverageController) controller).passData(teamName, teamId, periodId);
             }
         });
     }
