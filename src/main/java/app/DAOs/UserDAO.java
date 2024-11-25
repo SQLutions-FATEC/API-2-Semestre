@@ -7,22 +7,33 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
-    public void createStudents(ObservableList <UserModel> students, int teamId) {
+    public List<Integer> createStudents(ObservableList <UserModel> students, int teamId) {
+        String checkSql = "SELECT id FROM usuario WHERE ra = ?";
         String sql = "INSERT INTO usuario (ra, nome, senha, email, tipo, equipe) VALUES (?, ?, ?, ?, ?, ?)";
-
+        List<Integer> generatedKeys = new ArrayList<>();
+        int generatedKey = 0;
         int typeStudent = 2;
 
         for (UserModel student : students) {
             try {
-                DatabaseConnection.executeUpdate(sql, student.getRa(), student.getNome(), student.getSenha(), student.getEmail(), typeStudent, teamId);
+                ResultSet resultSet = DatabaseConnection.executeQuery(checkSql, student.getRa());
+                if (resultSet.next()) {
+                    continue;
+                }
+                generatedKey = DatabaseConnection.executeUpdate(sql, student.getRa(), student.getNome(), student.getSenha(), student.getEmail(), typeStudent, teamId);
             } catch (SQLException e) {
                 System.out.println("Erro no SQL de createStudents: " + e.getMessage());
             } finally {
                 DatabaseConnection.closeResources();
             }
+            generatedKeys.add(generatedKey);
         }
+
+        return generatedKeys;
     }
 
     public UserModel selectUserByLogin(String userEmail, String userPassword) {

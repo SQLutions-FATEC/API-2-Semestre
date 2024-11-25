@@ -66,8 +66,10 @@ public class ProfessorController implements ScreenController {
         TeamDAO teamDAO = new TeamDAO();
         teamList = teamDAO.selectTeamsByPeriod(selectedPeriodId);
 
-        title.setText("Lista de Equipes");
-        description.setText("Segue a lista das equipes cadastradas:");
+        if (!teamList.isEmpty()) {
+            title.setText("Lista de Equipes");
+            description.setText("Equipes cadastradas:");
+        }
 
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colGithub.setCellValueFactory(new PropertyValueFactory<>("github"));
@@ -82,7 +84,7 @@ public class ProfessorController implements ScreenController {
                     Button btn = new Button("Visualizar");
                     btn.setOnAction((ActionEvent event) -> {
                         TeamModel equipe = getTableView().getItems().get(getIndex());
-                        openPopup(equipe.getId(), selectedPeriodId);
+                        openPopup(equipe.getName(), equipe.getId(), selectedPeriodId);
                     });
                     setGraphic(btn);
                     setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
@@ -93,10 +95,10 @@ public class ProfessorController implements ScreenController {
         teamTable.setItems(teamList);
     }
 
-    private void openPopup(int teamId, int periodId) {
+    private void openPopup(String teamName, int teamId, int periodId) {
         Utils.setPopup("averageScreen", 400, 600, controller -> {
             if (controller instanceof AverageController) {
-                ((AverageController) controller).passData(teamId, periodId);
+                ((AverageController) controller).passData(teamName, teamId, periodId);
             }
         });
     }
@@ -132,6 +134,11 @@ public class ProfessorController implements ScreenController {
     public void goToSetScoreScreen(ActionEvent event) {
         SprintDAO sprintDAO = new SprintDAO();
         SprintModel sprint = sprintDAO.selectPastSprint();
+
+        if (sprint == null) {
+            Utils.setAlert("WARNING", "Sprints", "Não há nenhuma sprint");
+            return;
+        }
 
         Date sprintEndDate = sprint.getEndDate();
         Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);

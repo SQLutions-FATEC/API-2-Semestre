@@ -20,6 +20,6 @@
          </font>
       </Label>
       <ChoiceBox fx:id="sprintChoiceBox" layoutX="10.0" layoutY="37.0" prefWidth="150.0" />
-      <Button fx:id="ButtonClickGerarRelatorio" layoutX="452.0" layoutY="37.0" mnemonicParsing="false" onAction="#gerarCsvButton" prefHeight="26.0" prefWidth="126.0" text="Gerar relatório" />
+      <Button fx:id="reportButton" layoutX="452.0" layoutY="37.0" mnemonicParsing="false" onAction="#gerarCsvButton" prefHeight="26.0" prefWidth="126.0" text="Gerar relatório" />
    </children>
 </AnchorPane>
