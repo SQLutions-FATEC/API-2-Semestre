@@ -3,11 +3,11 @@ package app.models;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AvaliacaoModel {
+public class EvaluationModel {
     private String nome;
     private Map<String, Integer> notas;
 
-    public AvaliacaoModel(String nome, Integer notas) {
+    public EvaluationModel(String nome, Integer notas) {
         this.nome = nome;
         this.notas = new HashMap<>();
     }

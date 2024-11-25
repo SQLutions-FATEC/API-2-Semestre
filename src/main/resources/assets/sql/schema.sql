@@ -73,6 +73,7 @@ CREATE TABLE `pontuacao` (
 	`valor` TINYINT NOT NULL,
 	`sprint` INTEGER NOT NULL,
 	`equipe` INTEGER NOT NULL,
+	`data` DATE,
 	PRIMARY KEY(`id`)
 );
 
