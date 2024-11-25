@@ -74,7 +74,7 @@ public class Utils {
         files.put("addStudentScreen", new String[]{"/professor/addStudentScreen.fxml", "Adicionar aluno"});
         files.put("editStudentScreen", new String[]{"/professor/editStudentScreen.fxml", "Editar aluno"});
         files.put("setScore", new String[]{"/professor/setScore.fxml", "Definir pontuação"});
-        files.put("setSprintData", new String[]{"/professor/setSprintData.fxml", "Definir sprint"});
+        files.put("setSprintDataScreen", new String[]{"/professor/setSprintDataScreen.fxml", "Definir sprint"});
 
         String screenFXML = files.get(screenFile)[0];
         String screenName = files.get(screenFile)[1];

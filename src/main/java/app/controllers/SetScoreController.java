@@ -101,8 +101,8 @@ public class SetScoreController implements Initializable {
 
         for (SprintModel sprint : sprintList) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            String formattedStartDate = dateFormat.format(SprintModel.getStartDate());
-            String formattedEndDate = dateFormat.format(SprintModel.getEndDate());
+            String formattedStartDate = dateFormat.format(sprint.getStartDate());
+            String formattedEndDate = dateFormat.format(sprint.getEndDate());
 
             String sprintDescription = sprint.getDescription() + ": (" + formattedStartDate + " - " + formattedEndDate + ")";
             sprintOptionsList.add(sprintDescription);

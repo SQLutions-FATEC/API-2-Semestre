@@ -7,15 +7,17 @@ import java.util.Date;
 public class SprintModel {
     private SimpleIntegerProperty id;
     private SimpleStringProperty description;
-    private static ObjectProperty<Date> startDate = new SimpleObjectProperty<>();
-    private static ObjectProperty<Date> endDate = new SimpleObjectProperty<>();
+    private ObjectProperty<Date> startDate;
+    private ObjectProperty<Date> endDate;
+
 
     public SprintModel(int id, String description, Date startDate, Date endDate) {
         this.id = new SimpleIntegerProperty(id);
         this.description = new SimpleStringProperty(description);
-        SprintModel.startDate.set(startDate);
-        SprintModel.endDate.set(endDate);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.endDate = new SimpleObjectProperty<>(endDate);
     }
+
 
     public int getId() {
         return id.get();
@@ -33,21 +35,22 @@ public class SprintModel {
         this.description.set(description);
     }
 
-    public static Date getStartDate() {
+    public Date getStartDate() {
         return startDate.get();
     }
 
-    public static void setStartDate(Date startDate) {
-        SprintModel.startDate.set(startDate);
+    public void setStartDate(Date startDate) {
+        this.startDate.set(startDate);
     }
 
-    public static Date getEndDate() {
+    public Date getEndDate() {
         return endDate.get();
     }
 
-    public static void setEndDate(Date endDate) {
-        SprintModel.endDate.set(endDate);
+    public void setEndDate(Date endDate) {
+        this.endDate.set(endDate);
     }
+
 
     public IntegerProperty idProperty() {
         return id;
@@ -57,11 +60,11 @@ public class SprintModel {
         return description;
     }
 
-    public static ObjectProperty<Date> startDateProperty() {
+    public ObjectProperty<Date> startDateProperty() {
         return startDate;
     }
 
-    public static ObjectProperty<Date> endDateProperty() {
+    public ObjectProperty<Date> endDateProperty() {
         return endDate;
     }
 }

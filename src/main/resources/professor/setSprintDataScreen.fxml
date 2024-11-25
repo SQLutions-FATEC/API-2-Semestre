@@ -29,7 +29,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <DatePicker />
+            <DatePicker fx:id="startDatePicker"/>
          </children>
          <padding>
             <Insets top="20.0" />
@@ -42,44 +42,36 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <DatePicker />
+            <DatePicker fx:id="endDatePicker"/>
          </children>
          <padding>
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <HBox alignment="CENTER" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" spacing="120.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="120.0" text="Confirmar" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" layoutX="200.0" layoutY="40.0" prefHeight="40.0" prefWidth="200.0">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <padding>
-            <Insets right="-10.0" />
-         </padding>
-      </HBox>
-      <HBox alignment="CENTER" layoutY="360.0" prefHeight="190.0" prefWidth="800.0">
-         <children>
-            <TableView fx:id="tableData" maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
-              <columns>
-                <TableColumn fx:id="colSprint" prefWidth="100.0" text="Sprint" />
-                <TableColumn fx:id="colStartDate" prefWidth="150.0" text="Data de Inicio" />
-                  <TableColumn fx:id="colEndDate" prefWidth="150.0" text="Data de Fim" />
-              </columns>
-            </TableView>
-         </children>
-      </HBox>
       <HBox alignment="CENTER" layoutY="310.0" prefHeight="50.0" prefWidth="800.0">
          <children>
-            <Label text="Ultimas Sprints Criadas">
+            <Label text="Últimas Sprints Criadas">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="360.0" prefHeight="190.0" prefWidth="800.0">
+         <children>
+            <TableView fx:id="tableData" maxHeight="170.0" prefHeight="170.0" prefWidth="400.0">
+               <columns>
+                  <TableColumn fx:id="colSprint" prefWidth="100.0" text="Sprint" />
+                  <TableColumn fx:id="colStartDate" prefWidth="150.0" text="Data de Inicio" />
+                  <TableColumn fx:id="colEndDate" prefWidth="150.0" text="Data de Fim" />
+               </columns>
+            </TableView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="550.0" prefHeight="50.0" prefWidth="800.0" spacing="120.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="30.0" prefWidth="120.0" text="Voltar" />
+            <Button mnemonicParsing="false"  prefHeight="30.0" prefWidth="120.0" text="Confirmar" />
          </children>
       </HBox>
    </children>
