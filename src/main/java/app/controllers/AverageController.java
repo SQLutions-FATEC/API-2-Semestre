@@ -12,6 +12,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,8 @@ public class AverageController {
     public ChoiceBox<String> sprintChoiceBox;
     @FXML
     public TableView<AverageGradeModel> tableAverageGrades = new TableView<>();
+    @FXML
+    public Button reportButton;
 
     String currentSprint;
     Integer selectedSprintId;
@@ -60,6 +63,11 @@ public class AverageController {
     private void fetchSprint() {
         SprintDAO sprintDAO = new SprintDAO();
         ObservableList<SprintModel> sprintList = sprintDAO.selectSprints(selectedPeriodId);
+
+        if (sprintList.isEmpty()) {
+            reportButton.setDisable(true);
+            return;
+        }
 
         for (SprintModel sprint : sprintList) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -117,6 +125,10 @@ public class AverageController {
         GradeDAO averageGradeDAO = new GradeDAO();
         Map<String, AverageGradeModel> studentsMap = averageGradeDAO.selectAverages(selectedTeamId, selectedPeriodId, selectedSprintId);
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
+        if (data.isEmpty()) {
+            reportButton.setDisable(true);
+            return;
+        }
         tableAverageGrades.setItems(data);
     }
 
