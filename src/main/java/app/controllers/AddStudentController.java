@@ -132,7 +132,7 @@ public class AddStudentController implements Initializable {
         labelTeamGithub.setText("Link do Github: https://github.com/Exemplo");
 
         if (studentIds.isEmpty()) {
-            Utils.setAlert("ERROR", "Adição de alunos", "Os alunos já estavam cadastrados");
+            Utils.setAlert("WARNING", "Adição de alunos", "Os alunos já estavam cadastrados");
             return;
         }
 
@@ -153,7 +153,7 @@ public class AddStudentController implements Initializable {
             processCSV(selectedFile);
             confirmButton.setDisable(false);
         } else {
-            System.out.println("Nenhum arquivo selecionado.");
+            Utils.setAlert("WARNING", "Arquivos", "Nenhum arquivo selecionado");
         }
     }
 

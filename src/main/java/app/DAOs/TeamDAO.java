@@ -20,7 +20,7 @@ public class TeamDAO {
         try {
             ResultSet resultSet = DatabaseConnection.executeQuery(checkSql, teamName);
             if (resultSet.next()) {
-                Utils.setAlert("ERROR", "Adição de equipe", "A equipe já estava cadastrada");
+                Utils.setAlert("WARNING", "Adição de equipe", "A equipe já estava cadastrada");
                 return resultSet.getInt("id");
             }
             generatedKey = DatabaseConnection.executeUpdate(sql1, teamName);
