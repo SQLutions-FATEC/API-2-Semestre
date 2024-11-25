@@ -3,6 +3,7 @@ package app.controllers;
 import app.DAOs.SprintDAO;
 import app.helpers.Utils;
 import app.models.SprintModel;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,7 +28,7 @@ public class SetSprintDataController {
     private TableColumn<SprintModel, Date> colEndDate;
 
     @FXML
-    private TextField descricaoField;
+    private ComboBox<Integer> descricaoComboBox;
 
     @FXML
     private DatePicker dataInicioPicker;
@@ -39,9 +40,12 @@ public class SetSprintDataController {
 
     @FXML
     private void initialize() {
+        descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
+
         colSprint.setCellValueFactory(new PropertyValueFactory<>("description"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+
         loadLast4Sprints();
     }
 
@@ -50,16 +54,18 @@ public class SetSprintDataController {
         tableData.setItems(sprints);
     }
 
-
     @FXML
     private void createSprint(ActionEvent event) {
-        String descricao = descricaoField.getText();
+        Integer descricaoNumber = descricaoComboBox.getValue();
         Date dataInicio = dataInicioPicker.getValue() != null ? Date.valueOf(dataInicioPicker.getValue()) : null;
         Date dataFim = dataFimPicker.getValue() != null ? Date.valueOf(dataFimPicker.getValue()) : null;
-        if (descricao == null || descricao.isEmpty() || dataInicio == null || dataFim == null) {
+
+        if (descricaoNumber == null || dataInicio == null || dataFim == null) {
             Utils.setAlert("INFORMATION", "Aviso", "Por favor, preencha todos os campos.");
             return;
         }
+
+        String descricao = "Sprint " + descricaoNumber;
 
         try {
             boolean success = sprintDAO.createSprint(descricao, dataInicio, dataFim);
@@ -75,11 +81,8 @@ public class SetSprintDataController {
         }
     }
 
-
-
-
     private void clearFields() {
-        descricaoField.clear();
+        descricaoComboBox.setValue(null);
         dataInicioPicker.setValue(null);
         dataFimPicker.setValue(null);
     }

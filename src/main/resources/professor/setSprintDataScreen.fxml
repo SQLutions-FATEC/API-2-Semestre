@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -17,8 +17,8 @@
       <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" />
       <VBox alignment="TOP_CENTER" layoutX="51.0" layoutY="142.0" spacing="10.0">
          <children>
-            <Label text="Descrição da Sprint:" />
-            <TextField fx:id="descricaoField" prefHeight="26.0" prefWidth="193.0" promptText="Digite a descrição da sprint" />
+            <Label text="Sprint:" />
+            <ComboBox fx:id="descricaoComboBox" prefHeight="26.0" prefWidth="221.0" promptText="None" />
             <Label text="Data de Início:" />
             <DatePicker fx:id="dataInicioPicker" prefHeight="26.0" prefWidth="223.0" />
             <Label text="Data de Fim:" />
@@ -29,7 +29,7 @@
       <HBox alignment="CENTER" layoutX="-240.0" layoutY="349.0" prefHeight="50.0" prefWidth="800.0" spacing="20.0">
          <children>
             <Button onAction="#goToProfessorScreen" prefWidth="100.0" text="Voltar" />
-            <Button onAction="#createSprint" prefWidth="100.0" text="Confirmar" />
+            <Button onAction="#createSprint" prefWidth="100.0" text="Nova Sprint" />
          </children>
       </HBox>
       <Label layoutX="456.0" layoutY="100.0" text="Últimas Sprints Criadas:">
