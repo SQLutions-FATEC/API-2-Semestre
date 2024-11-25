@@ -67,8 +67,6 @@ public class SprintDAO {
                 throw new SQLException("Período não encontrado para ano " + ano + " e semestre " + semestre);
             }
         }
-
-        // Verificar se o intervalo de datas está disponível
         if (!isDateRangeAvailable(dataInicio, dataFim, periodoId)) {
             throw new SQLException("Datas inseridas já estão em uso.");
         }
@@ -93,13 +91,13 @@ public class SprintDAO {
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId, dataFim, dataFim, dataInicio, dataInicio, dataInicio, dataFim)) {
             if (resultSet.next()) {
                 int count = resultSet.getInt("count");
-                return count == 0; // Retorna true se não houver sobreposição
+                return count == 0;
             }
         } catch (SQLException e) {
             System.out.println("Erro ao verificar disponibilidade do intervalo de datas: " + e.getMessage());
         }
 
-        return false; // Retorna false se ocorrer um erro
+        return false;
     }
 
 
