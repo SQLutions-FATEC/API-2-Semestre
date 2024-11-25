@@ -63,8 +63,10 @@ CREATE TABLE `sprint` (
 	`data_inicio` DATE NOT NULL,
 	`data_fim` DATE NOT NULL,
 	`periodo` INTEGER NOT NULL,
+	`data_hora` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(`id`)
 );
+
 
 CREATE TABLE `pontuacao` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,

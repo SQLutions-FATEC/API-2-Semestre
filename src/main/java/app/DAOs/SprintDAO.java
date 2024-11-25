@@ -33,7 +33,7 @@ public class SprintDAO {
     }
 
     public ObservableList<SprintModel> selectLast4Sprints() {
-        String sql = "SELECT * FROM sprint s ORDER BY s.data_inicio DESC LIMIT 4";
+        String sql = "SELECT * FROM sprint s ORDER BY s.data_hora DESC LIMIT 4";
         sprintList.clear();
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
