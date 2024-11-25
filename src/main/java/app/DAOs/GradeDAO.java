@@ -8,10 +8,23 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AverageGradeDAO {
-    private Map<String, AverageGradeModel> studentsMap = new HashMap<>();
+public class GradeDAO {
+    public int createGrade(int grade, int evaluatorId, int evaluatedId, int criteriaId, int periodId, int sprintId) {
+        String sql = "INSERT INTO nota (valor, avaliador, avaliado, criterio, periodo, sprint) VALUES (?, ?, ?, ?, ?, ?)";
+        int gradeId = 0;
+
+        try {
+            gradeId = DatabaseConnection.executeUpdate(sql, grade, evaluatorId, evaluatedId, criteriaId, periodId, sprintId);
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de createCriteria: " + e.getMessage());
+        } finally {
+            DatabaseConnection.closeResources();
+        }
+        return gradeId;
+    }
 
     public Map<String, AverageGradeModel> selectAverages(int teamId, int periodId, int sprintId) {
+        Map<String, AverageGradeModel> studentsMap = new HashMap<>();
 
         String sql = "SELECT u.nome AS usuario_nome, c.nome AS criterio, " +
                 "COALESCE(SUM(n.valor), 0) AS media_nota, " +

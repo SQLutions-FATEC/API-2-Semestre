@@ -1,11 +1,10 @@
 package app.controllers;
 
 import app.DAOs.PeriodDAO;
-import app.DAOs.SetScoreDAO;
+import app.DAOs.ScoreDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
-import app.models.PeriodModel;
 import app.models.SprintModel;
 import app.models.TeamModel;
 import javafx.collections.ObservableList;
@@ -97,7 +96,7 @@ public class SetScoreController implements Initializable {
             return;
         }
 
-        SetScoreDAO setScoreDAO = new SetScoreDAO();
+        ScoreDAO setScoreDAO = new ScoreDAO();
         int scoreId = setScoreDAO.createScore(score, sprintId, selectedTeamId);
 
         if (scoreId != 0) {

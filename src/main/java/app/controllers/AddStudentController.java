@@ -75,6 +75,7 @@ public class AddStudentController {
                 }
 
                 UserModel aluno = new UserModel(
+                        0,
                         Integer.parseInt(linha[0]),
                         linha[1],
                         linha[2],

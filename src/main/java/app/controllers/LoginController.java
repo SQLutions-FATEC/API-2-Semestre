@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.DAOs.*;
 import app.helpers.Utils;
+import app.models.ScoreModel;
 import app.models.SprintModel;
 import app.models.UserModel;
 import javafx.event.ActionEvent;
@@ -9,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,8 +33,13 @@ public class LoginController {
         Date setScoreDeadlineDate = Utils.setDate(sprintEndDate, 7);
         Date currentDate = new Date();
 
-        SetScoreDAO setScoreDAO = new SetScoreDAO();
-        Date scoreDate = setScoreDAO.selectScoreDateBySprintId(teamId, sprint.getId());
+        ScoreDAO scoreDAO = new ScoreDAO();
+        ScoreModel score = scoreDAO.selectScoreBySprintId(teamId, sprint.getId());
+        Date scoreDate = null;
+
+        if (score != null) {
+            scoreDate = score.getDate();
+        }
 
         if (currentDate.before(sprintEndDate) || (scoreDate == null && currentDate.before(setScoreDeadlineDate))) {
             return false;
@@ -52,7 +57,7 @@ public class LoginController {
     }
 
     private boolean checkSprintEvaluation() {
-        AverageGradeDAO averageGradeDAO = new AverageGradeDAO();
+        GradeDAO averageGradeDAO = new GradeDAO();
         int evaluations = averageGradeDAO.selectUserGradeEvaluationBySprint(email, sprintId);
 
         return evaluations > 0;
@@ -86,6 +91,8 @@ public class LoginController {
                 }
                 Map<String, Object> data = new HashMap<>();
                 data.put("userEmail", email);
+                data.put("teamId", teamId);
+                data.put("event", event);
                 Utils.setScreen(event, "studentScreen", data);
             } else {
                 Utils.setScreen(event, "professorScreen", email);

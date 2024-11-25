@@ -27,17 +27,18 @@ public class UserDAO {
 
     public UserModel selectUserByLogin(String userEmail, String userPassword) {
         UserModel user = null;
-        String sql = "SELECT ra, nome, email, senha, equipe FROM usuario WHERE email = ? AND senha = ? AND deleted_at IS NULL";
+        String sql = "SELECT id, ra, nome, email, senha, equipe FROM usuario WHERE email = ? AND senha = ? AND deleted_at IS NULL";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, userEmail, userPassword)) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 int ra = resultSet.getInt("ra");
                 String name = resultSet.getString("nome");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("senha");
                 int teamId = resultSet.getInt("equipe");
 
-                user = new UserModel(ra, name, email, password, teamId);
+                user = new UserModel(id, ra, name, email, password, teamId);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL de selectUsers: " + e.getMessage());
@@ -47,21 +48,44 @@ public class UserDAO {
 
     public ObservableList<UserModel> selectStudents() {
         ObservableList<UserModel> studentList = FXCollections.observableArrayList();
-        String sql = "SELECT u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL AND deleted_at IS NULL ORDER BY u.nome";
+        String sql = "SELECT u.id, u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL AND deleted_at IS NULL ORDER BY u.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 int ra = resultSet.getInt("ra");
                 String name = resultSet.getString("nome");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("senha");
                 int teamId = resultSet.getInt("equipe");
 
-                UserModel user = new UserModel(ra, name, email, password, teamId);
+                UserModel user = new UserModel(id, ra, name, email, password, teamId);
                 studentList.add(user);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL de selectStudents: " + e.getMessage());
+        }
+        return studentList;
+    }
+
+    public ObservableList<UserModel> selectStudentsByTeamId(int userTeamId) {
+        ObservableList<UserModel> studentList = FXCollections.observableArrayList();
+        String sql = "SELECT u.* FROM usuario u WHERE u.ra IS NOT NULL AND u.equipe = ? AND deleted_at IS NULL ORDER BY u.nome";
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, userTeamId)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int ra = resultSet.getInt("ra");
+                String name = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("senha");
+                int teamId = resultSet.getInt("equipe");
+
+                UserModel user = new UserModel(id, ra, name, email, password, teamId);
+                studentList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectStudentsByTeamId: " + e.getMessage());
         }
         return studentList;
     }

@@ -29,7 +29,7 @@ public class CriteriaDAO {
         return criteriaId;
     }
 
-    public ObservableList<CriteriaModel> selectCriteriasByPeriod(int selectedPeriodId) {
+    public ObservableList<CriteriaModel> selectCriteriasByPeriodId(int selectedPeriodId) {
         String sql = "SELECT * FROM criterio ORDER BY nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
