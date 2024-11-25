@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.Date;
+import java.sql.SQLException;
 
 public class SetSprintDataController {
 
@@ -49,24 +50,33 @@ public class SetSprintDataController {
         tableData.setItems(sprints);
     }
 
+
     @FXML
     private void createSprint(ActionEvent event) {
         String descricao = descricaoField.getText();
         Date dataInicio = dataInicioPicker.getValue() != null ? Date.valueOf(dataInicioPicker.getValue()) : null;
         Date dataFim = dataFimPicker.getValue() != null ? Date.valueOf(dataFimPicker.getValue()) : null;
         if (descricao == null || descricao.isEmpty() || dataInicio == null || dataFim == null) {
-            Utils.setAlert("Erro", "Por favor, preencha todos os campos.", "");
+            Utils.setAlert("INFORMATION", "Aviso", "Por favor, preencha todos os campos.");
             return;
         }
-        boolean success = sprintDAO.createSprint(descricao, dataInicio, dataFim);
-        if (success) {
-            Utils.setAlert("INFORMATION", "Criação de Sprint", "Sprint criada com sucesso!");
-            loadLast4Sprints();
-            clearFields();
-        } else {
-            Utils.setAlert("DANGER", "Erro", "Erro ao criar a sprint.");
+
+        try {
+            boolean success = sprintDAO.createSprint(descricao, dataInicio, dataFim);
+            if (success) {
+                Utils.setAlert("INFORMATION", "Criação de Sprint", "Sprint criada com sucesso!");
+                loadLast4Sprints();
+                clearFields();
+            } else {
+                Utils.setAlert("INFORMATION", "Data inserida já em uso", "Escolha outro intervalo de datas.");
+            }
+        } catch (SQLException e) {
+            Utils.setAlert("INFORMATION", "Erro no sistema", "Erro ao criar sprint: " + e.getMessage());
         }
     }
+
+
+
 
     private void clearFields() {
         descricaoField.clear();

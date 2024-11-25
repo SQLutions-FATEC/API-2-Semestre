@@ -52,30 +52,56 @@ public class SprintDAO {
         return sprintList;
     }
 
-    public boolean createSprint(String descricao, Date dataInicio, Date dataFim) {
+    public boolean createSprint(String descricao, Date dataInicio, Date dataFim) throws SQLException {
         String getPeriodoSql = "SELECT id FROM periodo WHERE ano = ? AND semestre = ?";
         String insertSprintSql = "INSERT INTO sprint (descricao, data_inicio, data_fim, periodo) VALUES (?, ?, ?, ?)";
 
-        try {
-            int semestre = (dataInicio.getMonth() + 1 <= 6) ? 1 : 2;
-            int ano = dataInicio.getYear() + 1900;
-            int periodoId;
+        int semestre = (dataInicio.getMonth() + 1 <= 6) ? 1 : 2;
+        int ano = dataInicio.getYear() + 1900;
+        int periodoId;
 
-            try (ResultSet rs = DatabaseConnection.executeQuery(getPeriodoSql, ano, semestre)) {
-                if (rs.next()) {
-                    periodoId = rs.getInt("id");
-                } else {
-                    throw new SQLException("Período não encontrado para ano " + ano + " e semestre " + semestre);
-                }
+        try (ResultSet rs = DatabaseConnection.executeQuery(getPeriodoSql, ano, semestre)) {
+            if (rs.next()) {
+                periodoId = rs.getInt("id");
+            } else {
+                throw new SQLException("Período não encontrado para ano " + ano + " e semestre " + semestre);
             }
-
-            int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
-
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            System.out.println("Erro ao criar sprint: " + e.getMessage());
-            return false;
         }
+
+        // Verificar se o intervalo de datas está disponível
+        if (!isDateRangeAvailable(dataInicio, dataFim, periodoId)) {
+            throw new SQLException("Datas inseridas já estão em uso.");
+        }
+
+        int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
+        return rowsAffected > 0;
     }
+
+
+    private boolean isDateRangeAvailable(Date dataInicio, Date dataFim, int periodoId) {
+        String sql = """
+        SELECT COUNT(*) AS count 
+        FROM sprint 
+        WHERE periodo = ? 
+        AND (
+            (data_inicio <= ? AND data_fim >= ?) OR
+            (data_inicio <= ? AND data_fim >= ?) OR
+            (data_inicio >= ? AND data_fim <= ?)
+        )
+    """;
+
+        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId, dataFim, dataFim, dataInicio, dataInicio, dataInicio, dataFim)) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count == 0; // Retorna true se não houver sobreposição
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar disponibilidade do intervalo de datas: " + e.getMessage());
+        }
+
+        return false; // Retorna false se ocorrer um erro
+    }
+
+
 
 }
