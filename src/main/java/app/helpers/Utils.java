@@ -138,4 +138,10 @@ public class Utils {
         alert.setContentText(text);
         alert.showAndWait();
     }
+
+    public static int getSelectedPeriodId() {LocalDate today = LocalDate.now();
+        int year = today.getYear();
+        int semester = (today.getMonthValue() <= 6) ? 1 : 2; // Primeiro semestre até junho
+        return Integer.parseInt(year + "" + semester); // Retorna no formato: 20231, 20232
+    }
 }
