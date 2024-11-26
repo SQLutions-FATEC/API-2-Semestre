@@ -33,14 +33,25 @@ public class SprintDAO {
         return sprintList;
     }
 
-    public ObservableList<SprintModel> selectLast4Sprints() {
-        String sql = "SELECT * FROM sprint s ORDER BY s.data_hora DESC LIMIT 4";
+    public ObservableList<SprintModel> selectLast8Sprints() {
+        String sql = """
+        SELECT 
+            s.id,
+            CONCAT(p.ano, '.', p.semestre, ' - ', 
+                   TRIM(SUBSTRING(s.descricao, LOCATE(' ', s.descricao) + 1))) AS sprint_description, 
+            s.data_inicio,
+            s.data_fim
+        FROM sprint s
+        INNER JOIN periodo p ON s.periodo = p.id
+        ORDER BY s.data_hora DESC
+        LIMIT 8
+    """;
         sprintList.clear();
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String description = resultSet.getString("descricao");
+                String description = resultSet.getString("sprint_description");
                 Date dataInicio = resultSet.getDate("data_inicio");
                 Date dataFim = resultSet.getDate("data_fim");
 
@@ -48,10 +59,12 @@ public class SprintDAO {
                 sprintList.add(sprint);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectLast4Sprints: " + e.getMessage());
+            System.out.println("Erro no SQL de selectLast8Sprints: " + e.getMessage());
         }
         return sprintList;
     }
+
+
 
     public boolean createSprint(String descricao, Date dataInicio, Date dataFim) throws SQLException {
         String getPeriodoSql = "SELECT id FROM periodo WHERE ano = ? AND semestre = ?";

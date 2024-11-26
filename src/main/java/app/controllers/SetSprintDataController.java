@@ -50,7 +50,7 @@ public class SetSprintDataController {
     }
 
     private void loadLast4Sprints() {
-        ObservableList<SprintModel> sprints = sprintDAO.selectLast4Sprints();
+        ObservableList<SprintModel> sprints = sprintDAO.selectLast8Sprints();
         tableData.setItems(sprints);
     }
 
