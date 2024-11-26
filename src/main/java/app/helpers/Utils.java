@@ -1,5 +1,11 @@
 package app.helpers;
+
+import app.DAOs.CriteriaDAO;
+import app.DAOs.GradeDAO;
 import app.interfaces.ScreenController;
+import app.models.AverageGradeModel;
+import app.models.CriteriaModel;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,7 +15,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -158,11 +171,90 @@ public class Utils {
                 });
     }
 
+
+    public static Date setDate(Date date, int days) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DAY_OF_MONTH, days);
+
+        return calendar.getTime();
+    }
+
     public static void setAlert(String type, String title, String text) {
         Alert alert = new Alert(setAlertType(type));
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(text);
         alert.showAndWait();
+    }
+
+    public static String getDownloadsPath() {
+        String os = System.getProperty("os.name").toLowerCase();
+        Path caminho;
+
+        if (os.contains("win") || os.contains("mac") || os.contains("nix") || os.contains("nux")) {
+            caminho = Paths.get(System.getProperty("user.home"), "Downloads");
+        } else {
+            caminho = Paths.get(System.getProperty("user.home"), "Documentos");
+        }
+
+        return caminho.toString();
+    }
+
+    public static void createCsv(String caminhoArquivo, String teamName, int equipeID, int periodoID, String sprintDescription, int sprintID) throws SQLException {
+        try {
+            File file = new File(caminhoArquivo);
+
+            if (file.exists()) {
+                String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                String novoCaminho = caminhoArquivo.replaceFirst("(\\.csv)$", "_" + teamName + "_" + timestamp + "$1");
+                file = new File(novoCaminho);
+                caminhoArquivo = file.getAbsolutePath();
+            } else {
+                caminhoArquivo = Utils.getDownloadsPath() + "\\" + teamName + "_relatorio.csv";
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo))) {
+                writer.write("Equipe: " + teamName);
+                writer.newLine();
+
+                writer.write("Sprint: " + sprintDescription);
+                writer.newLine();
+
+                writer.write("Usuario");
+
+                StringBuilder criteriaSQL = new StringBuilder();
+                CriteriaDAO criteriaDAO = new CriteriaDAO();
+                ObservableList<CriteriaModel> criterias = criteriaDAO.selectCriteriasByPeriodId(periodoID);
+
+                for (CriteriaModel criteria: criterias) {
+                    criteriaSQL.append(",");
+                    criteriaSQL.append(criteria.getName());
+                }
+
+                writer.write(criteriaSQL.toString());
+                writer.newLine();
+
+                StringBuilder averageSQL = new StringBuilder();
+                GradeDAO gradeDAO = new GradeDAO();
+                Map<String, AverageGradeModel> averages = gradeDAO.selectAverages(equipeID, periodoID, sprintID);
+
+                for (AverageGradeModel average: averages.values()) {
+                    averageSQL.append(average.getName());
+                    for (Map.Entry<String, Integer> currentAverage: average.getAverages().entrySet()) {
+                        averageSQL.append(",");
+                        averageSQL.append(currentAverage.getValue());
+                    }
+                    averageSQL.append("\n");
+                }
+
+                writer.write(averageSQL.toString());
+                writer.newLine();
+
+                Utils.setAlert("CONFIRMATION", "CSV", "Arquivo CSV gerado com sucesso em: " + caminhoArquivo);
+            }
+        } catch (IOException e) {
+            System.err.println("Erro ao gerar o arquivo CSV: " + e.getMessage());
+        }
     }
 }

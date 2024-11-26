@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.DAOs.PeriodDAO;
-import app.DAOs.SetScoreDAO;
+import app.DAOs.ScoreDAO;
 import app.DAOs.SprintDAO;
 import app.DAOs.TeamDAO;
 import app.helpers.Utils;
@@ -158,7 +158,7 @@ public class SetScoreController implements Initializable {
             return;
         }
 
-        SetScoreDAO setScoreDAO = new SetScoreDAO();
+        ScoreDAO setScoreDAO = new ScoreDAO();
         int scoreId = setScoreDAO.createScore(score, selectedSprintId, selectedTeamId);
 
         if (scoreId != 0) {
