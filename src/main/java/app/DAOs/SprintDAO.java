@@ -8,15 +8,16 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class SprintDAO {
+    ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
-        ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
         String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
 
-        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String description = resultSet.getString("descricao");
@@ -32,36 +33,25 @@ public class SprintDAO {
         return sprintList;
     }
 
-    // Novo método para buscar sprints do período atual
-    public ObservableList<SprintModel> selectCurrentPeriodSprints() {
-        ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
+    public SprintModel selectPastSprint() {
+        LocalDate currentDate = LocalDate.now();
 
-        // Obter o período atual (Ex.: 1º semestre de 2024)
-        int currentPeriodId = Utils.getSelectedPeriodId();
-        if (currentPeriodId == -1) {
-            System.out.println("Período atual não identificado.");
-            return sprintList; // Retorna lista vazia se não encontrar o período
-        }
+        String sql = "SELECT s.* FROM sprint s WHERE s.data_fim < ? ORDER BY s.data_fim DESC LIMIT 1";
 
-        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
+        SprintModel sprint = null;
 
-        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentPeriodId)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentDate)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String description = resultSet.getString("descricao");
-                Date dataInicio = resultSet.getDate("data_inicio");
-                Date dataFim = resultSet.getDate("data_fim");
+                Date startDate = resultSet.getDate("data_inicio");
+                Date endDate = resultSet.getDate("data_fim");
 
-                SprintModel sprint = new SprintModel(id, description, dataInicio, dataFim);
-                sprintList.add(sprint);
+                sprint = new SprintModel(id, description, startDate, endDate);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectCurrentPeriodSprints: " + e.getMessage());
+            System.out.println("Erro no SQL de selectSprints: " + e.getMessage());
         }
-
-        return sprintList;
+        return sprint;
     }
 }
-
-//    TODO: fazer uma query que busca todas as sprints do periodo atual, para usar no lugar do selectSprints
-//    da linha 38 do PeerEvaluationController (selectedPeriodId). Dica: periodo eh baseado em semestre e ano, pode fazer no Utils essa verificacao

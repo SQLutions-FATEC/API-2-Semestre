@@ -2,7 +2,7 @@ package app.models;
 
 import javafx.beans.property.*;
 
-public class NotaModel {
+public class GradeModel {
 
     private SimpleIntegerProperty valor;
     private SimpleIntegerProperty avaliador;
@@ -11,7 +11,7 @@ public class NotaModel {
     private SimpleIntegerProperty periodo;
     private SimpleIntegerProperty sprint;
 
-    public NotaModel( Integer valor, Integer avaliador, Integer avaliado, Integer criterio, Integer periodo, Integer sprint) {
+    public GradeModel(Integer valor, Integer avaliador, Integer avaliado, Integer criterio, Integer periodo, Integer sprint) {
 
         this.valor = new SimpleIntegerProperty(valor);
         this.avaliador = new SimpleIntegerProperty(avaliador);

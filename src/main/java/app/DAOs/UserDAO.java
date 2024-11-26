@@ -7,37 +7,49 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
-    public void createStudents(ObservableList <UserModel> students, int teamId) {
+    public List<Integer> createStudents(ObservableList <UserModel> students, int teamId) {
+        String checkSql = "SELECT id FROM usuario WHERE ra = ?";
         String sql = "INSERT INTO usuario (ra, nome, senha, email, tipo, equipe) VALUES (?, ?, ?, ?, ?, ?)";
-
+        List<Integer> generatedKeys = new ArrayList<>();
+        int generatedKey = 0;
         int typeStudent = 2;
 
         for (UserModel student : students) {
             try {
-                DatabaseConnection.executeUpdate(sql, student.getRa(), student.getNome(), student.getSenha(), student.getEmail(), typeStudent, teamId);
+                ResultSet resultSet = DatabaseConnection.executeQuery(checkSql, student.getRa());
+                if (resultSet.next()) {
+                    continue;
+                }
+                generatedKey = DatabaseConnection.executeUpdate(sql, student.getRa(), student.getNome(), student.getSenha(), student.getEmail(), typeStudent, teamId);
             } catch (SQLException e) {
                 System.out.println("Erro no SQL de createStudents: " + e.getMessage());
             } finally {
                 DatabaseConnection.closeResources();
             }
+            generatedKeys.add(generatedKey);
         }
+
+        return generatedKeys;
     }
 
     public UserModel selectUserByLogin(String userEmail, String userPassword) {
         UserModel user = null;
-        String sql = "SELECT ra, nome, email, senha, equipe FROM usuario WHERE email = ? AND senha = ? AND deleted_at IS NULL";
+        String sql = "SELECT id, ra, nome, email, senha, equipe FROM usuario WHERE email = ? AND senha = ? AND deleted_at IS NULL";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, userEmail, userPassword)) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 int ra = resultSet.getInt("ra");
                 String name = resultSet.getString("nome");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("senha");
                 int teamId = resultSet.getInt("equipe");
 
-                user = new UserModel(ra, name, email, password, teamId);
+                user = new UserModel(id, ra, name, email, password, teamId);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL de selectUsers: " + e.getMessage());
@@ -47,21 +59,44 @@ public class UserDAO {
 
     public ObservableList<UserModel> selectStudents() {
         ObservableList<UserModel> studentList = FXCollections.observableArrayList();
-        String sql = "SELECT u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL AND deleted_at IS NULL ORDER BY u.nome";
+        String sql = "SELECT u.id, u.ra, u.nome, u.email, u.senha, u.equipe FROM usuario u WHERE u.ra IS NOT NULL AND deleted_at IS NULL ORDER BY u.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 int ra = resultSet.getInt("ra");
                 String name = resultSet.getString("nome");
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("senha");
                 int teamId = resultSet.getInt("equipe");
 
-                UserModel user = new UserModel(ra, name, email, password, teamId);
+                UserModel user = new UserModel(id, ra, name, email, password, teamId);
                 studentList.add(user);
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL de selectStudents: " + e.getMessage());
+        }
+        return studentList;
+    }
+
+    public ObservableList<UserModel> selectStudentsByTeamId(int userTeamId) {
+        ObservableList<UserModel> studentList = FXCollections.observableArrayList();
+        String sql = "SELECT u.* FROM usuario u WHERE u.ra IS NOT NULL AND u.equipe = ? AND deleted_at IS NULL ORDER BY u.nome";
+
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, userTeamId)) {
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int ra = resultSet.getInt("ra");
+                String name = resultSet.getString("nome");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("senha");
+                int teamId = resultSet.getInt("equipe");
+
+                UserModel user = new UserModel(id, ra, name, email, password, teamId);
+                studentList.add(user);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL de selectStudentsByTeamId: " + e.getMessage());
         }
         return studentList;
     }

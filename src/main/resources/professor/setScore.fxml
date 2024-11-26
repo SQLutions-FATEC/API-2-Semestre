@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.ChoiceBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetScoreController">
    <children>
-      <Label layoutX="275.0" layoutY="115.0" text="Período" />
-      <ChoiceBox fx:id="periodChoiceBox" layoutX="275.0" layoutY="135.0" prefHeight="30.0" prefWidth="250.0" />
-      <Label layoutX="275.0" layoutY="215.0" text="Sprint" />
-      <ChoiceBox fx:id="sprintChoiceBox" layoutX="275.0" layoutY="235.0" prefHeight="30.0" prefWidth="250.0" />
-      <Label layoutX="275.0" layoutY="315.0" text="Equipe" />
-      <ChoiceBox fx:id="teamChoiceBox" layoutX="275.0" layoutY="335.0" prefHeight="30.0" prefWidth="250.0" />
-      <Label layoutX="275.0" layoutY="415.0" text="Valor Máximo" />
-      <TextField fx:id="maxScore" promptText="Adicione um valor" layoutX="275.0" layoutY="435.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+      <Label layoutX="275.0" layoutY="205.0" text="Equipe" />
+      <ChoiceBox fx:id="teamChoiceBox" layoutX="275.0" layoutY="225.0" prefHeight="30.0" prefWidth="250.0" />
+      <Label layoutX="275.0" layoutY="310.0" text="Valor Máximo" />
+      <TextField fx:id="maxScore" layoutX="275.0" layoutY="330.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Adicione um valor" />
       <Label layoutX="255.0" layoutY="40.0" text="Definiçao da Pontuaçao Maxima">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" onAction="#goToProfessorScreen" text="Voltar" />
-      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="143.0" onAction="#addMaxScore" text="Confirmar" />
+      <Button layoutX="50.0" layoutY="525.0" mnemonicParsing="false" onAction="#goToProfessorScreen" prefHeight="38.0" prefWidth="143.0" text="Voltar" />
+      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#addMaxScore" prefHeight="38.0" prefWidth="143.0" text="Confirmar" />
    </children>
 </AnchorPane>

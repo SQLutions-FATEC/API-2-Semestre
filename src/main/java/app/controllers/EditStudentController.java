@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.DAOs.PeriodDAO;
 import app.DAOs.TeamDAO;
 import app.DAOs.UserDAO;
 import app.models.TeamModel;
@@ -12,12 +13,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import app.helpers.Utils;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.geometry.Side;
 
 import java.io.IOException;
@@ -41,6 +37,10 @@ public class EditStudentController implements Initializable {
     public ChoiceBox<String> teamChoiceBox;
     @FXML
     public TextField studentSearch;
+    @FXML
+    public Button deleteButton;
+    @FXML
+    public Button confirmButton;
 
     ObservableList<UserModel> studentTableData = FXCollections.observableArrayList();
     ObservableList<UserModel> studentList = FXCollections.observableArrayList();
@@ -65,6 +65,8 @@ public class EditStudentController implements Initializable {
         fetchTeams();
         configureAutocomplete();
         setTeamId();
+        deleteButton.setDisable(true);
+        confirmButton.setDisable(true);
     }
 
     private void fetchStudents() {
@@ -73,8 +75,13 @@ public class EditStudentController implements Initializable {
     }
 
     private void fetchTeams() {
+        PeriodDAO periodDAO = new PeriodDAO();
+        int periodId = periodDAO.selectCurrentPeriodId();
+
         TeamDAO teamDAO = new TeamDAO();
-        teamList = teamDAO.selectTeams();
+        teamList = teamDAO.selectTeamsByPeriod(periodId);
+        if (teamList.isEmpty()) return;;
+
         ObservableList<String> teamNames = FXCollections.observableArrayList();
 
         for (TeamModel team : teamList) {
@@ -128,6 +135,8 @@ public class EditStudentController implements Initializable {
         if (!studentTableData.contains(selectedStudent)) {
             studentTableData.clear();
             studentTableData.add(selectedStudent);
+            deleteButton.setDisable(false);
+            confirmButton.setDisable(false);
         }
     }
 
@@ -142,16 +151,20 @@ public class EditStudentController implements Initializable {
 
     @FXML
     private void deleteStudent() {
-        int ra = studentTableData.get(0).getRa();
-        UserDAO userDAO = new UserDAO();
-        int rowsAffected = userDAO.deleteStudent(ra);
+        Utils.setAlert("WARNING", "Deleção do aluno", "Tem certeza que deseja deletá-lo?",() -> {
+            int ra = studentTableData.get(0).getRa();
+            UserDAO userDAO = new UserDAO();
+            int rowsAffected = userDAO.deleteStudent(ra);
 
-        if (rowsAffected != 0) {
-            studentTableData.clear();
-            studentSearch.setText("");
-            studentList.removeIf(student -> student.getRa() == ra);
-            Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
-        }
+            if (rowsAffected != 0) {
+                studentTableData.clear();
+                studentSearch.setText("");
+                studentList.removeIf(student -> student.getRa() == ra);
+                deleteButton.setDisable(true);
+                confirmButton.setDisable(true);
+                Utils.setAlert("CONFIRMATION", "Deleção do aluno", "O aluno foi deletado com sucesso");
+            }
+        });
     }
 
     @FXML
@@ -161,6 +174,7 @@ public class EditStudentController implements Initializable {
         userDAO.updateStudentTeam(ra, selectedTeamId);
         updateTeamNameInTable();
         studentSearch.setText("");
+        Utils.setAlert("CONFIRMATION", "Edição do aluno", "A equipe do aluno foi editada com sucesso");
     }
 
     @FXML
@@ -178,10 +192,5 @@ public class EditStudentController implements Initializable {
     @FXML
     public void goToProfessorScreen(ActionEvent event) throws IOException {
         Utils.setScreen(event, "professorScreen");
-    }
-
-    @FXML
-    public void goToLoginScreen (ActionEvent event){
-        Utils.setScreen(event, "loginScreen");
     }
 }
