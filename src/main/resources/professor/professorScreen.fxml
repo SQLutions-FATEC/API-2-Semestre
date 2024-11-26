@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
-   <Separator blendMode="DARKEN" layoutX="208.0" layoutY="22.0" orientation="VERTICAL" prefHeight="558.0" prefWidth="0.0">
+   <Separator blendMode="DARKEN" layoutX="200.0" layoutY="20.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="0.0">
       <cursor>
          <Cursor fx:constant="OPEN_HAND" />
       </cursor>

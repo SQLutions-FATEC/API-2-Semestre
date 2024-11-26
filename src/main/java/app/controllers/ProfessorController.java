@@ -150,8 +150,6 @@ public class ProfessorController implements ScreenController {
             Utils.setScreen(event, "setScore");
         }
     }
-
-
     public void goToSetSprintDataScreen(ActionEvent event) {
         Utils.setScreen(event, "setSprintDataScreen");
     }

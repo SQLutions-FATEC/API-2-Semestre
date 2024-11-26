@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class SprintDAO {
-    private ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
         String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
@@ -64,8 +63,6 @@ public class SprintDAO {
         return sprintList;
     }
 
-
-
     public boolean createSprint(String descricao, Date dataInicio, Date dataFim) throws SQLException {
         String getPeriodoSql = "SELECT id FROM periodo WHERE ano = ? AND semestre = ?";
         String insertSprintSql = "INSERT INTO sprint (descricao, data_inicio, data_fim, periodo) VALUES (?, ?, ?, ?)";
@@ -88,7 +85,6 @@ public class SprintDAO {
         int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
         return rowsAffected > 0;
     }
-
 
     private boolean isDateRangeAvailable(Date dataInicio, Date dataFim, int periodoId) {
         String sql = """
@@ -114,7 +110,6 @@ public class SprintDAO {
         return false;
     }
 
-
     public SprintModel selectPastSprint() {
         LocalDate currentDate = LocalDate.now();
 
@@ -137,6 +132,5 @@ public class SprintDAO {
         return sprint;
     }
 
-
-
-}
+    private ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
+ }

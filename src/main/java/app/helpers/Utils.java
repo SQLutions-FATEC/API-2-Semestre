@@ -77,17 +77,22 @@ public class Utils {
         return null;
     }
 
+
+
     public static void setScreen(ActionEvent event, String screenFile, Object data) {
         Map<String, String[]> files = new HashMap<>();
 
         files.put("loginScreen", new String[]{"/loginScreen.fxml", "Tela de login"});
         files.put("studentScreen", new String[]{"/student/studentScreen.fxml", "Tela do aluno"});
+        files.put("outOfEvaluationPeriodScreen", new String[]{"/student/outOfEvaluationPeriodScreen.fxml", "Fora do período"});
+        files.put("alreadyEvaluatedScreen", new String[]{"/student/alreadyEvaluatedScreen.fxml", "Período avaliado"});
         files.put("professorScreen", new String[]{"/professor/professorScreen.fxml", "Tela do professor"});
         files.put("criteriaScreen", new String[]{"/professor/criteriaScreen.fxml", "Definir critérios"});
         files.put("addStudentScreen", new String[]{"/professor/addStudentScreen.fxml", "Adicionar aluno"});
         files.put("editStudentScreen", new String[]{"/professor/editStudentScreen.fxml", "Editar aluno"});
         files.put("setScore", new String[]{"/professor/setScore.fxml", "Definir pontuação"});
         files.put("setSprintDataScreen", new String[]{"/professor/setSprintDataScreen.fxml", "Definir sprint"});
+        files.put("outOfSetScorePeriodScreen", new String[]{"/professor/outOfSetScorePeriodScreen.fxml", "Fora do período"});
 
         String screenFXML = files.get(screenFile)[0];
         String screenName = files.get(screenFile)[1];
@@ -256,5 +261,12 @@ public class Utils {
         } catch (IOException e) {
             System.err.println("Erro ao gerar o arquivo CSV: " + e.getMessage());
         }
+    }
+
+    public static String formatDate(LocalDate date) {
+        if (date == null) {
+            return "";
+        }
+        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }

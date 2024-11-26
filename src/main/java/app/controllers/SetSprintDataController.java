@@ -40,16 +40,41 @@ public class SetSprintDataController {
 
     @FXML
     private void initialize() {
+
         descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
+        descricaoComboBox.setPromptText("Selecione uma sprint:");
 
         colSprint.setCellValueFactory(new PropertyValueFactory<>("description"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        colStartDate.setCellFactory(column -> new TableCell<SprintModel, Date>() {
+            @Override
+            protected void updateItem(Date item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(Utils.formatDate(item.toLocalDate()));
+                }
+            }
+        });
 
-        loadLast4Sprints();
+        colEndDate.setCellFactory(column -> new TableCell<SprintModel, Date>() {
+            @Override
+            protected void updateItem(Date item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(Utils.formatDate(item.toLocalDate()));
+                }
+            }
+        });
+
+        loadLast8Sprints();
     }
 
-    private void loadLast4Sprints() {
+    private void loadLast8Sprints() {
         ObservableList<SprintModel> sprints = sprintDAO.selectLast8Sprints();
         tableData.setItems(sprints);
     }
@@ -61,7 +86,7 @@ public class SetSprintDataController {
         Date dataFim = dataFimPicker.getValue() != null ? Date.valueOf(dataFimPicker.getValue()) : null;
 
         if (descricaoNumber == null || dataInicio == null || dataFim == null) {
-            Utils.setAlert("INFORMATION", "Aviso", "Por favor, preencha todos os campos.");
+            Utils.setAlert("WARNING", "AVISO", "Por favor, preencha todos os campos.");
             return;
         }
 
@@ -71,13 +96,13 @@ public class SetSprintDataController {
             boolean success = sprintDAO.createSprint(descricao, dataInicio, dataFim);
             if (success) {
                 Utils.setAlert("INFORMATION", "Criação de Sprint", "Sprint criada com sucesso!");
-                loadLast4Sprints();
+                loadLast8Sprints();
                 clearFields();
             } else {
-                Utils.setAlert("INFORMATION", "Data inserida já em uso", "Escolha outro intervalo de datas.");
+                Utils.setAlert("WARNING", "Data inserida já em uso", "Escolha outro intervalo de datas.");
             }
         } catch (SQLException e) {
-            Utils.setAlert("INFORMATION", "Erro no sistema", "Erro ao criar sprint: " + e.getMessage());
+            Utils.setAlert("ERROR", "Erro no sistema", "Erro ao criar sprint: " + e.getMessage());
         }
     }
 
