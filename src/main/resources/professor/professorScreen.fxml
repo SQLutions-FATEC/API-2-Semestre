@@ -21,7 +21,7 @@
          <Insets />
       </opaqueInsets>
    </Separator>
-   <VBox alignment="CENTER" layoutY="1.0" prefHeight="601.0" prefWidth="203.0" spacing="30.0">
+   <VBox alignment="CENTER" layoutY="1.0" prefHeight="600.0" prefWidth="200.0" spacing="30.0">
       <children>
          <Button mnemonicParsing="false" onAction="#goToAddStudentScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
             <font>

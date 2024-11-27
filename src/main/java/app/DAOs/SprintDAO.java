@@ -42,7 +42,7 @@ public class SprintDAO {
             s.data_fim
         FROM sprint s
         INNER JOIN periodo p ON s.periodo = p.id
-        ORDER BY s.data_hora DESC
+        ORDER BY s.data_fim DESC
         LIMIT 8
     """;
         sprintList.clear();
@@ -64,6 +64,10 @@ public class SprintDAO {
     }
 
     public boolean createSprint(String descricao, Date dataInicio, Date dataFim) throws SQLException {
+        if (!dataFim.after(dataInicio)) {
+            throw new SQLException("A data de término deve ser posterior à data de início.");
+        }
+
         String getPeriodoSql = "SELECT id FROM periodo WHERE ano = ? AND semestre = ?";
         String insertSprintSql = "INSERT INTO sprint (descricao, data_inicio, data_fim, periodo) VALUES (?, ?, ?, ?)";
 
@@ -78,13 +82,23 @@ public class SprintDAO {
                 throw new SQLException("Período não encontrado para ano " + ano + " e semestre " + semestre);
             }
         }
+
         if (!isDateRangeAvailable(dataInicio, dataFim, periodoId)) {
             throw new SQLException("Datas inseridas já estão em uso.");
+        }
+
+        if (isDuplicateSprint(descricao, periodoId)) {
+            throw new SQLException("Já existe uma sprint com esse nome para o mesmo período.");
+        }
+
+        if (!isSequentialDates(dataInicio, dataFim, periodoId)) {
+            throw new SQLException("A sequência de datas da sprint está fora de ordem.");
         }
 
         int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
         return rowsAffected > 0;
     }
+
 
     private boolean isDateRangeAvailable(Date dataInicio, Date dataFim, int periodoId) {
         String sql = """
@@ -110,6 +124,41 @@ public class SprintDAO {
         return false;
     }
 
+    private boolean isDuplicateSprint(String descricao, int periodoId) {
+        String sql = "SELECT COUNT(*) AS count FROM sprint WHERE descricao = ? AND periodo = ?";
+
+        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, descricao, periodoId)) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt("count");
+                return count > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar duplicidade da sprint: " + e.getMessage());
+        }
+        return false;
+    }
+
+    private boolean isSequentialDates(Date dataInicio, Date dataFim, int periodoId) {
+        String sql = """
+        SELECT data_fim 
+        FROM sprint 
+        WHERE periodo = ? 
+        ORDER BY data_fim DESC 
+        LIMIT 1
+    """;
+
+        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId)) {
+            if (resultSet.next()) {
+                Date lastEndDate = resultSet.getDate("data_fim");
+                return lastEndDate.before(dataInicio);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar sequência das datas: " + e.getMessage());
+        }
+
+        return true;
+    }
+
     public SprintModel selectPastSprint() {
         LocalDate currentDate = LocalDate.now();
 
@@ -117,7 +166,7 @@ public class SprintDAO {
 
         SprintModel sprint = null;
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentDate)) {
+        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, currentDate)) {
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String description = resultSet.getString("descricao");
@@ -127,10 +176,10 @@ public class SprintDAO {
                 sprint = new SprintModel(id, description, startDate, endDate);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectSprints: " + e.getMessage());
+            System.out.println("Erro no SQL de selectPastSprint: " + e.getMessage());
         }
         return sprint;
     }
 
     private ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
- }
+}

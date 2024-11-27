@@ -7,13 +7,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class SetSprintDataController {
+public class SetSprintDataController implements Initializable {
 
     @FXML
     private TableView<SprintModel> tableData;
@@ -38,10 +41,10 @@ public class SetSprintDataController {
 
     private final SprintDAO sprintDAO = new SprintDAO();
 
-    @FXML
-    private void initialize() {
 
-        descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4));
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8));
         descricaoComboBox.setPromptText("Selecione uma sprint:");
 
         colSprint.setCellValueFactory(new PropertyValueFactory<>("description"));
