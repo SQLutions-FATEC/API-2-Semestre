@@ -150,6 +150,8 @@ public class ProfessorController implements ScreenController {
             Utils.setScreen(event, "setScore");
         }
     }
+
+    @FXML
     public void goToSetSprintDataScreen(ActionEvent event) {
         Utils.setScreen(event, "setSprintDataScreen");
     }

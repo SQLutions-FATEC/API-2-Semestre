@@ -49,7 +49,6 @@ public class SprintModel {
         this.endDate.set(endDate);
     }
 
-
     public IntegerProperty idProperty() {
         return id;
     }

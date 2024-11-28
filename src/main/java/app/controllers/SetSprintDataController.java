@@ -17,33 +17,24 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class SetSprintDataController implements Initializable {
-
     @FXML
     private TableView<SprintModel> tableData;
-
     @FXML
     private TableColumn<SprintModel, String> colSprint;
-
     @FXML
     private TableColumn<SprintModel, Date> colStartDate;
-
     @FXML
     private TableColumn<SprintModel, Date> colEndDate;
-
     @FXML
     private ComboBox<Integer> descricaoComboBox;
-
     @FXML
     private DatePicker dataInicioPicker;
-
     @FXML
     private DatePicker dataFimPicker;
 
     private final SprintDAO sprintDAO = new SprintDAO();
 
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8));
         descricaoComboBox.setPromptText("Selecione uma sprint:");
 
