@@ -1,57 +1,52 @@
 package app.models;
 
 public class PastEvaluationModel {
-        private String evaluatorName;
-        private int evaluatedStudentId;
-        private String criteria;
+        private String evaluatorStudentName;
+        private String evaluatedStudentName;
+        private String criteriaName;
         private String sprintDescription;
         private int nota;
 
-        public PastEvaluationModel(String evaluatorName, int evaluatedStudentId, String criteria, String sprintDescription, int nota) {
-            this.evaluatorName = evaluatorName;
-            this.evaluatedStudentId = evaluatedStudentId;
-            this.criteria = criteria;
+        public PastEvaluationModel(String evaluatorStudentName, String evaluatedStudentName, String criteriaName, String sprintDescription, int nota) {
+            this.evaluatorStudentName = evaluatorStudentName;
+            this.evaluatedStudentName = evaluatedStudentName;
+            this.criteriaName = criteriaName;
             this.sprintDescription = sprintDescription;
             this.nota = nota;
         }
 
-        public String getEvaluatorName() {
-            return evaluatorName;
+        public String getEvaluatorStudentName() {
+            return evaluatorStudentName;
+        }
+        public void setEvaluatorStudentName(String evaluatorName) {
+            this.evaluatorStudentName = evaluatorName;
         }
 
-        public void setEvaluatorName(String evaluatorName) {
-            this.evaluatorName = evaluatorName;
+        public String getEvaluatedStudentName() {
+            return evaluatedStudentName;
+        }
+        public void setEvaluatedStudentName(String evaluatedStudentName) {
+            this.evaluatedStudentName = evaluatedStudentName;
         }
 
-        public int getEvaluatedStudentId() {
-            return evaluatedStudentId;
+        public String getCriteriaName() {
+            return criteriaName;
+        }
+        public void setCriteriaName(String criteria) {
+            this.criteriaName = criteria;
         }
 
-        public void setEvaluatedStudentId(int evaluatedStudentId) {
-            this.evaluatedStudentId = evaluatedStudentId;
+        public int getNota() {
+            return nota;
         }
-
-        public String getCriteria() {
-            return criteria;
-        }
-
-    public int getNota() {
-        return nota;
-    }
-
-        public void setCriteria(String criteria) {
-            this.criteria = criteria;
+        public void setNota(int nota){
+            this.nota = nota;
         }
 
         public String getSprintDescription() {
             return sprintDescription;
         }
-
         public void setSprintDescription(String sprintDescription) {
             this.sprintDescription = sprintDescription;
-        }
-
-        public void setNota(int nota){
-            this.nota = nota;
         }
 }

@@ -2,41 +2,41 @@ package app.DAOs;
 
 import app.helpers.DatabaseConnection;
 import app.models.PastEvaluationModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PastEvaluationDAO {
-    public List<PastEvaluationModel> fetchPeerEvaluations(int sprintId) {
-        String sql = "SELECT u.nome AS avaliador, n.avaliado, n.criterio, s.descricao, n.valor AS nota " +
+    public ObservableList<PastEvaluationModel> selectPastEvaluations(int teamId, int sprintId) {
+        ObservableList<PastEvaluationModel> evaluations = FXCollections.observableArrayList();
+
+        String sql = "SELECT uador.nome AS avaliador, uado.nome AS avaliado, c.nome AS criterio, s.descricao, n.valor AS nota " +
                 "FROM nota n " +
-                "JOIN usuario u ON u.id = n.avaliador " +
+                "JOIN usuario uador ON uador.id = n.avaliador " +
+                "JOIN usuario uado ON uado.id = n.avaliado " +
+                "JOIN equipe e ON e.id = uador.equipe " +
                 "JOIN sprint s ON s.id = n.sprint " +
-                "WHERE s.id = ?";
+                "JOIN criterio c ON c.id = n.criterio " +
+                "WHERE e.id = ? AND s.id = ? " +
+                "ORDER BY uador.id";
 
-        List<PastEvaluationModel> evaluations = new ArrayList<>();
+        sprintId = 1;
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, teamId, sprintId)) {
+            while (resultSet.next()) {
+                String evaluatorName = resultSet.getString("avaliador");
+                String evaluatedName = resultSet.getString("avaliado");
+                String criteriaName = resultSet.getString("criterio");
+                String sprintDescription = resultSet.getString("descricao");
+                int nota = resultSet.getInt("nota");
 
-        try (PreparedStatement statement = DatabaseConnection.getConnection(true).prepareStatement(sql)) {
-            statement.setInt(1, sprintId);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    String evaluatorName = resultSet.getString("avaliador");
-                    int evaluatedStudentId = resultSet.getInt("avaliado");
-                    String criteria = resultSet.getString("criterio");
-                    String sprintDescription = resultSet.getString("descricao");
-                    int nota = resultSet.getInt("nota");
-
-                    PastEvaluationModel evaluation = new PastEvaluationModel(evaluatorName, evaluatedStudentId, criteria, sprintDescription, nota);
-                    evaluations.add(evaluation);
-                }
+                PastEvaluationModel evaluation = new PastEvaluationModel(evaluatorName, evaluatedName, criteriaName, sprintDescription, nota);
+                evaluations.add(evaluation);
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar avaliações: " + e.getMessage());
+            System.out.println("Erro no SQL de selectPastEvaluations: " + e.getMessage());
         }
-
         return evaluations;
     }
 }
