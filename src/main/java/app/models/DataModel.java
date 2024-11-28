@@ -54,6 +54,4 @@ public class DataModel {
     public String getData_fim(){
         return data_fim.get();
     }
-
-
 }

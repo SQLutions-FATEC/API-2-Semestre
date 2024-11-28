@@ -31,7 +31,6 @@ import java.util.function.Consumer;
 public class Utils {
     private static Stage primaryStage;
 
-
     public static boolean isOnlyLetters(String input) {
         if (input == null || input.isEmpty()) {
             return false;
@@ -79,8 +78,6 @@ public class Utils {
         }
         return null;
     }
-
-
 
     public static void setScreen(ActionEvent event, String screenFile, Object data) {
         Map<String, String[]> files = new HashMap<>();

@@ -10,14 +10,12 @@ public class SprintModel {
     private ObjectProperty<Date> startDate;
     private ObjectProperty<Date> endDate;
 
-
     public SprintModel(int id, String description, Date startDate, Date endDate) {
         this.id = new SimpleIntegerProperty(id);
         this.description = new SimpleStringProperty(description);
         this.startDate = new SimpleObjectProperty<>(startDate);
         this.endDate = new SimpleObjectProperty<>(endDate);
     }
-
 
     public int getId() {
         return id.get();

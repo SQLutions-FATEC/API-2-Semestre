@@ -67,7 +67,6 @@ CREATE TABLE `sprint` (
 	PRIMARY KEY(`id`)
 );
 
-
 CREATE TABLE `pontuacao` (
 	`id` INTEGER NOT NULL AUTO_INCREMENT UNIQUE,
 	`valor` TINYINT NOT NULL,
