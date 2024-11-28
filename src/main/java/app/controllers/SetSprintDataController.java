@@ -117,23 +117,14 @@ public class SetSprintDataController implements Initializable {
 
     @FXML
     private void deleteSprint(){
-
-
-
-
                 ObservableList<SprintModel> selectedItems = tableData.getSelectionModel().getSelectedItems();
             for (SprintModel sprint : selectedItems) {
-                System.out.println(sprint);
+                System.out.println(sprint.getId());
+                int sprintId = sprint.getId();
             }
 
     }
 
-
-/*    public String toString(){
-
-        String informacoes =
-        return informacoes;
-    };*/
 
     @FXML
     private void goToProfessorScreen(ActionEvent event) {
