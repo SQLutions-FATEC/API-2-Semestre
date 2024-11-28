@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
    <Separator blendMode="DARKEN" layoutX="200.0" layoutY="20.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="0.0">
       <cursor>
@@ -23,34 +21,34 @@
    </Separator>
    <VBox alignment="CENTER" layoutY="1.0" prefHeight="600.0" prefWidth="200.0" spacing="30.0">
       <children>
-         <Button mnemonicParsing="false" onAction="#goToAddStudentScreen" prefHeight="44.0" prefWidth="198.0" text="Criar Equipe">
+         <Button mnemonicParsing="false" onAction="#goToAddStudentScreen" prefHeight="40.0" prefWidth="160.0" text="Criar Equipe">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#goToSetSprintDataScreen" prefHeight="44.0" prefWidth="198.0" text="Período das Sprints">
+         <Button mnemonicParsing="false" onAction="#goToSetSprintDataScreen" prefHeight="40.0" prefWidth="160.0" text="Definir Sprints">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#goToEditStudentScreen" prefHeight="44.0" prefWidth="198.0" text="Editar Aluno">
+         <Button mnemonicParsing="false" onAction="#goToEditStudentScreen" prefHeight="40.0" prefWidth="160.0" text="Editar Aluno">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#goToSetScoreScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Limite Pontuaçao">
+         <Button mnemonicParsing="false" onAction="#goToSetScoreScreen" prefHeight="40.0" prefWidth="160.0" text="Limitar Pontuaçao">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#goToCriteriaScreen" prefHeight="44.0" prefWidth="198.0" text="Definir Critérios">
+         <Button mnemonicParsing="false" onAction="#goToCriteriaScreen" prefHeight="40.0" prefWidth="160.0" text="Definir Critérios">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="44.0" prefWidth="198.0" text="Deslogar">
+         <Button mnemonicParsing="false" onAction="#goToLoginScreen" prefHeight="40.0" prefWidth="160.0" text="Deslogar">
             <font>
-               <Font size="16.0" />
+               <Font size="14.0" />
             </font>
          </Button>
       </children>
@@ -58,27 +56,27 @@
          <Insets right="-5.0" />
       </padding>
    </VBox>
-   <Label layoutX="613.0" layoutY="31.0" prefHeight="21.0" prefWidth="67.0" text="Período">
+   <Label layoutX="580.0" layoutY="20.0" prefHeight="20.0" prefWidth="67.0" text="Período">
       <font>
          <Font size="16.0" />
       </font>
    </Label>
-   <ChoiceBox fx:id="periodChoiceBox" layoutX="613.0" layoutY="53.0" prefWidth="150.0" />
-   <Label fx:id="title" alignment="CENTER" layoutX="300.0" layoutY="94.0" prefHeight="45.0" prefWidth="380.0" text="Nenhuma Equipe Encontrada">
+   <ChoiceBox fx:id="periodChoiceBox" layoutX="580.0" layoutY="45.0" prefWidth="200.0" />
+   <Label fx:id="title" alignment="CENTER" layoutX="310.0" layoutY="85.0" prefHeight="32.0" prefWidth="380.0" text="Nenhuma Equipe Encontrada">
       <font>
-         <Font size="30.0" />
+         <Font size="24.0" />
       </font>
    </Label>
-   <Label fx:id="description" alignment="CENTER" layoutX="300.0" layoutY="139.0" prefHeight="45.0" prefWidth="392.0" text="Crie uma Equipe" textAlignment="CENTER">
+   <Label fx:id="description" alignment="CENTER" layoutX="400.0" layoutY="120.0" prefHeight="32.0" prefWidth="200.0" text="Crie uma Equipe" textAlignment="CENTER">
       <font>
-         <Font size="20.0" />
+         <Font size="18.0" />
       </font>
    </Label>
-   <TableView fx:id="teamTable" layoutX="243.0" layoutY="201.0" prefHeight="323.0" prefWidth="494.0">
+   <TableView fx:id="teamTable" layoutX="220.0" layoutY="170.0" prefHeight="400.0" prefWidth="560.0">
       <columns>
-         <TableColumn fx:id="colName" prefWidth="125.0" text="Nome" />
-         <TableColumn fx:id="colGithub" prefWidth="250.0" text="Link do GitHub" />
-         <TableColumn fx:id="colVisualize" prefWidth="125.0" text="Visualizar" />
+         <TableColumn fx:id="colName" prefWidth="149.0" text="Nome" />
+         <TableColumn fx:id="colGithub" prefWidth="282.0" text="Link do GitHub" />
+         <TableColumn fx:id="colVisualize" prefWidth="148.0" text="Visualizar" />
       </columns>
    </TableView>
 </AnchorPane>
