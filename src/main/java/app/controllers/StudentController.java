@@ -170,11 +170,7 @@ public class StudentController implements ScreenController {
             }
         }
 
-        if (total > scoreValue) {
-            sendButton.setDisable(true);
-        } else {
-            sendButton.setDisable(false);
-        }
+        sendButton.setDisable(total > scoreValue);
 
         pointsInfo.setText(String.format("Pontos destinados: %s (Limite: %s)", total, scoreValue));
     }

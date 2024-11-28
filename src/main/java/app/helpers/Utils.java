@@ -91,7 +91,7 @@ public class Utils {
         files.put("addStudentScreen", new String[]{"/professor/addStudentScreen.fxml", "Adicionar aluno"});
         files.put("editStudentScreen", new String[]{"/professor/editStudentScreen.fxml", "Editar aluno"});
         files.put("setScore", new String[]{"/professor/setScore.fxml", "Definir pontuação"});
-        files.put("setSprintData", new String[]{"/professor/setSprintData.fxml", "Definir sprint"});
+        files.put("setSprintDataScreen", new String[]{"/professor/setSprintDataScreen.fxml", "Definir sprint"});
         files.put("outOfSetScorePeriodScreen", new String[]{"/professor/outOfSetScorePeriodScreen.fxml", "Fora do período"});
 
         String screenFXML = files.get(screenFile)[0];
@@ -102,8 +102,8 @@ public class Utils {
             Parent root = loader.load();
 
             if (
-                data != null ||
-                Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
+                    data != null ||
+                    Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
             ) {
                 ScreenController controller = loader.getController();
                 controller.initData(data);
@@ -180,13 +180,6 @@ public class Utils {
                 });
     }
 
-    public static void setAlert(String type, String title, String text) {
-        Alert alert = new Alert(setAlertType(type));
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(text);
-        alert.showAndWait();
-    }
 
     public static Date setDate(Date date, int days) {
         Calendar calendar = Calendar.getInstance();
@@ -194,6 +187,14 @@ public class Utils {
         calendar.add(Calendar.DAY_OF_MONTH, days);
 
         return calendar.getTime();
+    }
+
+    public static void setAlert(String type, String title, String text) {
+        Alert alert = new Alert(setAlertType(type));
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(text);
+        alert.showAndWait();
     }
 
     public static String getDownloadsPath() {
@@ -212,7 +213,7 @@ public class Utils {
     public static void createCsv(String caminhoArquivo, String teamName, int equipeID, int periodoID, String sprintDescription, int sprintID) throws SQLException {
         try {
             File file = new File(caminhoArquivo);
-            
+
             if (file.exists()) {
                 String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 String novoCaminho = caminhoArquivo.replaceFirst("(\\.csv)$", "_" + teamName + "_" + timestamp + "$1");
@@ -264,5 +265,12 @@ public class Utils {
         } catch (IOException e) {
             System.err.println("Erro ao gerar o arquivo CSV: " + e.getMessage());
         }
+    }
+
+    public static String formatDate(LocalDate date) {
+        if (date == null) {
+            return "";
+        }
+        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
     }
 }
