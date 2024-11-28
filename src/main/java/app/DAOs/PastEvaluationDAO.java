@@ -11,7 +11,7 @@ import java.util.List;
 
 public class PastEvaluationDAO {
     public List<PastEvaluationModel> fetchPeerEvaluations(int sprintId) {
-        String sql = "SELECT u.nome AS avaliador, n.avaliado, n.criterio, s.descricao " +
+        String sql = "SELECT u.nome AS avaliador, n.avaliado, n.criterio, s.descricao, n.valor AS nota " +
                 "FROM nota n " +
                 "JOIN usuario u ON u.id = n.avaliador " +
                 "JOIN sprint s ON s.id = n.sprint " +
@@ -27,8 +27,9 @@ public class PastEvaluationDAO {
                     int evaluatedStudentId = resultSet.getInt("avaliado");
                     String criteria = resultSet.getString("criterio");
                     String sprintDescription = resultSet.getString("descricao");
+                    int nota = resultSet.getInt("nota");
 
-                    PastEvaluationModel evaluation = new PastEvaluationModel(evaluatorName, evaluatedStudentId, criteria, sprintDescription);
+                    PastEvaluationModel evaluation = new PastEvaluationModel(evaluatorName, evaluatedStudentId, criteria, sprintDescription, nota);
                     evaluations.add(evaluation);
                 }
             }

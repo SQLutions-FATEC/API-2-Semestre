@@ -5,12 +5,14 @@ public class PastEvaluationModel {
         private int evaluatedStudentId;
         private String criteria;
         private String sprintDescription;
+        private int nota;
 
-        public PastEvaluationModel(String evaluatorName, int evaluatedStudentId, String criteria, String sprintDescription) {
+        public PastEvaluationModel(String evaluatorName, int evaluatedStudentId, String criteria, String sprintDescription, int nota) {
             this.evaluatorName = evaluatorName;
             this.evaluatedStudentId = evaluatedStudentId;
             this.criteria = criteria;
             this.sprintDescription = sprintDescription;
+            this.nota = nota;
         }
 
         public String getEvaluatorName() {
@@ -33,6 +35,10 @@ public class PastEvaluationModel {
             return criteria;
         }
 
+    public int getNota() {
+        return nota;
+    }
+
         public void setCriteria(String criteria) {
             this.criteria = criteria;
         }
@@ -43,5 +49,9 @@ public class PastEvaluationModel {
 
         public void setSprintDescription(String sprintDescription) {
             this.sprintDescription = sprintDescription;
+        }
+
+        public void setNota(int nota){
+            this.nota = nota;
         }
 }
