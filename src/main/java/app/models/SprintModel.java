@@ -65,4 +65,9 @@ public class SprintModel {
     public ObjectProperty<Date> endDateProperty() {
         return endDate;
     }
+
+    @Override
+    public String toString() {
+        return id.getValue().toString();
+    }
 }

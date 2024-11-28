@@ -116,6 +116,26 @@ public class SetSprintDataController implements Initializable {
     }
 
     @FXML
+    private void deleteSprint(){
+
+
+
+
+                ObservableList<SprintModel> selectedItems = tableData.getSelectionModel().getSelectedItems();
+            for (SprintModel sprint : selectedItems) {
+                System.out.println(sprint);
+            }
+
+    }
+
+
+/*    public String toString(){
+
+        String informacoes =
+        return informacoes;
+    };*/
+
+    @FXML
     private void goToProfessorScreen(ActionEvent event) {
         Utils.setScreen(event, "professorScreen");
     }
