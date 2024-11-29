@@ -42,6 +42,7 @@ public class SprintDAO {
                         s.data_fim
                     FROM sprint s
                     INNER JOIN periodo p ON s.periodo = p.id
+                    WHERE s.deleted_at IS NULL
                     ORDER BY s.data_fim DESC
                     LIMIT 8
                 """;
