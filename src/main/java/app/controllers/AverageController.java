@@ -127,7 +127,8 @@ public class AverageController {
         ObservableList<AverageGradeModel> data = FXCollections.observableArrayList(studentsMap.values());
         if (data.isEmpty()) {
             reportButton.setDisable(true);
-            return;
+        } else {
+            reportButton.setDisable(false);
         }
         tableAverageGrades.setItems(data);
     }
