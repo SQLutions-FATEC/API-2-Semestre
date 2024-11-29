@@ -117,7 +117,7 @@ public class SetSprintDataController implements Initializable {
         try {
             boolean success = sprintDAO.deleteSprint(sprintId) > 0;
             if (success) {
-                Utils.setAlert("INFORMATION", "Deleção da Sprint", "Sprint deletada com sucesso!");
+                Utils.setAlert("CONFIRMATION", "Deleção da Sprint", "Sprint deletada com sucesso!");
                 loadLast8Sprints();
             }
         } catch (SQLException e) {
