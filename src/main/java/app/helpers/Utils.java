@@ -102,8 +102,8 @@ public class Utils {
             Parent root = loader.load();
 
             if (
-                    data != null ||
-                    Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
+                data != null ||
+                Objects.equals(screenFile, "professorScreen") || Objects.equals(screenFile, "studentScreen")
             ) {
                 ScreenController controller = loader.getController();
                 controller.initData(data);

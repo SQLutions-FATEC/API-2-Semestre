@@ -11,10 +11,10 @@ import java.time.LocalDate;
 import java.util.Date;
 
 public class SprintDAO {
-
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
+        ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
+
         String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
-        sprintList.clear();
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
@@ -33,20 +33,21 @@ public class SprintDAO {
     }
 
     public ObservableList<SprintModel> selectLast8Sprints() {
+        ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
+
         String sql = """
-                    SELECT 
-                        s.id,
-                        CONCAT(p.ano, '.', p.semestre, ' - ', 
-                               TRIM(SUBSTRING(s.descricao, LOCATE(' ', s.descricao) + 1))) AS sprint_description, 
-                        s.data_inicio,
-                        s.data_fim
-                    FROM sprint s
-                    INNER JOIN periodo p ON s.periodo = p.id
-                    WHERE s.deleted_at IS NULL
-                    ORDER BY s.data_fim DESC
-                    LIMIT 8
-                """;
-        sprintList.clear();
+        SELECT 
+            s.id,
+            CONCAT(p.ano, '.', p.semestre, ' - ', 
+                   TRIM(SUBSTRING(s.descricao, LOCATE(' ', s.descricao) + 1))) AS sprint_description, 
+            s.data_inicio,
+            s.data_fim
+        FROM sprint s
+        INNER JOIN periodo p ON s.periodo = p.id
+        WHERE s.deleted_at IS NULL
+        ORDER BY s.data_fim DESC
+        LIMIT 8
+    """;
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
             while (resultSet.next()) {
@@ -92,7 +93,7 @@ public class SprintDAO {
             throw new SQLException("Já existe uma sprint com esse nome para o mesmo período.");
         }
 
-        if (!isSequentialDates(dataInicio, dataFim, periodoId)) {
+        if (!isSequentialDates(dataInicio, periodoId)) {
             throw new SQLException("A sequência de datas da sprint está fora de ordem.");
         }
 
@@ -102,16 +103,18 @@ public class SprintDAO {
 
 
     private boolean isDateRangeAvailable(Date dataInicio, Date dataFim, int periodoId) {
+        ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
+
         String sql = """
-                    SELECT COUNT(*) AS count 
-                    FROM sprint 
-                    WHERE periodo = ? 
-                    AND (
-                        (data_inicio <= ? AND data_fim >= ?) OR
-                        (data_inicio <= ? AND data_fim >= ?) OR
-                        (data_inicio >= ? AND data_fim <= ?)
-                    )
-                """;
+        SELECT COUNT(*) AS count 
+        FROM sprint 
+        WHERE periodo = ? 
+        AND (
+            (data_inicio <= ? AND data_fim >= ?) OR
+            (data_inicio <= ? AND data_fim >= ?) OR
+            (data_inicio >= ? AND data_fim <= ?)
+        )
+    """;
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId, dataFim, dataFim, dataInicio, dataInicio, dataInicio, dataFim)) {
             if (resultSet.next()) {
@@ -139,14 +142,14 @@ public class SprintDAO {
         return false;
     }
 
-    private boolean isSequentialDates(Date dataInicio, Date dataFim, int periodoId) {
+    private boolean isSequentialDates(Date dataInicio, int periodoId) {
         String sql = """
-                    SELECT data_fim 
-                    FROM sprint 
-                    WHERE periodo = ? 
-                    ORDER BY data_fim DESC 
-                    LIMIT 1
-                """;
+            SELECT data_fim 
+            FROM sprint 
+            WHERE periodo = ? 
+            ORDER BY data_fim DESC 
+            LIMIT 1
+        """;
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId)) {
             if (resultSet.next()) {
@@ -182,8 +185,6 @@ public class SprintDAO {
         return sprint;
     }
 
-    private ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
-
     public int deleteSprint(int sprintId) throws SQLException {
         int generatedKey = 0;
         String sql = "UPDATE sprint SET deleted_at = NOW() where id = ?";
@@ -196,4 +197,5 @@ public class SprintDAO {
         }
         return generatedKey;
     }
+
 }
