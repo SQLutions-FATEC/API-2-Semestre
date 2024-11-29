@@ -14,7 +14,7 @@ public class SprintDAO {
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
         ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
+        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? AND deleted_at IS NULL ORDER BY s.data_inicio";
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
@@ -108,7 +108,7 @@ public class SprintDAO {
         String sql = """
         SELECT COUNT(*) AS count 
         FROM sprint 
-        WHERE periodo = ? 
+        WHERE periodo = ? AND deleted_at IS NULL
         AND (
             (data_inicio <= ? AND data_fim >= ?) OR
             (data_inicio <= ? AND data_fim >= ?) OR
@@ -146,7 +146,7 @@ public class SprintDAO {
         String sql = """
             SELECT data_fim 
             FROM sprint 
-            WHERE periodo = ? 
+            WHERE periodo = ? AND deleted_at IS NULL 
             ORDER BY data_fim DESC 
             LIMIT 1
         """;
