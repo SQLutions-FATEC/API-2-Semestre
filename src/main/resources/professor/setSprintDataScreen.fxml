@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetSprintDataController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="60.0" prefWidth="800.0" />
+      <VBox alignment="TOP_CENTER" layoutX="51.0" layoutY="142.0" spacing="10.0">
+         <children>
+            <Label text="Sprint:" />
+            <ComboBox fx:id="descricaoComboBox" prefHeight="26.0" prefWidth="221.0" promptText="None" />
+            <Label text="Data de Início:" />
+            <DatePicker fx:id="dataInicioPicker" prefHeight="26.0" prefWidth="223.0" />
+            <Label text="Data de Fim:" />
+            <DatePicker fx:id="dataFimPicker" prefHeight="26.0" prefWidth="222.0" />
+         </children>
+      </VBox>
+      <VBox alignment="TOP_CENTER" layoutX="500.0" layoutY="80.0" spacing="10.0" />
+      <HBox alignment="CENTER" layoutX="-240.0" layoutY="349.0" prefHeight="50.0" prefWidth="800.0" spacing="20.0">
+         <children>
+            <Button onAction="#goToProfessorScreen" prefWidth="100.0" text="Voltar" />
+            <Button onAction="#createSprint" prefWidth="100.0" text="Nova Sprint" />
+         </children>
+      </HBox>
+      <Label layoutX="456.0" layoutY="100.0" text="Últimas Sprints Criadas:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableData" layoutX="400.0" layoutY="142.0" prefHeight="323.0" prefWidth="296.0">
+         <columns>
+            <TableColumn fx:id="colSprint" prefWidth="100.0" text="Sprint" />
+            <TableColumn fx:id="colStartDate" prefWidth="100.0" text="Data de Início" />
+            <TableColumn fx:id="colEndDate" prefWidth="100.0" text="Data de Fim" />
+         </columns>
+      </TableView>
+      <Label layoutX="76.0" layoutY="101.0" text="Definir Data das Sprints">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Line endX="100.00006103515625" endY="326.20001220703125" layoutX="248.0" layoutY="245.0" startX="100.00006103515625" startY="-223.40000915527344" stroke="#d9cfcf" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.ProfessorController">
    <Separator blendMode="DARKEN" layoutX="200.0" layoutY="20.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="0.0">
       <cursor>
@@ -28,7 +26,7 @@
                <Font size="14.0" />
             </font>
          </Button>
-         <Button mnemonicParsing="false" onAction="#definirDataSprint" prefHeight="40.0" prefWidth="160.0" text="Definir Sprints">
+         <Button mnemonicParsing="false" onAction="#goToSetSprintDataScreen" prefHeight="40.0" prefWidth="160.0" text="Definir Sprints">
             <font>
                <Font size="14.0" />
             </font>

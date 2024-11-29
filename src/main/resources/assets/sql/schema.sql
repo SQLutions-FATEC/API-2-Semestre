@@ -63,6 +63,7 @@ CREATE TABLE `sprint` (
 	`data_inicio` DATE NOT NULL,
 	`data_fim` DATE NOT NULL,
 	`periodo` INTEGER NOT NULL,
+    `deleted_at` DATETIME,
 	PRIMARY KEY(`id`)
 );
 

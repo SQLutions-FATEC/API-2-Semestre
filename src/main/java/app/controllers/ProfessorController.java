@@ -151,7 +151,8 @@ public class ProfessorController implements ScreenController {
         }
     }
 
-    public void definirDataSprint(ActionEvent event) {
-        Utils.setScreen(event, "setSprintData");
+    @FXML
+    public void goToSetSprintDataScreen(ActionEvent event) {
+        Utils.setScreen(event, "setSprintDataScreen");
     }
 }
