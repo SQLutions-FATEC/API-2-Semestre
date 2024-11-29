@@ -116,13 +116,23 @@ public class SetSprintDataController implements Initializable {
     }
 
     @FXML
-    private void deleteSprint(){
-                ObservableList<SprintModel> selectedItems = tableData.getSelectionModel().getSelectedItems();
-            for (SprintModel sprint : selectedItems) {
-                System.out.println(sprint.getId());
-                int sprintId = sprint.getId();
+    private void deleteSprint() {
+        Utils.setAlert("WARNING", "Deleção da sprint", "Tem certeza que deseja deletá-la?",() -> {
+        int sprintId = 0;
+        ObservableList<SprintModel> selectedItems = tableData.getSelectionModel().getSelectedItems();
+        for (SprintModel sprint : selectedItems) {
+            sprintId = sprint.getId();
+        }
+        try {
+            boolean success = sprintDAO.deleteSprint(sprintId) > 0;
+            if (success) {
+                Utils.setAlert("INFORMATION", "Deleção da Sprint", "Sprint deletada com sucesso!");
+                loadLast8Sprints();
             }
-
+        } catch (SQLException e) {
+            Utils.setAlert("ERROR", "Erro no sistema", "Erro ao deletar sprint: " + e.getMessage());
+        }
+        });
     }
 
 
@@ -131,3 +141,4 @@ public class SetSprintDataController implements Initializable {
         Utils.setScreen(event, "professorScreen");
     }
 }
+
