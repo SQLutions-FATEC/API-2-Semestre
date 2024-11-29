@@ -22,6 +22,7 @@
             <TableColumn fx:id="criteria" prefWidth="125.0" text="Criterio" />
             <TableColumn fx:id="description" prefWidth="100.0" text="Descricao" />
             <TableColumn fx:id="grade" prefWidth="54.0" text="Nota" />
-         </columns></TableView>
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
