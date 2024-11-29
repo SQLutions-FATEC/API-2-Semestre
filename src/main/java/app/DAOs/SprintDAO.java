@@ -129,7 +129,7 @@ public class SprintDAO {
     }
 
     private boolean isDuplicateSprint(String descricao, int periodoId) {
-        String sql = "SELECT COUNT(*) AS count FROM sprint WHERE descricao = ? AND periodo = ?";
+        String sql = "SELECT COUNT(*) AS count FROM sprint WHERE descricao = ? AND periodo = ? AND deleted_at IS NULL";
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, descricao, periodoId)) {
             if (resultSet.next()) {
