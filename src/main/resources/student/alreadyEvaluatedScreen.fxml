@@ -22,5 +22,10 @@
                 <Font size="16.0" />
             </font>
         </Button>
+        <Button layoutX="305.0" layoutY="100.0" mnemonicParsing="false" onAction="#goToPastEvaluationsScreen" prefHeight="30.0" prefWidth="198.0" text="Ver avaliaçoes passadas">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>

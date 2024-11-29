@@ -13,8 +13,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CriteriaDAO {
-    ObservableList<CriteriaModel> criteriaList = FXCollections.observableArrayList();
-
     public int createCriteria(String name, String description) {
         String sql = "INSERT INTO criterio (nome, descricao) VALUES (?, ?)";
         int criteriaId = 0;
@@ -30,6 +28,8 @@ public class CriteriaDAO {
     }
 
     public ObservableList<CriteriaModel> selectCriteriasByPeriodId(int selectedPeriodId) {
+        ObservableList<CriteriaModel> criteriaList = FXCollections.observableArrayList();
+
         String sql = "SELECT * FROM criterio ORDER BY nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql)) {
@@ -62,6 +62,8 @@ public class CriteriaDAO {
     }
 
     public ObservableList<CriteriaModel> selectActiveCriteriasByPeriod(int selectedPeriodId) {
+        ObservableList<CriteriaModel> criteriaList = FXCollections.observableArrayList();
+
         String sql = "SELECT * FROM criterio c JOIN criterio_periodo cp ON cp.criterio_id = c.id WHERE cp.periodo_id = ? AND c.deleted_at IS NULL AND cp.deleted_at IS NULL ORDER BY c.nome";
 
         try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {

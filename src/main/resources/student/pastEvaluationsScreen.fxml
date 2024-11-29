@@ -2,10 +2,10 @@
 
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.PastEvaluationsController">
    <children>
@@ -15,6 +15,14 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <TableView fx:id="tableEvaluationGrades" layoutX="10.0" layoutY="90.0" prefHeight="300.0" prefWidth="580.0" />
+      <TableView fx:id="tableEvaluationGrades" layoutX="10.0" layoutY="90.0" prefHeight="300.0" prefWidth="580.0">
+         <columns>
+            <TableColumn fx:id="evaluator" prefWidth="150.0" text="Avaliador" />
+            <TableColumn fx:id="evaluated" prefWidth="150.0" text="Avaliado" />
+            <TableColumn fx:id="criteria" prefWidth="125.0" text="Criterio" />
+            <TableColumn fx:id="description" prefWidth="100.0" text="Descricao" />
+            <TableColumn fx:id="grade" prefWidth="54.0" text="Nota" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>
