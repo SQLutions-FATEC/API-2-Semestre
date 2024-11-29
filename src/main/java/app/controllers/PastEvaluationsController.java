@@ -3,6 +3,7 @@ package app.controllers;
 import app.DAOs.PastEvaluationDAO;
 import app.DAOs.PeriodDAO;
 import app.DAOs.SprintDAO;
+import app.models.CriteriaModel;
 import app.models.PastEvaluationModel;
 import app.models.SprintModel;
 import javafx.collections.FXCollections;
@@ -23,6 +24,16 @@ public class PastEvaluationsController {
     public ChoiceBox<String> sprintChoiceBox;
     @FXML
     TableView<PastEvaluationModel> tableEvaluationGrades;
+    @FXML
+    public TableColumn<PastEvaluationModel, String> evaluator;
+    @FXML
+    public TableColumn<PastEvaluationModel, String> evaluated;
+    @FXML
+    public TableColumn<PastEvaluationModel, String> criteria;
+    @FXML
+    public TableColumn<PastEvaluationModel, String> description;
+    @FXML
+    public TableColumn<PastEvaluationModel, Integer> grade;
 
     int teamId = 0;
     int periodId = 0;
@@ -74,23 +85,11 @@ public class PastEvaluationsController {
     }
 
     private void createTable() {
-        TableColumn<PastEvaluationModel, String> evaluatorColumn = new TableColumn<>("Avaliador");
-        TableColumn<PastEvaluationModel, String> evaluatedColumn = new TableColumn<>("Avaliado");
-        TableColumn<PastEvaluationModel, String> criteriaColumn = new TableColumn<>("Critério");
-        TableColumn<PastEvaluationModel, String> sprintColumn = new TableColumn<>("Sprint");
-        TableColumn<PastEvaluationModel, Integer> notaColumn = new TableColumn<>("Nota");
-
-        evaluatorColumn.setCellValueFactory(new PropertyValueFactory<>("evaluatorStudentName"));
-        evaluatedColumn.setCellValueFactory(new PropertyValueFactory<>("evaluatedStudentName"));
-        criteriaColumn.setCellValueFactory(new PropertyValueFactory<>("criteriaName"));
-        sprintColumn.setCellValueFactory(new PropertyValueFactory<>("sprintDescription"));
-        notaColumn.setCellValueFactory(new PropertyValueFactory<>("nota"));
-
-        tableEvaluationGrades.getColumns().add(evaluatorColumn);
-        tableEvaluationGrades.getColumns().add(evaluatedColumn);
-        tableEvaluationGrades.getColumns().add(criteriaColumn);
-        tableEvaluationGrades.getColumns().add(sprintColumn);
-        tableEvaluationGrades.getColumns().add(notaColumn);
+        evaluator.setCellValueFactory(new PropertyValueFactory<>("evaluatorStudentName"));
+        evaluated.setCellValueFactory(new PropertyValueFactory<>("evaluatedStudentName"));
+        criteria.setCellValueFactory(new PropertyValueFactory<>("criteriaName"));
+        description.setCellValueFactory(new PropertyValueFactory<>("sprintDescription"));
+        grade.setCellValueFactory(new PropertyValueFactory<>("nota"));
     }
 
     private void loadPeerEvaluations(int sprintId) {
