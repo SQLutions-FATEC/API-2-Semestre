@@ -50,5 +50,6 @@
          </font>
       </Label>
       <Line endX="100.00006103515625" endY="326.20001220703125" layoutX="248.0" layoutY="245.0" startX="100.00006103515625" startY="-223.40000915527344" stroke="#d9cfcf" />
+      <Button layoutX="109.0" layoutY="405.0" onAction="#deleteSprint" prefWidth="100.0" text="Deletar Sprint" />
    </children>
 </AnchorPane>
