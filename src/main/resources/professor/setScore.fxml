@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetScoreController">
    <children>
       <Label layoutX="275.0" layoutY="205.0" text="Equipe" />
-      <Label fx:id="currentPeriod" layoutX="321.0" layoutY="90.0" text="Periodo Atual: ">
+      <Label fx:id="currentPeriod" layoutX="300.0" layoutY="90.0" text="Periodo Atual: ">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
