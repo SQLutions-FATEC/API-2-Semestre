@@ -10,6 +10,11 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetScoreController">
    <children>
       <Label layoutX="275.0" layoutY="205.0" text="Equipe" />
+      <Label fx:id="currentPeriod" layoutX="321.0" layoutY="90.0" text="Periodo Atual: ">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
       <ChoiceBox fx:id="teamChoiceBox" layoutX="275.0" layoutY="225.0" prefHeight="30.0" prefWidth="250.0" />
       <Label layoutX="275.0" layoutY="310.0" text="Valor Máximo" />
       <TextField fx:id="maxScore" layoutX="275.0" layoutY="330.0" maxWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" promptText="Adicione um valor" />

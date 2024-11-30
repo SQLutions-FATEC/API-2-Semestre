@@ -44,6 +44,7 @@ public class ProfessorController implements ScreenController {
             handlePeriodListSelectionChange(newValue);
         });
         fetchPeriods();
+        fetchCurrentSprint();
     }
 
     private void fetchPeriods() {
@@ -60,6 +61,10 @@ public class ProfessorController implements ScreenController {
 
         periodChoiceBox.getItems().addAll(periodOptionsList);
         periodChoiceBox.setValue(period[1] + " - " + period[0]);
+    }
+
+    private void fetchCurrentSprint() {
+        Utils.getCurrentPeriodAndSprint();
     }
 
     public void fetchTeams() {
