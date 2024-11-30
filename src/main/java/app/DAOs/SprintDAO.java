@@ -15,7 +15,7 @@ public class SprintDAO {
     public ObservableList<SprintModel> selectSprints(int selectedPeriodId) {
         ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
 
-        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? ORDER BY s.data_inicio";
+        String sql = "SELECT * FROM sprint s WHERE s.periodo = ? AND deleted_at IS NULL ORDER BY s.data_inicio";
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, selectedPeriodId)) {
             while (resultSet.next()) {
@@ -45,6 +45,7 @@ public class SprintDAO {
             s.data_fim
         FROM sprint s
         INNER JOIN periodo p ON s.periodo = p.id
+        WHERE s.deleted_at IS NULL
         ORDER BY s.data_fim DESC
         LIMIT 8
     """;
@@ -108,7 +109,7 @@ public class SprintDAO {
         String sql = """
         SELECT COUNT(*) AS count 
         FROM sprint 
-        WHERE periodo = ? 
+        WHERE periodo = ? AND deleted_at IS NULL
         AND (
             (data_inicio <= ? AND data_fim >= ?) OR
             (data_inicio <= ? AND data_fim >= ?) OR
@@ -129,7 +130,7 @@ public class SprintDAO {
     }
 
     private boolean isDuplicateSprint(String descricao, int periodoId) {
-        String sql = "SELECT COUNT(*) AS count FROM sprint WHERE descricao = ? AND periodo = ?";
+        String sql = "SELECT COUNT(*) AS count FROM sprint WHERE descricao = ? AND periodo = ? AND deleted_at IS NULL";
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, descricao, periodoId)) {
             if (resultSet.next()) {
@@ -146,7 +147,7 @@ public class SprintDAO {
         String sql = """
             SELECT data_fim 
             FROM sprint 
-            WHERE periodo = ? 
+            WHERE periodo = ? AND deleted_at IS NULL 
             ORDER BY data_fim DESC 
             LIMIT 1
         """;
@@ -202,8 +203,22 @@ public class SprintDAO {
                 sprint = new SprintModel(id, description, startDate, endDate);
             }
         } catch (SQLException e) {
-            System.out.println("Erro no SQL de selectPastSprint: " + e.getMessage());
+            System.out.println("Erro no SQL de selectCurrentSprint: " + e.getMessage());
         }
         return sprint;
     }
+
+    public int deleteSprint(int sprintId) throws SQLException {
+        int generatedKey = 0;
+        String sql = "UPDATE sprint SET deleted_at = NOW() where id = ?";
+        try{
+            generatedKey = DatabaseConnection.executeUpdate(sql, sprintId);
+        } catch (SQLException e){
+            System.out.println("Erro no SQL de deleteSprintt: " + e.getMessage());
+        } finally {
+            DatabaseConnection.closeResources();
+        }
+        return generatedKey;
+    }
+
 }
