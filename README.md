@@ -36,12 +36,12 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 <details>
   <summary>Aluno</summary>
-  TODO
+  Fluxo aluno
 </details>
 
 <details>
   <summary>Professor</summary>
-  TODO
+  Fluxo professor
 </details>
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
