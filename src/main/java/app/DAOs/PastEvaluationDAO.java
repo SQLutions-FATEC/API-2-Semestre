@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class PastEvaluationDAO {
-    public ObservableList<PastEvaluationModel> selectPastEvaluations(int teamId, int sprintId) {
+    public ObservableList<PastEvaluationModel> selectPastEvaluations(String evaluatorEmail, int sprintId) {
         ObservableList<PastEvaluationModel> evaluations = FXCollections.observableArrayList();
 
         String sql = "SELECT uador.nome AS avaliador, uado.nome AS avaliado, c.nome AS criterio, s.descricao, n.valor AS nota " +
@@ -19,10 +19,10 @@ public class PastEvaluationDAO {
                 "JOIN equipe e ON e.id = uador.equipe " +
                 "JOIN sprint s ON s.id = n.sprint " +
                 "JOIN criterio c ON c.id = n.criterio " +
-                "WHERE e.id = ? AND s.id = ? " +
+                "WHERE uador.email = ? AND s.id = ? " +
                 "ORDER BY uador.id";
 
-        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, teamId, sprintId)) {
+        try(ResultSet resultSet = DatabaseConnection.executeQuery(sql, evaluatorEmail, sprintId)) {
             while (resultSet.next()) {
                 String evaluatorName = resultSet.getString("avaliador");
                 String evaluatedName = resultSet.getString("avaliado");

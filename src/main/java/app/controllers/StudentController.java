@@ -46,11 +46,13 @@ public class StudentController implements ScreenController {
             actionEvent = (ActionEvent) ((Map<?, ?>) data).get("event");
         }
         try {
-            fetchPeriod();
-            fetchSprint();
-            fetchCriterias();
-            fetchStudents();
-            setScoreLimit();
+            if (tableView != null) {
+                fetchPeriod();
+                fetchSprint();
+                fetchCriterias();
+                fetchStudents();
+                setScoreLimit();
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +145,11 @@ public class StudentController implements ScreenController {
                 }
             }
             Utils.setAlert("CONFIRMATION", "Definição de notas", "As notas foram registradas com sucesso!");
-            Utils.setScreen(actionEvent, "alreadyEvaluatedScreen");
+            Map<String, Object> data = new HashMap<>();
+            data.put("userEmail", userEmail);
+            data.put("teamId", teamId);
+            data.put("event", actionEvent);
+            Utils.setScreen(actionEvent, "alreadyEvaluatedScreen", data);
         });
     }
 
@@ -184,7 +190,7 @@ public class StudentController implements ScreenController {
     public void goToPastEvaluationsScreen () {
         Utils.setPopup("pastEvaluationsScreen", 400, 600, controller -> {
             if (controller instanceof PastEvaluationsController) {
-                ((PastEvaluationsController) controller).passData(teamId);
+                ((PastEvaluationsController) controller).passData(userEmail);
             }
         });
     }
