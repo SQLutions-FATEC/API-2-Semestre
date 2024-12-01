@@ -57,7 +57,7 @@
 - Navegue até a pasta em que foi baixado o arquivo `.jar`
     - Provavelmente a pasta "Downloads", sendo assim digite `cd ~/Downloads` e confirme
 - Execute o seguinte comando, substituindo o `PASTA_SDK` pela pasta que salvou o arquivo `javafx-sdk-22.0.2` anteriormente:
-    - `java --module-path "PASTA_SDK\javafx-sdk-22.0.2\lib" --add-modules javafx.controls,javafx.fxml -jar avaliador-de-soft-skill.jar`
+    - `java --module-path "PASTA_SDK\javafx-sdk-22.0.2/lib" --add-modules javafx.controls,javafx.fxml -jar avaliador-de-soft-skill.jar`
 ---
 
 ---
@@ -67,7 +67,7 @@
 - Navegue até a pasta em que foi baixado o arquivo `.jar`
   - Provavelmente a pasta "Downloads", sendo assim digite `cd ~/Downloads` e confirme
 - Execute o seguinte comando, substituindo o `PASTA_SDK` pela pasta que salvou o arquivo `javafx-sdk-22.0.2` anteriormente:
-  - `java --module-path "PASTA_SDK\javafx-sdk-22.0.2\lib" --add-modules javafx.controls,javafx.fxml -jar avaliador-de-soft-skill.jar`
+  - `java --module-path "PASTA_SDK\javafx-sdk-22.0.2/lib" --add-modules javafx.controls,javafx.fxml -jar avaliador-de-soft-skill.jar`
 ---
 
 - Clique no botão de `Preencher banco` para que tenha dados locais para utilizar o projeto
