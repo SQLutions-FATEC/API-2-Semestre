@@ -60,7 +60,7 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 <details>
   <summary>Professor</summary>
-  TODO
+  fluxo
 </details>
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
