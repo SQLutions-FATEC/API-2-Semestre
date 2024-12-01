@@ -60,7 +60,65 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 <details>
   <summary>Professor</summary>
-  fluxo
+
+---
+
+### Login e Criação de Equipes
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1w1bkqJDsnphoh3H3D4lc2NLP4q8tcsBO/view?usp=sharing)
+
+**Legenda:** Este vídeo demonstra como o professor acessa o sistema e cria uma nova equipe a partir de um arquivo CSV.
+
+---
+
+### Criação de Sprints
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1QZKbopmvAGyny_GUsOsPi3owxSYWHn41/view?usp=sharing)
+
+**Legenda:** Este vídeo demonstra a funcionalidade do professor para criar Sprints, incluindo a simulação de sua criação e posterior visualização.
+
+---
+
+### Edição e Exclusão de alunos
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1-ztsjapcYGOMJs8m1qfyEvZXKNynsnHK/view?usp=sharing)
+
+**Legenda:** Este vídeo apresenta como o professor pode editar e excluir alunos, incluindo a transferência de um aluno entre equipes e sua remoção do sistema.
+
+---
+
+### Definir Limite de Pontuação fora da data
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1F1D1bl4gs5QAJFoJkZEUyHs6K5cYK_AD/view?usp=sharing)
+
+**Legenda:** Este vídeo demonstra a mensagem exibida ao professor ao tentar definir a pontuação máxima fora do período permitido, indicando que a ação só pode ser realizada no intervalo de uma semana após a data final da Sprint.
+
+---
+
+### Definir Limite de Pontuação dentro da data
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1MXPWR22p-jFW2q1kyFohL7CcP5Yf06jG/view?usp=sharing)
+
+**Legenda:** Este vídeo apresenta a funcionalidade que permite ao professor definir a pontuação máxima para uma equipe específica.
+
+---
+
+### Criação e Seleção de Critérios
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1VqIkzWDm__RJcKVI0kxxEQiOfWsIMlKH/view?usp=sharing)
+
+**Legenda:** Este vídeo apresenta a funcionalidade que permite ao professor criar critérios com nome e descrição, além de selecionar quais critérios serão aplicados em cada período específico.
+
+---
+
+### Visualização de Médias e Geração de Relatórios
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1adghxIUtDmhemoLN_4QkUlLYveTi_n37/view?usp=sharing)
+
+**Legenda:** O professor pode visualizar as médias dos integrantes de uma equipe em um período específico e gerar um relatório em formato CSV. O vídeo também apresenta uma simulação que informa a impossibilidade de gerar o relatório caso a equipe não tenha notas.
+
+---
+
 </details>
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
