@@ -42,7 +42,7 @@
     - ATENÇÃO: Lembre-se de qual pasta salvou este arquivo, pois será utilizado mais pra frente. Por agora, vamos nos referir à esta pasta como `PASTA_SDK`
 
 ### .jar
-- Faça o download do arquivo [Avaliador de Soft Skill](https://drive.google.com/file/d/1Zh-dQstVjuzCZAYFwv7ya4SyzmyYCG5L/view?usp=sharing)
+- Faça o download do arquivo [Avaliador de Soft Skill](https://drive.google.com/file/d/1zrfx87TAEPJmOpIlY3N1YcxqCUgHtup_/view?usp=sharing)
 
 ## Execução
 
