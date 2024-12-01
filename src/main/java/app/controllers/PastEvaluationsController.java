@@ -35,15 +35,15 @@ public class PastEvaluationsController {
     @FXML
     public TableColumn<PastEvaluationModel, Integer> grade;
 
-    int teamId = 0;
+    String evaluatorEmail;
     int periodId = 0;
     int sprintId = 0;
     ObservableList<SprintModel> sprintList = FXCollections.observableArrayList();
     ArrayList<String> sprintOptionsList = new ArrayList<>();
     Map<String, Integer> sprintIdMap = new HashMap<>();
 
-    public void passData(int userTeamId) {
-        teamId = userTeamId;
+    public void passData(String userEmail) {
+        evaluatorEmail = userEmail;
 
         sprintChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleSprintListSelectionChange(newValue);
@@ -94,7 +94,7 @@ public class PastEvaluationsController {
 
     private void loadPeerEvaluations(int sprintId) {
         PastEvaluationDAO pastEvaluationDAO = new PastEvaluationDAO();
-        ObservableList<PastEvaluationModel> evaluationData = pastEvaluationDAO.selectPastEvaluations(teamId, sprintId);
+        ObservableList<PastEvaluationModel> evaluationData = pastEvaluationDAO.selectPastEvaluations(evaluatorEmail, sprintId);
 
         tableEvaluationGrades.setItems(evaluationData);
     }

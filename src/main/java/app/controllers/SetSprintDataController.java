@@ -31,12 +31,15 @@ public class SetSprintDataController implements Initializable {
     private DatePicker dataInicioPicker;
     @FXML
     private DatePicker dataFimPicker;
+    @FXML
+    public Label currentPeriod;
 
     private final SprintDAO sprintDAO = new SprintDAO();
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         descricaoComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5, 6, 7, 8));
         descricaoComboBox.setPromptText("Selecione uma sprint:");
+        currentPeriod.setText(currentPeriod.getText() + Utils.currentPeriodAndSprint);
 
         colSprint.setCellValueFactory(new PropertyValueFactory<>("description"));
         colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));

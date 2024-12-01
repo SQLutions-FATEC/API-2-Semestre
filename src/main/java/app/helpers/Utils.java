@@ -2,9 +2,12 @@ package app.helpers;
 
 import app.DAOs.CriteriaDAO;
 import app.DAOs.GradeDAO;
+import app.DAOs.PeriodDAO;
+import app.DAOs.SprintDAO;
 import app.interfaces.ScreenController;
 import app.models.AverageGradeModel;
 import app.models.CriteriaModel;
+import app.models.SprintModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +33,7 @@ import java.util.function.Consumer;
 
 public class Utils {
     private static Stage primaryStage;
+    public static String currentPeriodAndSprint;
 
     public static boolean isOnlyLetters(String input) {
         if (input == null || input.isEmpty()) {
@@ -37,6 +41,20 @@ public class Utils {
         }
 
         return input.matches("[a-zA-ZÀ-ÿ\\s]+");
+    }
+
+    public static void getCurrentPeriodAndSprint() {
+        int[] period = getCurrentSemesterAndYearNumbers();
+        int year = period[0];
+        int semester = period[1];
+        SprintDAO sprintDAO = new SprintDAO();
+        SprintModel currentSprint = sprintDAO.selectCurrentSprint();
+
+        currentPeriodAndSprint = year + "." + semester;
+
+        if (currentSprint != null) {
+            currentPeriodAndSprint = currentPeriodAndSprint + ":" + currentSprint.getDescription();
+        }
     }
 
     public static int[] getCurrentSemesterAndYearNumbers() {

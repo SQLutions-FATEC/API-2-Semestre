@@ -79,20 +79,20 @@ public class LoginController {
         if (user != null) {
             teamId = user.getEquipeId();
             if (teamId > 0) {
-                boolean isEvaluationPeriod = checkEvaluationPeriod();
-                if (!isEvaluationPeriod) {
-                    Utils.setScreen(event, "outOfEvaluationPeriodScreen");
-                    return;
-                }
-                boolean hasAlreadyEvaluated = checkSprintEvaluation();
-                if (hasAlreadyEvaluated) {
-                    Utils.setScreen(event, "alreadyEvaluatedScreen");
-                    return;
-                }
                 Map<String, Object> data = new HashMap<>();
                 data.put("userEmail", email);
                 data.put("teamId", teamId);
                 data.put("event", event);
+                boolean isEvaluationPeriod = checkEvaluationPeriod();
+                if (!isEvaluationPeriod) {
+                    Utils.setScreen(event, "outOfEvaluationPeriodScreen", data);
+                    return;
+                }
+                boolean hasAlreadyEvaluated = checkSprintEvaluation();
+                if (hasAlreadyEvaluated) {
+                    Utils.setScreen(event, "alreadyEvaluatedScreen", data);
+                    return;
+                }
                 Utils.setScreen(event, "studentScreen", data);
             } else {
                 Utils.setScreen(event, "professorScreen", email);

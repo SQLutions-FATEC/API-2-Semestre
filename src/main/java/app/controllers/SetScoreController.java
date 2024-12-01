@@ -24,6 +24,8 @@ public class SetScoreController implements Initializable {
     public ChoiceBox<String> teamChoiceBox;
     @FXML
     public TextField maxScore;
+    @FXML
+    public Label currentPeriod;
 
     Integer selectedTeamId;
     Integer sprintId;
@@ -33,6 +35,7 @@ public class SetScoreController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         maxScore.setPromptText("Adicione um valor");
+        currentPeriod.setText(currentPeriod.getText() + Utils.currentPeriodAndSprint);
         teamChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handleTeamListSelectionChange(newValue);
         });
