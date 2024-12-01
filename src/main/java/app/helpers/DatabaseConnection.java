@@ -4,14 +4,11 @@ import java.sql.*;
 import io.github.cdimascio.dotenv.Dotenv;
 
 public class DatabaseConnection {
-//    static Dotenv dotenv = Dotenv.load();
+    static Dotenv dotenv = Dotenv.load();
 
     private static final String DEFAULT_SCHEMA = "avaliador";
-//    private static final String USER = dotenv.get("DB_USER");
-//    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
-
-    private static final String USER = "root";
-    private static final String PASSWORD = "admin";
+    private static final String USER = dotenv.get("DB_USER");
+    private static final String PASSWORD = dotenv.get("DB_PASSWORD");
 
     private static Connection connection = null;
 
