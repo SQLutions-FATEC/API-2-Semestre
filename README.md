@@ -36,12 +36,31 @@ Confira a seguir uma demonstração das funcionalidades para cada tipo de usuár
 
 <details>
   <summary>Aluno</summary>
-  Fluxo aluno
+
+---
+
+### Usuário fora do período de avaliação
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1yxpkCxTIa_KCHZmryaEG42VUpuoriIut/view?usp=sharing)
+
+**Legenda:** Este vídeo demonstra como o aluno acessa o sistema, simulando fora do período de avaliação.
+
+---
+
+### Usuário dentro do período de avaliação
+
+[🎥 Assista ao vídeo](https://drive.google.com/file/d/1lc5Ea2zX63tNUrmOt5xV3Vabm19udvMk/view?usp=sharing)
+
+**Legenda:** Este vídeo mostra como o aluno acessa o sistema e avalia os colegas de sua equipe, simulando o processo de avaliação dentro do período estipulado e o cenário de limite de pontos excedido.
+
+---
+
 </details>
+
 
 <details>
   <summary>Professor</summary>
-  Fluxo professor
+  TODO
 </details>
 
 [→ Voltar ao topo](https://github.com/SQLutions-FATEC/API-2-Semestre/blob/main/README.md)
