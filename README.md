@@ -152,7 +152,7 @@ Como planejamento foi feito wireframe para validação do fluxo com o cliente, a
 
 > 🔗 **Links gerais**<br>
 >
-> - Manual do usuário: TODO<br>
+> - Manual do usuário: [clique aqui para acessar](https://drive.google.com/file/d/17MszjvFm3NBriFH0x14YNH5d-_79dsh0/view?usp=drive_link)<br>
 > - Guia de instalação: [clique aqui para acessar](https://drive.google.com/file/d/1V-B9wRj7Xq34Bef8cKEu-fvkvedjF5vK/view?usp=sharing)<br>
 > - Modelagem do banco de dados: [clique aqui para acessar](https://lucid.app/lucidchart/d3db8d95-2b6a-473f-8f60-90e07a328f93/edit?invitationId=inv_a0329dad-38a0-4aa1-93a9-6037de6f0d62&page=0_0#)
 
