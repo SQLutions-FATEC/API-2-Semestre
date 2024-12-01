@@ -225,6 +225,9 @@ Gerar relatórios dos valores calculados
 
 - Usuário pode fazer login
 - Professor pode editar sprints
+- Professor pode definir pontuação da equipe na sprint
+- A aplicação varia conforme a data atual
+- O aluno pode visualizar suas avaliações anteriores
 
 ### 👤User story 8: *Professor define as datas de cada sprint para definir controles sobre o período de acesso dos alunos na plataforma* - 🔴Prioridade média
 
@@ -245,22 +248,15 @@ Gerar relatórios dos valores calculados
 - **Dúvidas pertinentes**:
     - Dúvidas relacionadas à essa user story
 
-### 👤User story 9: *Professor edita as datas de cada sprint para contornar imprevistos que venham a surgir no calendário acadêmico* - 🔴 Prioridade alta
+### 👤User story 9: *Professor remove e recria as datas de cada sprint para contornar imprevistos que venham a surgir na definição de datas das sprints* - 🔴 Prioridade alta
 
 - **DoR**:
     - **Resumo:**
-        - O professor pode precisar editar as datas das sprints ao longo do projeto. Para isso, teremos uma tela dedicada à edição dessas datas.
-        - O professor deve selecionar o fim ou o início de uma sprint. Ao editar o final de uma sprint que contenha uma outra sprint subsequente, a próxima sprint deve ter a sua data de início configurada para um dia depois da data final da sprint editada. O mesmo deve ocorrer na data de início de uma sprint que contenha uma sprint anterior.
+        - O professor pode precisar recriar as datas das sprints no momento de definição das datas do projeto. Para isso, teremos um botão para realizar a exclusão dos registros.
     - **Controles importantes:**
-        - A aplicação deve travar a seleção de datas que já passaram;
-        - A aplicação não pode permitir a escolha de datas anteriores à data atual;
-        - As sprints não podem ter gaps entre elas. Sempre que uma termina, outra se inicia no dia seguinte.
+        - 
     - **A interface deve conter:**
-        - Label indicando o período que está sendo visualizado;
-        - Seleção de data a ser editada;
-        - Campo para fazer alteração;
-        - Botão de confirmação;
-        - Botão para voltar.
+        - Na tela de criação de sprints, a tabela que mostra os registros no banco deve conter uma coluna com um botão para cada linha. Esse botão irá excluir o registro daquela linha.
 - **Dúvidas pertinentes**:
   - 
 
