@@ -1,11 +1,9 @@
 package app.DAOs;
 
 import app.helpers.DatabaseConnection;
-import app.helpers.Utils;
 import app.models.SprintModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -94,7 +92,7 @@ public class SprintDAO {
             throw new SQLException("Já existe uma sprint com esse nome para o mesmo período.");
         }
 
-        if (!isSequentialDates(dataInicio, periodoId)) {
+        if (!isSequentialDates(dataInicio, periodoId, dataFim)) {
             throw new SQLException("A sequência de datas da sprint está fora de ordem.");
         }
 
@@ -143,26 +141,34 @@ public class SprintDAO {
         return false;
     }
 
-    private boolean isSequentialDates(Date dataInicio, int periodoId) {
+    private boolean isSequentialDates(Date dataInicio, int periodoId, Date dataFim) {
         String sql = """
-            SELECT data_fim 
-            FROM sprint 
-            WHERE periodo = ? AND deleted_at IS NULL 
-            ORDER BY data_fim DESC 
-            LIMIT 1
-        """;
+        SELECT data_inicio, data_fim 
+        FROM sprint 
+        WHERE periodo = ? 
+        ORDER BY data_inicio
+    """;
 
         try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId)) {
-            if (resultSet.next()) {
-                Date lastEndDate = resultSet.getDate("data_fim");
-                return lastEndDate.before(dataInicio);
+            while (resultSet.next()) {
+                Date existingStart = resultSet.getDate("data_inicio");
+                Date existingEnd = resultSet.getDate("data_fim");
+
+                if (dataInicio.before(existingEnd) && dataFim.after(existingStart)) {
+                    System.out.println("Erro: A nova sprint cruza com uma sprint já existente.");
+                    return false;
+                }
             }
         } catch (SQLException e) {
             System.out.println("Erro ao verificar sequência das datas: " + e.getMessage());
+            return false;
         }
 
         return true;
     }
+
+
+
 
     public SprintModel selectPastSprint() {
         LocalDate currentDate = LocalDate.now();
