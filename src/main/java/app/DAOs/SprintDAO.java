@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -92,10 +93,6 @@ public class SprintDAO {
             throw new SQLException("Já existe uma sprint com esse nome para o mesmo período.");
         }
 
-        if (!isSequentialDates(dataInicio, periodoId, dataFim)) {
-            throw new SQLException("A sequência de datas da sprint está fora de ordem.");
-        }
-
         int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
         return rowsAffected > 0;
     }
@@ -140,35 +137,6 @@ public class SprintDAO {
         }
         return false;
     }
-
-    private boolean isSequentialDates(Date dataInicio, int periodoId, Date dataFim) {
-        String sql = """
-        SELECT data_inicio, data_fim 
-        FROM sprint 
-        WHERE periodo = ? 
-        ORDER BY data_inicio
-    """;
-
-        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId)) {
-            while (resultSet.next()) {
-                Date existingStart = resultSet.getDate("data_inicio");
-                Date existingEnd = resultSet.getDate("data_fim");
-
-                if (dataInicio.before(existingEnd) && dataFim.after(existingStart)) {
-                    System.out.println("Erro: A nova sprint cruza com uma sprint já existente.");
-                    return false;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar sequência das datas: " + e.getMessage());
-            return false;
-        }
-
-        return true;
-    }
-
-
-
 
     public SprintModel selectPastSprint() {
         LocalDate currentDate = LocalDate.now();
