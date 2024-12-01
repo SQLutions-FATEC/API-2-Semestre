@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetSprintDataController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.SetSprintDataController">
    <children>
       <Separator layoutX="200.0" layoutY="20.0" orientation="VERTICAL" prefHeight="550.0" prefWidth="0.0" />
       <VBox prefHeight="600.0" prefWidth="200.0" spacing="40.0">
@@ -50,12 +50,13 @@
                </children>
             </VBox>
             <Button onAction="#createSprint" prefHeight="40.0" prefWidth="160.0" text="Nova Sprint" />
+            <Button onAction="#deleteSprint" prefHeight="40.0" prefWidth="160.0" text="Deletar Sprint" />
+            <Button onAction="#goToProfessorScreen" prefHeight="40.0" prefWidth="160.0" text="Voltar" />
          </children>
          <padding>
             <Insets bottom="20.0" left="20.0" right="20.0" top="40.0" />
          </padding>
       </VBox>
-      <Button layoutX="20.0" layoutY="525.0" onAction="#goToProfessorScreen" prefHeight="40.0" prefWidth="160.0" text="Voltar" />
       <Label layoutX="392.0" layoutY="120.0" text="Últimas Sprints Criadas:">
          <font>
             <Font size="18.0" />

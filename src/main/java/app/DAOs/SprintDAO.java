@@ -1,13 +1,12 @@
 package app.DAOs;
 
 import app.helpers.DatabaseConnection;
-import app.helpers.Utils;
 import app.models.SprintModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
 
@@ -94,10 +93,6 @@ public class SprintDAO {
             throw new SQLException("Já existe uma sprint com esse nome para o mesmo período.");
         }
 
-        if (!isSequentialDates(dataInicio, periodoId)) {
-            throw new SQLException("A sequência de datas da sprint está fora de ordem.");
-        }
-
         int rowsAffected = DatabaseConnection.executeUpdate(insertSprintSql, descricao, dataInicio, dataFim, periodoId);
         return rowsAffected > 0;
     }
@@ -141,27 +136,6 @@ public class SprintDAO {
             System.out.println("Erro ao verificar duplicidade da sprint: " + e.getMessage());
         }
         return false;
-    }
-
-    private boolean isSequentialDates(Date dataInicio, int periodoId) {
-        String sql = """
-            SELECT data_fim 
-            FROM sprint 
-            WHERE periodo = ? AND deleted_at IS NULL 
-            ORDER BY data_fim DESC 
-            LIMIT 1
-        """;
-
-        try (ResultSet resultSet = DatabaseConnection.executeQuery(sql, periodoId)) {
-            if (resultSet.next()) {
-                Date lastEndDate = resultSet.getDate("data_fim");
-                return lastEndDate.before(dataInicio);
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar sequência das datas: " + e.getMessage());
-        }
-
-        return true;
     }
 
     public SprintModel selectPastSprint() {
