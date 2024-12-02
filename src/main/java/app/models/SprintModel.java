@@ -7,22 +7,61 @@ import java.util.Date;
 public class SprintModel {
     private SimpleIntegerProperty id;
     private SimpleStringProperty description;
-    private static ObjectProperty<Date> startDate;
-    private static ObjectProperty<Date> endDate;
+    private ObjectProperty<Date> startDate;
+    private ObjectProperty<Date> endDate;
 
-    public SprintModel(int id, String descricao, Date dataInicio, Date dataFim) {
+    public SprintModel(int id, String description, Date startDate, Date endDate) {
         this.id = new SimpleIntegerProperty(id);
-        this.description = new SimpleStringProperty(descricao);
-        this.startDate = new SimpleObjectProperty<>(dataInicio);
-        this.endDate = new SimpleObjectProperty<>(dataFim);
+        this.description = new SimpleStringProperty(description);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.endDate = new SimpleObjectProperty<>(endDate);
     }
 
-    public int getId() { return id.get(); }
-    public void setId(int id) { this.id.set(id); }
+    public int getId() {
+        return id.get();
+    }
 
-    public String getDescription() { return description.get(); }
+    public void setId(int id) {
+        this.id.set(id);
+    }
 
-    public static Date getStartDate() { return startDate.get(); }
+    public String getDescription() {
+        return description.get();
+    }
 
-    public static Date getEndDate() { return endDate.get(); }
+    public void setDescription(String description) {
+        this.description.set(description);
+    }
+
+    public Date getStartDate() {
+        return startDate.get();
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate.set(startDate);
+    }
+
+    public Date getEndDate() {
+        return endDate.get();
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate.set(endDate);
+    }
+
+    public IntegerProperty idProperty() {
+        return id;
+    }
+
+    public StringProperty descriptionProperty() {
+        return description;
+    }
+
+    public ObjectProperty<Date> startDateProperty() {
+        return startDate;
+    }
+
+    public ObjectProperty<Date> endDateProperty() {
+        return endDate;
+    }
 }

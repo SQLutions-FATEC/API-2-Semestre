@@ -42,8 +42,6 @@ public class CriteriaController implements Initializable  {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        criteriaName.setPromptText("Adicione um critério");
-        criteriaDescription.setPromptText("Descreva o critério");
         periodChoiceBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             handlePeriodListSelectionChange(newValue);
         });
@@ -74,7 +72,7 @@ public class CriteriaController implements Initializable  {
 
     private void fetchCriterias(int periodId) {
         CriteriaDAO criteriaDAO = new CriteriaDAO();
-        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectCriteriasByPeriod(periodId);
+        ObservableList<CriteriaModel> criteriaList = criteriaDAO.selectCriteriasByPeriodId(periodId);
 
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));

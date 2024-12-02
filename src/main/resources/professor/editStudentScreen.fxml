@@ -15,12 +15,12 @@
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="450.0" layoutY="525.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="38.0" prefWidth="143.0" text="Deletar aluno">
+      <Button fx:id="deleteButton" layoutX="450.0" layoutY="525.0" mnemonicParsing="false" onAction="#deleteStudent" prefHeight="38.0" prefWidth="143.0" text="Deletar aluno">
          <font>
             <Font size="15.0" />
          </font>
       </Button>
-      <Button layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#changeStudentTeam" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
+      <Button fx:id="confirmButton" layoutX="605.0" layoutY="525.0" mnemonicParsing="false" onAction="#changeStudentTeam" prefHeight="38.0" prefWidth="143.0" text="Confirmar">
          <font>
             <Font size="15.0" />
          </font>
@@ -44,5 +44,5 @@
          <TableColumn fx:id="colTeam" maxWidth="300.0" minWidth="300.0" prefWidth="300.0" text="Equipe" />
      </columns>
    </TableView>
-   <TextField fx:id="studentSearch" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
+   <TextField fx:id="studentSearch" promptText="Digite para pesquisar" layoutX="50.0" layoutY="65.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="250.0" />
 </AnchorPane>

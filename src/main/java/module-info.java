@@ -5,8 +5,8 @@ module app.controllers {
     requires dotenv.java;
 
     opens student to javafx.fxml;
-    opens app.controllers to javafx.fxml;
     exports app.controllers;
+    opens app.controllers to javafx.fxml;
     exports app.models;
     opens app.models to javafx.fxml;
     exports app.helpers;

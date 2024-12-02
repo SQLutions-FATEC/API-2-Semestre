@@ -36,7 +36,6 @@ public class LoginDAO {
                 }
             }
         } catch (Exception e) {
-            System.out.println(e);
             throw new SQLException("Erro ao executar o arquivo SQL", e);
         } finally {
             try {
